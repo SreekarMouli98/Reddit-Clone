@@ -1,0 +1,34 @@
+from redditapp.models import *
+from django.views.generic import *
+from redditapp.serializers import *
+from rest_framework.generics import *
+
+class ListCommentsOfPost(ListCreateAPIView):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(parent_post__subreddit__id=self.kwargs['r_id'], parent_post__id=self.kwargs['p_id'])
+
+
+class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        return get_object_or_404(queryset, parent_post__subreddit__id=self.kwargs['r_id'], parent_post__id=self.kwargs['p_id'], id=self.kwargs['c_id'])
+
+class ListCommentsOfUser(ListCreateAPIView):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(owner__id=self.kwargs['u_id'])
+
+class DetailCommentsOfUser(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        return get_object_or_404(queryset, owner__id=self.kwargs['u_id'], id=self.kwargs['c_id'])
+
