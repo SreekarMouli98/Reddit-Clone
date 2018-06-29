@@ -12,7 +12,7 @@ class LoginComponent extends Component {
                 { context => {
                     return (
                         <React.Fragment>
-                            <Button color="primary" onClick={() => context.toggleLoginModal()}>Login</Button>
+                            <Button color="info" onClick={() => context.toggleLoginModal()}>Login</Button>
                             <Modal isOpen={context.loginModalOpen} toggle={() => context.toggleLoginModal()}>
                                 <ModalHeader toggle={() => context.toggleLoginModal()}></ModalHeader>
                                 <ModalBody>
