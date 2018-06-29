@@ -4,12 +4,13 @@ const Context = React.createContext();
 
 class Provider extends Component {
   state = {
-    loginDropdownOpen: false,
+    
+    loginModalOpen: false,
     navbarOpen: false,
     activeTab: '1',
-    toggleLoginDropdown: () => {
-      const val = !this.state.loginDropdownOpen;
-      this.setState({loginDropdownOpen: val});
+
+    toggleLoginModal: () => {
+      this.setState({loginModalOpen: !this.state.loginModalOpen});
     },
     toggleNavbar: () => {
       this.setState({navbarOpen: !this.state.navbarOpen})
@@ -20,6 +21,7 @@ class Provider extends Component {
       }
     }
   }
+  
   render() {
     return (
         <Context.Provider value={this.state}>

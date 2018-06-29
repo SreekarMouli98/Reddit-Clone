@@ -43,6 +43,10 @@ class BodyComponent extends Component {
                                 <Row><Col sm="12"><CardComponent /></Col></Row>
                                 <Row><Col sm="12"><CardComponent /></Col></Row>
                                 <Row><Col sm="12"><CardComponent /></Col></Row>
+                                <Row><Col sm="12"><CardComponent /></Col></Row>
+                                <Row><Col sm="12"><CardComponent /></Col></Row>
+                                <Row><Col sm="12"><CardComponent /></Col></Row>
+                                <Row><Col sm="12"><CardComponent /></Col></Row>
                             </TabPane>
                             <TabPane tabId="2">
                                 <Row>

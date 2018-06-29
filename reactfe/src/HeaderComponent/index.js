@@ -4,8 +4,8 @@ import {
     Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Form, FormGroup, Label, Input, Button,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
+import LoginComponent from './LoginComponent'
 
 class HeaderComponent extends React.Component {
     render() {
@@ -19,7 +19,7 @@ class HeaderComponent extends React.Component {
                                 <Collapse isOpen={context.navbarOpen} navbar>
                                 <Nav className="ml-auto" navbar>
                                     <NavItem>
-                                        <Dropdown inNavbar isOpen={context.loginDropdownOpen} toggle={() => context.toggleLoginDropdown()}>
+                                        {/* <Dropdown inNavbar isOpen={context.loginDropdownOpen} toggle={() => context.toggleLoginDropdown()}>
                                             <DropdownToggle tag="a" className="nav-link" caret>Login</DropdownToggle>
                                             <DropdownMenu>
                                                 <Form inline>
@@ -35,7 +35,8 @@ class HeaderComponent extends React.Component {
                                                     <Button>Login</Button>
                                                 </Form>
                                             </DropdownMenu>
-                                        </Dropdown>
+                                        </Dropdown> */}
+                                        <LoginComponent />
                                     </NavItem>
                                     <NavItem><NavLink href="/">Signup</NavLink></NavItem>
                                 </Nav>
