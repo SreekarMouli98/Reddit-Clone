@@ -3,7 +3,7 @@ import Context from '../../provider'
 import {Nav, NavItem, NavLink} from 'reactstrap'
 import classnames from 'classnames'
 
-class TabComponent extends Component {
+export default class TabComponent extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -39,5 +39,3 @@ class TabComponent extends Component {
         )
     }
 }
-
-export default TabComponent;

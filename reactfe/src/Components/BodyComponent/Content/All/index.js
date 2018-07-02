@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Row, Col} from 'reactstrap'
-import CardComponent from '../../assets/CardComponent'
+import CardComponent from '../../OtherComponents/CardComponent'
 
-export default class AllContent extends Component {
+export default class All extends Component {
     render() {
         return (
             <React.Fragment>

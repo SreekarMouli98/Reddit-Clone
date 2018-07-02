@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import Context from '../../provider'
+import Context from '../../../provider'
 import {
     Button, Modal, ModalHeader, ModalBody, ModalFooter,
     Col, Form, FormGroup, Label, Input, FormText
 } from 'reactstrap'
 
-class LoginComponent extends Component {
+export default class LoginComponent extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -43,5 +43,3 @@ class LoginComponent extends Component {
         )
     }
 }
-
-export default LoginComponent;
