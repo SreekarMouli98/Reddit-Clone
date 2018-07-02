@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Card, CardBody, CardLink, CardTitle, CardText 
-} from 'reactstrap'
+import {Card, CardBody, CardLink, CardTitle, CardText} from 'reactstrap'
 
 class CardComponent extends Component {
     render() {

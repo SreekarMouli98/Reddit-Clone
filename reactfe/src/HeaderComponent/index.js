@@ -14,7 +14,7 @@ class HeaderComponent extends React.Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <Navbar color="light" light expand="md">
+                        <Navbar color="light" light expand="md" fixed="top">
                             <NavbarBrand href="/">Reddit</NavbarBrand>
                                 <NavbarToggler onClick={() => context.toggleNavbar()} />
                                 <Collapse isOpen={context.navbarOpen} navbar>
