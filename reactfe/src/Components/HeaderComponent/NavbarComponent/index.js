@@ -14,7 +14,7 @@ export default class NavbarComponent extends React.Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <Navbar color="light" light expand="md" fixed="top">
+                        <Navbar color="light" light expand="md">
                             <NavbarBrand href="/">Reddit</NavbarBrand>
                                 <NavbarToggler onClick={() => context.toggleNavbar()} />
                                 <Collapse isOpen={context.navbarOpen} navbar>

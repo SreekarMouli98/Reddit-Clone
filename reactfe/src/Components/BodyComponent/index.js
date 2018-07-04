@@ -11,17 +11,19 @@ class BodyComponent extends Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <TabContent activeTab={context.activeTab}>
-                            <TabPane tabId="1">
-                                <Home />
-                            </TabPane>
-                            <TabPane tabId="2">
-                                <Popular />
-                            </TabPane>
-                            <TabPane tabId="3">
-                                <All />
-                            </TabPane>
-                        </TabContent>   
+                        <Container>
+                            <TabContent activeTab={context.activeTab}>
+                                <TabPane tabId="1">
+                                    <Home />
+                                </TabPane>
+                                <TabPane tabId="2">
+                                    <Popular />
+                                </TabPane>
+                                <TabPane tabId="3">
+                                    <All />
+                                </TabPane>
+                            </TabContent>   
+                        </Container>
                     )
                 }}
             </Context.Consumer>

@@ -5,10 +5,17 @@ const Context = React.createContext();
 class Provider extends Component {
   state = {
     
+    loggedIn: false,
+    username: '',
+    password: '',
     loginModalOpen: false,
     signupModalOpen: false,
     navbarOpen: false,
     activeTab: '1',
+
+    toggleLoggedIn: () => {
+      this.setState({loggedIn: !this.state.loggedIn});
+    },
 
     toggleLoginModal: () => {
       this.setState({loginModalOpen: !this.state.loginModalOpen});

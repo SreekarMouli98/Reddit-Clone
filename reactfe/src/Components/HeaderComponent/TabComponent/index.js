@@ -8,7 +8,7 @@ export default class TabComponent extends Component {
         return (
             <Context.Consumer>
                 {context => (
-                    <Nav tabs>
+                    <Nav tabs color='primary'>
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: context.activeTab === '1' })}
