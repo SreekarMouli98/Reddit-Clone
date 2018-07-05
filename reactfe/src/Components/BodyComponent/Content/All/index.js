@@ -11,7 +11,7 @@ export default class All extends Component {
     }
 
     componentDidMount() {   
-        fetch('http://localhost:8000/api/reddit/r/4/posts/')
+        fetch('http://localhost:8000/api/reddit/r/all/')
         .then(result => {
             return result.json();
         })
