@@ -7,10 +7,10 @@ class CardComponent extends Component {
             <Container>
                 <Card>
                     <CardBody>
-                        <CardTitle>Post-title</CardTitle>
-                        <CardText>Post-content</CardText>
-                        <CardLink href='/'>Subreddit Link</CardLink>
-                        <CardLink href='/'>User Link</CardLink>
+                        <CardTitle>{this.props.title}</CardTitle>
+                        <CardText>{this.props.content}</CardText>
+                        <CardLink href='/'>{this.props.subredditlink}</CardLink>
+                        <CardLink href='/'>{this.props.userlink}</CardLink>
                     </CardBody>
                 </Card>
             </Container>
