@@ -27,7 +27,7 @@ export default class Popular extends Component {
                     return (
                         <Row key={post.id}>
                             <Col sm={12}>
-                                <CardComponent title={post.title} content={post.content} subredditlink='/' userlink='/' />
+                                <CardComponent title={post.title} content={post.content} subredditlink='/' userlink='/' updatedate='/' />
                             </Col>
                         </Row>
                     )

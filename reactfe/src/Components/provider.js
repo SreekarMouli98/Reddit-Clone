@@ -11,7 +11,7 @@ class Provider extends Component {
     loginModalOpen: false,
     signupModalOpen: false,
     navbarOpen: false,
-    activeTab: '3',
+    activeTab: '1',
 
     toggleLoggedIn: () => {
       this.setState({loggedIn: !this.state.loggedIn});

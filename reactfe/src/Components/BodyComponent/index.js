@@ -1,34 +1,38 @@
 import React, {Component} from 'react'
-import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Container} from 'reactstrap'
 import Context from '../provider'
-import Home from './Content/Home'
-import Popular from './Content/Popular'
-import All from './Content/All'
+import SwitchTab from './OtherComponents/SwitchTab'
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
-class BodyComponent extends Component {
+class Handler extends React.Component {
+    componentDidMount() {
+       this.props.setActiveTab(this.props.activeTab);
+    }
+  
+    render() {
+      return null;
+    }
+ }
+
+export default class BodyComponent extends Component {
     render() {
         return (
             <Context.Consumer>
                 {context => {
                     return (
-                        <Container>
-                            <TabContent activeTab={context.activeTab}>
-                                <TabPane tabId="1">
-                                    <Home />
-                                </TabPane>
-                                <TabPane tabId="2">
-                                    <Popular />
-                                </TabPane>
-                                <TabPane tabId="3">
-                                    <All />
-                                </TabPane>
-                            </TabContent>   
-                        </Container>
+                        <React.Fragment>
+                            <BrowserRouter>
+                                <React.Fragment>
+                                    <Route exact path='/' render={() => <Redirect to='/home/' /> } />
+                                    <Route exact path='/home/' render={() => <Handler setActiveTab={context.toggleTab} activeTab={'1'} />}/>
+                                    <Route exact path='/popular/' render={() => <Handler setActiveTab={context.toggleTab} activeTab={'2'} />}/>
+                                    <Route exact path='/all/' render={() => <Handler setActiveTab={context.toggleTab} activeTab={'3'} />}/>
+                                </React.Fragment>
+                            </BrowserRouter>
+                            <SwitchTab />
+                        </React.Fragment>
                     )
                 }}
             </Context.Consumer>
         )
     }
 }
-
-export default BodyComponent;   

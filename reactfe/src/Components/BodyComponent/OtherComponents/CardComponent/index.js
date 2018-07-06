@@ -9,8 +9,8 @@ class CardComponent extends Component {
                     <CardBody>
                         <CardTitle>{this.props.title}</CardTitle>
                         <CardText>{this.props.content}</CardText>
-                        <CardLink href='/'>{this.props.subredditlink}</CardLink>
-                        <CardLink href='/'>{this.props.userlink}</CardLink>
+                        <CardLink href={this.props.subredditlink}>subreddit</CardLink>
+                        <CardLink href={this.props.userlink}>user</CardLink>
                     </CardBody>
                 </Card>
             </Container>
