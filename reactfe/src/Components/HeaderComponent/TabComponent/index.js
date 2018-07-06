@@ -13,8 +13,10 @@ export default class TabComponent extends Component {
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: context.activeTab === '1' })}
-                                onClick={() => { context.toggleTab('1'); }}
-                                // onClick={() => <Redirect to='/home/' /> }
+                                onClick={() =>{
+                                    // context.toggleTab('1');
+                                    window.location = '/home/';
+                                }}
                             >
                             Home
                             </NavLink>
@@ -22,8 +24,10 @@ export default class TabComponent extends Component {
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: context.activeTab === '2' })}
-                                onClick={() => { context.toggleTab('2'); }}
-                                // onClick={() => <Redirect to='/popular/' /> }
+                                onClick={() => {
+                                    // context.toggleTab('2');
+                                    window.location = '/popular/';
+                                }}
                             >
                             Popular
                             </NavLink>
@@ -31,8 +35,10 @@ export default class TabComponent extends Component {
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: context.activeTab === '3' })}
-                                onClick={() => { context.toggleTab('3'); }}
-                                // onClick={() => <Redirect to='/all/' /> }
+                                onClick={() => {
+                                    // context.toggleTab('3');
+                                    window.location = '/all/';
+                                }}
                             >
                             All
                             </NavLink>
