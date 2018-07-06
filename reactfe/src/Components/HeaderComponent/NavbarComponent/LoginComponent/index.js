@@ -6,6 +6,18 @@ import {
 } from 'reactstrap'
 
 export default class LoginComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        console.log('Mounted Login Component')
+    }
+
+    handleFormSubmit() {
+        console.log('submitted')
+    }
+
     render() {
         return (
             <Context.Consumer>
@@ -16,7 +28,7 @@ export default class LoginComponent extends Component {
                             <Modal isOpen={context.loginModalOpen} toggle={() => context.toggleLoginModal()}>
                                 <ModalHeader toggle={() => context.toggleLoginModal()}></ModalHeader>
                                 <ModalBody>
-                                    <Form>
+                                    <Form onSubmit={() => this.handleFormSubmit()}>
                                         <FormGroup row>
                                             <Label for='username' sm={2}>Username</Label>
                                             <Col sm={10}><Input type='text' name='username' id='username' /></Col>

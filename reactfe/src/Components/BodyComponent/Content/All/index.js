@@ -27,7 +27,7 @@ export default class All extends Component {
                     return (
                         <Row key={post.id}>
                             <Col sm={12}>
-                                <CardComponent title={post.title} content={post.content} subredditlink='/' userlink='/' />
+                                <CardComponent votes={post.votes} title={post.title} content={post.content} subredditlink='/' userlink='/' />
                             </Col>
                         </Row>
                     )

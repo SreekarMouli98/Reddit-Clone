@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 import LoginComponent from './LoginComponent'
 import SignupComponent from './SignupComponent'
+import SignoutComponent from './SignoutComponent'
 
 export default class NavbarComponent extends React.Component {
     render() {
@@ -19,8 +20,17 @@ export default class NavbarComponent extends React.Component {
                                 <NavbarToggler onClick={() => context.toggleNavbar()} />
                                 <Collapse isOpen={context.navbarOpen} navbar>
                                 <Nav className="ml-auto" navbar>
-                                    <NavItem><LoginComponent /></NavItem>
-                                    <NavItem><SignupComponent /></NavItem>
+                                    {context.loggedIn ? 
+                                            <React.Fragment>
+                                                <NavItem><NavLink>{context.username}</NavLink></NavItem>
+                                                <NavItem><SignoutComponent /></NavItem>
+                                            </React.Fragment>
+                                            :
+                                            <React.Fragment>
+                                                <NavItem><LoginComponent /></NavItem>
+                                                <NavItem><SignupComponent /></NavItem>
+                                            </React.Fragment>
+                                    }
                                 </Nav>
                             </Collapse>
                         </Navbar>
