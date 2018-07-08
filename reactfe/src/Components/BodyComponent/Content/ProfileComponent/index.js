@@ -1,14 +1,31 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
-import {Container} from 'reactstrap'
+import {
+    Container,
+    Card,
+    CardTitle,
+    CardImg,
+    CardBody,
+    CardText,
+    Button,
+} from 'reactstrap'
 
 export default class ProfileComponent extends Component {
     constructor(props) {
-        super(props);
+        super(props)
+        this.state = {user: '', owner: ''}
     }
 
     componentDidMount() {
-        fetch('')
+        fetch(`http://localhost:8000/api/reddit/u/${this.props.username}/`)
+        .then(data => data.json())
+        .then((data) => {
+            this.setState({
+                user: data,
+                owner: data.owner,
+            })
+            console.log(this.state)
+        })
     }
 
     render() {
@@ -16,9 +33,17 @@ export default class ProfileComponent extends Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <Container fluid>
-                            <h1>{context.toggleTab('4')}{this.props.match.params.username}'s Profile</h1>
-                        </Container>
+                        <React.Fragment>
+                            <Card className='text-center'>
+                                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                                <CardTitle>{this.state.owner.username}'s profile</CardTitle>
+                                <CardBody>
+                                    <CardText><b>Name:</b> {this.state.owner.first_name} {this.state.owner.last_name}</CardText>
+                                    <CardText><b>D.O.B:</b> {this.state.user.dob}</CardText>
+                                    <CardText><b>Karma:</b> {this.state.user.karma}</CardText>
+                                </CardBody>
+                            </Card>
+                        </React.Fragment>
                     )
                 }}
             </Context.Consumer>
