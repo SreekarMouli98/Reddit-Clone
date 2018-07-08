@@ -22,7 +22,7 @@ export default class NavbarComponent extends React.Component {
                                 <Nav className="ml-auto" navbar>
                                     {context.loggedIn ? 
                                         <React.Fragment>
-                                            <NavItem><NavLink>{context.username}</NavLink></NavItem>
+                                            <NavItem><NavLink href={'/u/' + context.username.toLowerCase() + '/'}>{context.username}</NavLink></NavItem>
                                             <NavItem><SignoutComponent /></NavItem>
                                         </React.Fragment>
                                         :

@@ -31,7 +31,13 @@ export default class LoginComponent extends Component {
                                         </FormGroup>
                                         <FormGroup>
                                             <Col sm={{size:10, offset:10}}>
-                                                <Button color="primary" onClick={() => context.toggleLoginModal()}>Login</Button>{' '}
+                                                <Button 
+                                                    color="primary" 
+                                                    onClick={() => {
+                                                        context.toggleLoginModal()
+                                                        context.toggleLoggedIn()
+                                                    }}
+                                                >Login</Button>{' '}
                                             </Col>
                                         </FormGroup>
                                     </Form>

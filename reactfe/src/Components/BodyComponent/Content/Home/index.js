@@ -3,6 +3,7 @@ import Context from '../../../provider'
 import CardComponent from '../../OtherComponents/CardComponent'
 import {
     Container,
+    Alert,
 } from 'reactstrap'
 
 export default class Home extends Component {
@@ -11,15 +12,15 @@ export default class Home extends Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <Container className='text-center'>
-                            <h1 className='display-1'>Welcome to Reddit</h1>
+                        <Container>
+                            <h1 className='display-1 text-center'>Welcome to Reddit</h1>
                             {context.loggedIn ? 
                                 <React.Fragment>
-                                    <h1 className='display-4'>User logged in</h1>
+                                    <Alert color='success'>User logged in</Alert>
                                 </React.Fragment>
                                 :
                                 <React.Fragment>
-                                    <h1 className='display-4'>Please Login</h1>
+                                    <Alert color='danger'>Please Login</Alert>
                                 </React.Fragment>                            
                             }
                         </Container>
