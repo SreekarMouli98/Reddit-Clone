@@ -18,7 +18,8 @@ urlpatterns = [
     ###########
     # USER VIEWS
     path('u/', ListProfiles.as_view(), name='profiles'),
-    path('u/<int:u_id>/', DetailProfile.as_view(), name='profiles-detail'),
+    path('u/<int:u_id>/', DetailProfileUsingId.as_view(), name='profiles-detail-id'),
+    path('u/<str:username>/', DetailProfileUsingUsername.as_view(), name='profiles-detail-username'),
     path('u/<int:u_id>/posts/', ListPostsOfUser.as_view(), name='profile-posts'), 
     path('u/<int:u_id>/posts/<int:p_id>/', DetailPostsOfUser.as_view(), name='profile-posts-detail'),
     path('u/<int:u_id>/comments/', ListCommentsOfUser.as_view(), name='profile-comments'),
