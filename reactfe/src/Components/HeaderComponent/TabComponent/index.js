@@ -15,7 +15,7 @@ export default class TabComponent extends Component {
                                 className={classnames({ active: context.activeTab === '1' })}
                                 onClick={() =>{
                                     // context.toggleTab('1');
-                                    window.location = '/home/';
+                                    window.location = '/r/home/';
                                 }}
                             >
                             Home
@@ -26,7 +26,7 @@ export default class TabComponent extends Component {
                                 className={classnames({ active: context.activeTab === '2' })}
                                 onClick={() => {
                                     // context.toggleTab('2');
-                                    window.location = '/popular/';
+                                    window.location = '/r/popular/';
                                 }}
                             >
                             Popular
@@ -37,7 +37,7 @@ export default class TabComponent extends Component {
                                 className={classnames({ active: context.activeTab === '3' })}
                                 onClick={() => {
                                     // context.toggleTab('3');
-                                    window.location = '/all/';
+                                    window.location = '/r/all/';
                                 }}
                             >
                             All

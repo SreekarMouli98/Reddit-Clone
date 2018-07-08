@@ -4,7 +4,7 @@ const Context = React.createContext();
 
 class Provider extends Component {
   state = {
-    
+  
     loggedIn: false,
     username: 'Mouli',
     password: '',
@@ -31,10 +31,8 @@ class Provider extends Component {
     },
 
     toggleTab: (tab) => {
-      if(this.state.activeTab !== tab) {
-        this.setState({activeTab: tab});
-      }
-    }
+      this.setState({activeTab: tab});
+    },
   }
   
   render() {

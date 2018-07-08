@@ -21,15 +21,15 @@ export default class NavbarComponent extends React.Component {
                                 <Collapse isOpen={context.navbarOpen} navbar>
                                 <Nav className="ml-auto" navbar>
                                     {context.loggedIn ? 
-                                            <React.Fragment>
-                                                <NavItem><NavLink>{context.username}</NavLink></NavItem>
-                                                <NavItem><SignoutComponent /></NavItem>
-                                            </React.Fragment>
-                                            :
-                                            <React.Fragment>
-                                                <NavItem><LoginComponent /></NavItem>
-                                                <NavItem><SignupComponent /></NavItem>
-                                            </React.Fragment>
+                                        <React.Fragment>
+                                            <NavItem><NavLink>{context.username}</NavLink></NavItem>
+                                            <NavItem><SignoutComponent /></NavItem>
+                                        </React.Fragment>
+                                        :
+                                        <React.Fragment>
+                                            <NavItem><LoginComponent /></NavItem>
+                                            <NavItem><SignupComponent /></NavItem>
+                                        </React.Fragment>
                                     }
                                 </Nav>
                             </Collapse>
