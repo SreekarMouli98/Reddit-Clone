@@ -11,9 +11,9 @@ urlpatterns = [
     path('r/', ListSubreddits.as_view(), name='reddits'),
     path('r/<str:r_name>/', DetailSubreddit.as_view(), name='reddits-detail'),
     path('r/<str:r_name>/posts/', ListPostsOfReddit.as_view(), name='reddit-posts'),
-    path('r/<int:r_id>/posts/<int:p_id>/', DetailPostOfReddit.as_view(), name='reddit-posts-detail'),
-    path('r/<int:r_id>/posts/<int:p_id>/comments/', ListCommentsOfPost.as_view(), name='reddit-post-comments'),
-    path('r/<int:r_id>/posts/<int:p_id>/comments/<int:c_id>/', DetailCommentsOfPost.as_view(), name='reddit-post-comments-detail'),
+    path('r/<str:r_name>/posts/<int:p_id>/', DetailPostOfReddit.as_view(), name='reddit-posts-detail'),
+    path('r/<str:r_name>/posts/<int:p_id>/comments/', ListCommentsOfPost.as_view(), name='reddit-post-comments'),
+    path('r/<str:r_name>/posts/<int:p_id>/comments/<int:c_id>/', DetailCommentsOfPost.as_view(), name='reddit-post-comments-detail'),
     # USER VIEWS
     path('u/', ListProfiles.as_view(), name='profiles'),
     path('u/<int:u_id>/', DetailProfileUsingId.as_view(), name='profiles-detail-id'),

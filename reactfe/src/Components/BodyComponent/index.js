@@ -12,9 +12,11 @@ import {
 } from 'reactstrap'
 import ProfileComponent from './Content/ProfileComponent'
 import SubredditComponent from './Content/SubredditComponent'
+import PostComponent from './Content/PostComponent'
 
 class Handler extends React.Component {
     componentDidMount() {
+        console.log('Handler mounted')
        this.props.setActiveTab(this.props.activeTab);
     }
   
@@ -87,12 +89,15 @@ export default class BodyComponent extends Component {
                                     />
                                     <Route
                                         exact
-                                        path = 'r/:subreddit/post/:postid/'
+                                        path = '/r/:subreddit/post/:postid/'
                                         render={(props) => {
                                             return (
                                                 <React.Fragment>
                                                     <Handler setActiveTab={context.setActiveTab} activeTab={'4'} />
-
+                                                    <PostComponent
+                                                        subreddit={props.match.params.subreddit}
+                                                        postid={props.match.params.postid}
+                                                    />
                                                 </React.Fragment>
                                             )
                                         }}

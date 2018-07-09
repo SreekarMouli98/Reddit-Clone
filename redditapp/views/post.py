@@ -26,7 +26,7 @@ class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         conditions = {
-            'subreddit__id': self.kwargs['r_id'],
+            'subreddit__name': self.kwargs['r_name'],
             'id': self.kwargs['p_id']
         }
         return get_object_or_404(queryset, **conditions)        
