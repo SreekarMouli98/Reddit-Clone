@@ -5,11 +5,13 @@ import {
     BrowserRouter,
     Route,
     Redirect,
+    Switch,
 } from "react-router-dom"
 import {
     Container,
 } from 'reactstrap'
 import ProfileComponent from './Content/ProfileComponent'
+import SubredditComponent from './Content/SubredditComponent'
 
 class Handler extends React.Component {
     componentDidMount() {
@@ -30,7 +32,7 @@ export default class BodyComponent extends Component {
                         <Container>
                             <SwitchTab />
                             <BrowserRouter>
-                                <React.Fragment>
+                                <Switch>
                                     <Route 
                                         exact 
                                         path='/' 
@@ -71,7 +73,31 @@ export default class BodyComponent extends Component {
                                             )
                                         }}
                                     />
-                                </React.Fragment>
+                                    <Route
+                                        exact
+                                        path='/r/:subreddit/'
+                                        render={(props) => {
+                                            return (
+                                                <React.Fragment>
+                                                    <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
+                                                    <SubredditComponent subreddit={props.match.params.subreddit} />
+                                                </React.Fragment>
+                                            )
+                                        }}
+                                    />
+                                    <Route
+                                        exact
+                                        path = 'r/:subreddit/post/:postid/'
+                                        render={(props) => {
+                                            return (
+                                                <React.Fragment>
+                                                    <Handler setActiveTab={context.setActiveTab} activeTab={'4'} />
+
+                                                </React.Fragment>
+                                            )
+                                        }}
+                                    />
+                                </Switch>
                             </BrowserRouter>
                         </Container>
                     )

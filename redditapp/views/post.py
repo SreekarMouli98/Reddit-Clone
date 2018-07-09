@@ -17,7 +17,7 @@ class ListPostsOfReddit(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(subreddit__id=self.kwargs['r_id'])
+        return Post.objects.filter(subreddit__name=self.kwargs['r_name'])
 
 class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()

@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {
     Row,
-    Col
+    Col,
 } from 'reactstrap'
 import CardComponent from '../../OtherComponents/CardComponent'
 
-export default class All extends Component {
+export default class SubredditComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,15 +14,17 @@ export default class All extends Component {
     }
 
     componentDidMount() {   
-        fetch('http://localhost:8000/api/reddit/r/all/')
-        .then(result => {
+        console.log('subreddit mounted: ', this.props.subreddit)
+        fetch(`http://localhost:8000/api/reddit/r/${this.props.subreddit}/posts/`)
+        .then(result => {   
             return result.json();
         })
         .then(data => {
+            console.log(data)
             this.setState({posts: data})
         })
     }
-    
+
     render() {
         return (
             <React.Fragment>
