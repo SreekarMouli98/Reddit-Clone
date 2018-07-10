@@ -93,7 +93,7 @@ export default class BodyComponent extends Component {
                                         render={(props) => {
                                             return (
                                                 <React.Fragment>
-                                                    <Handler setActiveTab={context.setActiveTab} activeTab={'4'} />
+                                                    {/* <Handler setActiveTab={context.setActiveTab} activeTab={'4'} /> */}
                                                     <PostComponent
                                                         subreddit={props.match.params.subreddit}
                                                         postid={props.match.params.postid}
