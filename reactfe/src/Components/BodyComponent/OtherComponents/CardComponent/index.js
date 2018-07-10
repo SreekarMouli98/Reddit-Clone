@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
 import {
-    Container,
     Card,
     CardBody,
     CardTitle,
     CardText,
     CardLink,
     Table,
-    Row,
-    Col,
 } from 'reactstrap'
-import {
-    Redirect,
-} from 'react-router-dom'
 import Context from '../../../provider'
 import './style.css'
 

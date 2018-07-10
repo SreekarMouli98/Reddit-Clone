@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
-import {Button} from 'reactstrap'
+import {
+    Button,
+} from 'reactstrap'
 
 export default class SignoutComponent extends Component {
     render() {

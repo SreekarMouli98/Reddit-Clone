@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import Context from '../../provider'
-import {Nav, NavItem, NavLink} from 'reactstrap'
-import {Redirect} from 'react-router-dom'
+import {
+    Nav,
+    NavItem,
+    NavLink,
+} from 'reactstrap'
 import classnames from 'classnames'
 
 export default class TabComponent extends Component {

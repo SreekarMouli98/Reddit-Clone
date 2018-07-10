@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import Context from "../../../provider";
-import { Container, TabContent, TabPane } from "reactstrap";
+import {
+    Container,
+    TabContent,
+    TabPane,
+} from "reactstrap";
 import Home from '../../Content/Home'
 import Popular from '../../Content/Popular'
 import All from '../../Content/All'

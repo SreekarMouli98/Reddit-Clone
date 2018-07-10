@@ -3,13 +3,6 @@ import Context from '../../../provider'
 import {
     Row,
     Col,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    CardText,
-    CardLink,
-    CardFooter,
     Jumbotron,
 } from 'reactstrap'
 import PostHeaderComponent from './PostHeaderComponent'

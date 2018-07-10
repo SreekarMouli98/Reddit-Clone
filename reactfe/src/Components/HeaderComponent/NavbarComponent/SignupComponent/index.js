@@ -1,8 +1,16 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
 import {
-    Button, Modal, ModalHeader, ModalBody, ModalFooter,
-    Col, Form, FormGroup, Label, Input, FormText
+    Button, 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter,
+    Col, 
+    Form, 
+    FormGroup, 
+    Label, 
+    Input, 
 } from 'reactstrap'
 
 export default class SignupComponent extends Component {

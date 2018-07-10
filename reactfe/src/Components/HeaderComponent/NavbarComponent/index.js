@@ -2,8 +2,12 @@ import React from 'react';
 import Context from '../../provider'
 import {
     Collapse,
-    Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-    Form, FormGroup, Label, Input, Button,
+    Navbar, 
+    NavbarToggler, 
+    NavbarBrand, 
+    Nav, 
+    NavItem, 
+    NavLink,
 } from 'reactstrap';
 import LoginComponent from './LoginComponent'
 import SignupComponent from './SignupComponent'

@@ -1,15 +1,19 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
 import {
-    Button, Modal, ModalHeader, ModalBody, ModalFooter,
-    Col, Form, FormGroup, Label, Input, FormText
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody, 
+    ModalFooter,
+    Col, 
+    Form, 
+    FormGroup, 
+    Label, 
+    Input,
 } from 'reactstrap'
 
 export default class LoginComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Context.Consumer>

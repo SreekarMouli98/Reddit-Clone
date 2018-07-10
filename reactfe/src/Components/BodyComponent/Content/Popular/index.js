@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
-import {Row, Col} from 'reactstrap'
+import {
+    Row,
+    Col,
+} from 'reactstrap'
 import CardComponent from '../../OtherComponents/CardComponent'
 
 export default class Popular extends Component {

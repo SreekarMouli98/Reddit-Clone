@@ -1,13 +1,11 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
 import {
-    Container,
     Card,
     CardTitle,
     CardImg,
     CardBody,
     CardText,
-    Button,
 } from 'reactstrap'
 
 export default class ProfileComponent extends Component {

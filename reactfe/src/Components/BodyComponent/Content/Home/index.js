@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
-import CardComponent from '../../OtherComponents/CardComponent'
 import {
     Container,
     Alert,
