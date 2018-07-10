@@ -28,6 +28,7 @@ export default class Popular extends Component {
                         <Row key={post.id}>
                             <Col sm={12}>
                             <CardComponent
+                                    postid={post.id}
                                     votes={post.votes}
                                     title={post.title} 
                                     content={post.content} 
