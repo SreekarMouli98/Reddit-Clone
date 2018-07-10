@@ -11,7 +11,7 @@ class Profile(models.Model):
         unique_together = ("username", )
 
     def __str__(self):
-        return "%s" % (self.owner)
+        return "%s" % (self.username)
 
 class Subreddit(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='subreddits')
@@ -46,4 +46,4 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey("Comment", null=True, blank=True, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "%s > %s's comment > %s....." % (self.parent_post, self.owner, self.content[:10])
+        return "%s's comment on \"%s\"" % (self.owner.username, self.parent_post)

@@ -7,13 +7,7 @@ class ListProfiles(ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class DetailProfileUsingId(RetrieveUpdateDestroyAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    lookup_field = 'id'
-    lookup_url_kwarg = 'u_id'
-
-class DetailProfileUsingUsername(RetrieveUpdateDestroyAPIView):
+class DetailProfile(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     lookup_field = 'username'

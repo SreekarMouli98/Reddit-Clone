@@ -35,7 +35,7 @@ class ListPostsOfUser(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(owner__id=self.kwargs['u_id'])
+        return Post.objects.filter(owner__username=self.kwargs['username'])
 
 class DetailPostsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
@@ -44,7 +44,7 @@ class DetailPostsOfUser(RetrieveUpdateDestroyAPIView):
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         conditions = {
-            'owner__id': self.kwargs['u_id'],
+            'owner__username': self.kwargs['username'],
             'id': self.kwargs['p_id']
         }
         return get_object_or_404(queryset, **conditions)      
