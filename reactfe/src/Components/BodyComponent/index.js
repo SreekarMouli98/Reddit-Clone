@@ -17,7 +17,7 @@ import PostComponent from './Content/PostComponent'
 class Handler extends React.Component {
     componentDidMount() {
         console.log('Handler mounted')
-       this.props.setActiveTab(this.props.activeTab);
+        this.props.setActiveTab(this.props.activeTab);
     }
   
     render() {
@@ -93,7 +93,7 @@ export default class BodyComponent extends Component {
                                         render={(props) => {
                                             return (
                                                 <React.Fragment>
-                                                    {/* <Handler setActiveTab={context.setActiveTab} activeTab={'4'} /> */}
+                                                    <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
                                                     <PostComponent
                                                         subreddit={props.match.params.subreddit}
                                                         postid={props.match.params.postid}

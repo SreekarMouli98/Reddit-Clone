@@ -34,7 +34,7 @@ export default class ProfileComponent extends Component {
                         <React.Fragment>
                             <Card className='text-center'>
                                 <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                                <CardTitle>{this.state.owner.username}'s profile</CardTitle>
+                                <CardTitle>{this.state.user.username}'s profile</CardTitle>
                                 <CardBody>
                                     <CardText><b>Name:</b> {this.state.owner.first_name} {this.state.owner.last_name}</CardText>
                                     <CardText><b>D.O.B:</b> {this.state.user.dob}</CardText>

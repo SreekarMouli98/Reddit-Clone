@@ -23,10 +23,10 @@ export default class PostHeaderComponent extends Component {
         .then(data => data.json())
         .then(data => {
             this.setState({
-            post: data,
-            profile: data.owner,
-            owner: data.owner.owner,
-            subreddit: data.subreddit,
+                post: data,
+                profile: data.owner,
+                owner: data.owner.owner,
+                subreddit: data.subreddit,
             })
         })
     }
