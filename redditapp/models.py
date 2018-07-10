@@ -5,6 +5,10 @@ class Profile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     dob = models.DateField()
     karma = models.IntegerField(default=0)
+    username = models.CharField(max_length=128)
+
+    class Meta:
+        unique_together = ("username", )
 
     def __str__(self):
         return "%s" % (self.owner)

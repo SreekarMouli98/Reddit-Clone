@@ -16,5 +16,5 @@ class DetailProfileUsingId(RetrieveUpdateDestroyAPIView):
 class DetailProfileUsingUsername(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    lookup_field = 'owner__username'
+    lookup_field = 'username'
     lookup_url_kwarg = 'username'
