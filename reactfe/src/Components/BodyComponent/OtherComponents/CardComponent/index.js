@@ -10,6 +10,9 @@ import {
     Row,
     Col,
 } from 'reactstrap'
+import {
+    Redirect,
+} from 'react-router-dom'
 import Context from '../../../provider'
 import './style.css'
 
@@ -26,7 +29,11 @@ class CardComponent extends Component {
                                     <td rowSpan='3'>
                                         <Card>
                                             <CardBody>
-                                                <CardTitle>{this.props.title}</CardTitle>
+                                                <CardTitle>
+                                                    <CardLink 
+                                                        href={'/' + this.props.subredditlink + '/post/' +  this.props.postid + '/'}
+                                                    >{this.props.title}</CardLink>
+                                                </CardTitle>
                                                 <CardText>{this.props.content}</CardText>
                                                 <CardLink 
                                                     href={'/' + this.props.subredditlink + '/'}
