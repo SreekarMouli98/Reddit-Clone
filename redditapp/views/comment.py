@@ -4,7 +4,11 @@ from redditapp.serializers import *
 from rest_framework.generics import *
 
 class ListCommentsOfPost(ListCreateAPIView):
-    serializer_class = CommentSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CommentSerializer_detailed
+        if self.request.method == 'POST':
+            return CommentSerializer
 
     def get_queryset(self):
         return Comment.objects.filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'])
@@ -19,7 +23,11 @@ class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
         return get_object_or_404(queryset, parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'], id=self.kwargs['c_id'])
 
 class ListCommentsOfUser(ListCreateAPIView):
-    serializer_class = CommentSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CommentSerializer_detailed
+        if self.request.method == 'POST':
+            return CommentSerializer
 
     def get_queryset(self):
         return Comment.objects.filter(profile__username=self.kwargs['username'])

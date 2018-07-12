@@ -5,16 +5,20 @@ from rest_framework.generics import *
 
 class ListAllPosts(ListAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer_detailed
 
 class ListPopularPosts(ListAPIView):
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer_detailed
 
     def get_queryset(self):
         return Post.objects.order_by('-votes')
 
 class ListPostsOfReddit(ListCreateAPIView):
-    serializer_class = PostSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return PostSerializer_detailed
+        if self.request.method == 'POST':
+            return PostSerializer
 
     def get_queryset(self):
         return Post.objects.filter(subreddit__name=self.kwargs['r_name'])
@@ -32,7 +36,11 @@ class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
         return get_object_or_404(queryset, **conditions)        
 
 class ListPostsOfUser(ListAPIView):
-    serializer_class = PostSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return PostSerializer_detailed
+        if self.request.method == 'POST':
+            return PostSerializer    
 
     def get_queryset(self):
         return Post.objects.filter(profile__username=self.kwargs['username'])

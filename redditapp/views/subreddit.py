@@ -5,15 +5,14 @@ from rest_framework.generics import *
 
 class ListSubreddits(ListCreateAPIView):
     queryset = Subreddit.objects.all()
-    serializer_class = SubredditSerializer
 
-class DetailSubreddit_with_id(RetrieveUpdateDestroyAPIView):
-    queryset = Subreddit.objects.all()
-    serializer_class = SubredditSerializer
-    lookup_field = 'id'
-    lookup_url_kwarg = 'r_id'
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SubredditSerializer_detailed
+        if self.request.method == 'POST':
+            return SubredditSerializer
 
-class DetailSubreddit_with_name(RetrieveUpdateDestroyAPIView):
+class DetailSubreddit(RetrieveUpdateDestroyAPIView):
     queryset = Subreddit.objects.all()
     serializer_class = SubredditSerializer
     lookup_field = 'name'

@@ -8,11 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)
-    
-    class Meta:
-        model = Profile
-        fields = '__all__'
-        depth = 1
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -32,3 +27,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.user.save()
         instance.save()
         return instance
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        
+
