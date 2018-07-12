@@ -4,11 +4,10 @@ from .views import *
 app_name = 'reddit_app'
 
 urlpatterns = [
-    # API Views
-    path('r/all/', ListAllPosts.as_view(), name='reddit-all'),
-    path('r/popular/', ListPopularPosts.as_view(), name='reddit-popular'),
     # SUBREDDIT VIEWS
     path('r/', ListSubreddits.as_view(), name='reddits'),
+    path('r/all/', ListAllPosts.as_view(), name='reddit-all'),
+    path('r/popular/', ListPopularPosts.as_view(), name='reddit-popular'),
     path('r/<str:r_name>/', DetailSubreddit.as_view(), name='reddits-detail'),
     path('r/<str:r_name>/posts/', ListPostsOfReddit.as_view(), name='reddit-posts'),
     path('r/<str:r_name>/posts/<int:p_id>/', DetailPostOfReddit.as_view(), name='reddit-posts-detail'),

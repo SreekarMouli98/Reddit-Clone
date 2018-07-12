@@ -17,12 +17,19 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView 
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 urlpatterns = [
+    # ADMIN
     path('admin/', admin.site.urls),
+
+    # REST API'S
     path('api/reddit/', include('redditapp.urls')),
-    path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
+    
+    # AUTH
+    path('api/auth/token/', obtain_jwt_token),
+    path('api/auth/token/refresh/', refresh_jwt_token),
+    
+    # REACTJS
     url(r'^', TemplateView.as_view(template_name="index.html")),
 ]
