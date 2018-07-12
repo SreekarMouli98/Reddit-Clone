@@ -19,7 +19,7 @@ export default class PostHeaderComponent extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
+        fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
         .then(data => data.json())
         .then(data => {
             this.setState({

@@ -14,7 +14,7 @@ export default class Popular extends Component {
     }
 
     componentDidMount() {   
-        fetch('http://localhost:8000/api/reddit/r/popular/')
+        fetch('/api/reddit/r/popular/')
         .then(result => {
             return result.json();
         })

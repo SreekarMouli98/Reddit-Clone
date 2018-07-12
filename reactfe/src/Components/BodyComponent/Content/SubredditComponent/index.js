@@ -15,7 +15,7 @@ export default class SubredditComponent extends Component {
 
     componentDidMount() {   
         console.log('subreddit mounted: ', this.props.subreddit)
-        fetch(`http://localhost:8000/api/reddit/r/${this.props.subreddit}/posts/`)
+        fetch(`/api/reddit/r/${this.props.subreddit}/posts/`)
         .then(result => {   
             return result.json();
         })

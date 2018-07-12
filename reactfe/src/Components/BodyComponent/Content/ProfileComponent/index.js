@@ -15,7 +15,7 @@ export default class ProfileComponent extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/api/reddit/u/${this.props.username}/`)
+        fetch(`/api/reddit/u/${this.props.username}/`)
         .then(data => data.json())
         .then((data) => {
             this.setState({

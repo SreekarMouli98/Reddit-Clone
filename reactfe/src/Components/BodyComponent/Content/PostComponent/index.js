@@ -16,7 +16,7 @@ export default class PostComponent extends Component {
 
     componentDidMount() {
         console.log('PostComponent mounted')
-        fetch(`http://localhost:8000/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/`)
+        fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/`)
         .then(data => data.json())
         .then(data => {
                 console.log(data)
