@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'email', 'password')
 
 class ProfileSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(required=True)
+    user = UserSerializer(required=True)
     
     class Meta:
         model = Profile
@@ -17,7 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = User.objects.create_user(**user_data, username=validated_data.get('username'))
-        profile = Profile.objects.create(owner=user, **validated_data)
+        profile = Profile.objects.create(user=user, **validated_data)
         return profile
     
     def update(self, instance, validated_data):
