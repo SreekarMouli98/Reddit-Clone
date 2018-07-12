@@ -7,7 +7,13 @@ class ListSubreddits(ListCreateAPIView):
     queryset = Subreddit.objects.all()
     serializer_class = SubredditSerializer
 
-class DetailSubreddit(RetrieveUpdateDestroyAPIView):
+class DetailSubreddit_with_id(RetrieveUpdateDestroyAPIView):
+    queryset = Subreddit.objects.all()
+    serializer_class = SubredditSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'r_id'
+
+class DetailSubreddit_with_name(RetrieveUpdateDestroyAPIView):
     queryset = Subreddit.objects.all()
     serializer_class = SubredditSerializer
     lookup_field = 'name'
