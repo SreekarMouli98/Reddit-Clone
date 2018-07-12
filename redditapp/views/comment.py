@@ -12,7 +12,7 @@ class ListCommentsOfPost(ListCreateAPIView):
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentSerializer_detailed
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -22,13 +22,13 @@ class ListCommentsOfUser(ListCreateAPIView):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(owner__username=self.kwargs['username'])
+        return Comment.objects.filter(profile__username=self.kwargs['username'])
 
 class DetailCommentsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentSerializer_detailed
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
-        return get_object_or_404(queryset, owner__username=self.kwargs['username'], id=self.kwargs['c_id'])
+        return get_object_or_404(queryset, profile__username=self.kwargs['username'], id=self.kwargs['c_id'])
 

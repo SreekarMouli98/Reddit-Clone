@@ -13,7 +13,7 @@ class ListPopularPosts(ListAPIView):
     def get_queryset(self):
         return Post.objects.order_by('-votes')
 
-class ListPostsOfReddit(ListAPIView):
+class ListPostsOfReddit(ListCreateAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -21,7 +21,7 @@ class ListPostsOfReddit(ListAPIView):
 
 class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer_detailed
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -35,16 +35,16 @@ class ListPostsOfUser(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(owner__username=self.kwargs['username'])
+        return Post.objects.filter(profile__username=self.kwargs['username'])
 
 class DetailPostsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer_detailed
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         conditions = {
-            'owner__username': self.kwargs['username'],
+            'profile__username': self.kwargs['username'],
             'id': self.kwargs['p_id']
         }
         return get_object_or_404(queryset, **conditions)      

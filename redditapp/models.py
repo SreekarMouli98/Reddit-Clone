@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     dob = models.DateField()
     karma = models.IntegerField(default=0)
     username = models.CharField(max_length=128)
@@ -14,7 +14,7 @@ class Profile(models.Model):
         return "%s" % (self.username)
 
 class Subreddit(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='subreddits')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='subreddits')
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
@@ -25,7 +25,7 @@ class Subreddit(models.Model):
         return '%s' % (self.name)
 
 class Post(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
     content = models.CharField(max_length=1000)
     votes = models.IntegerField()
@@ -37,7 +37,7 @@ class Post(models.Model):
         return '%s' % (self.title)
 
 class Comment(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, null=True)
     content = models.CharField(max_length=500)
     votes = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,4 +46,4 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey("Comment", null=True, blank=True, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "%s's comment on \"%s\"" % (self.owner.username, self.parent_post)
+        return "%s's comment on \"%s\"" % (self.profile, self.parent_post)
