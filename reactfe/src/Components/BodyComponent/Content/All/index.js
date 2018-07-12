@@ -36,7 +36,7 @@ export default class All extends Component {
                                     title={post.title} 
                                     content={post.content} 
                                     subredditlink= {'r/' + post.subreddit.name.toLowerCase()} 
-                                    userlink= {'u/' + post.owner.owner.username.toLowerCase()}
+                                    userlink= {'u/' + post.profile.username.toLowerCase()}
                                 />
                             </Col>
                         </Row>

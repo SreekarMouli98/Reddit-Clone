@@ -42,7 +42,7 @@ export default class PostComponent extends Component {
                                             <Col>            
                                                 <CommentComponent
                                                     comment={comment}
-                                                    owner={comment.owner.owner}
+                                                    profile={comment.profile}
                                                 />
                                             </Col>
                                         </Row>

@@ -13,7 +13,7 @@ export default class PostHeaderComponent extends Component {
         this.state = {
             post: '',
             profile:'',
-            owner: {username: ''},
+            user:'',
             subreddit:'',
         }
     }
@@ -24,8 +24,7 @@ export default class PostHeaderComponent extends Component {
         .then(data => {
             this.setState({
                 post: data,
-                profile: data.owner,
-                owner: data.owner.owner,
+                profile: data.profile,
                 subreddit: data.subreddit,
             })
         })
@@ -38,7 +37,7 @@ export default class PostHeaderComponent extends Component {
                     <CardHeader>
                         <CardLink href={'/r/' + this.state.subreddit.name + '/'}>r/{this.state.subreddit.name}</CardLink>
                         <CardText className='text-muted'>
-                            Posted by <CardLink href={'/u/' + this.state.owner.username + '/'}>u/{this.state.owner.username}</CardLink>
+                            Posted by <CardLink href={'/u/' + this.state.profile.username + '/'}>u/{this.state.profile.username}</CardLink>
                         </CardText>
                     </CardHeader>
                     <CardBody>
