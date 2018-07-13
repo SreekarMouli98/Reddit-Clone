@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import Context from '../../../provider'
 import {
-    Card,
-    CardTitle,
-    CardImg,
-    CardBody,
-    CardText,
+    Nav,
+    NavItem,
+    NavLink,
+    Navbar,
+    NavbarBrand,
 } from 'reactstrap'
+import classnames from 'classnames'
+import ProfilePosts from './ProfilePosts'
+import ProfileComments from './ProfileComments'
 
 export default class ProfileComponent extends Component {
     constructor(props) {
@@ -32,15 +35,28 @@ export default class ProfileComponent extends Component {
                 {context => {
                     return (
                         <React.Fragment>
-                            <Card className='text-center'>
-                                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                                <CardTitle>{this.state.profile.username}'s profile</CardTitle>
-                                <CardBody>
-                                    <CardText><b>Name:</b> {this.state.user.first_name} {this.state.user.last_name}</CardText>
-                                    <CardText><b>D.O.B:</b> {this.state.profile.dob}</CardText>
-                                    <CardText><b>Karma:</b> {this.state.profile.karma}</CardText>
-                                </CardBody>
-                            </Card>
+                            <Navbar>
+                                <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Activity</NavbarBrand>
+                            </Navbar>
+                            <Nav tabs>
+                                <NavItem>
+                                    <NavLink 
+                                        onClick={() => {context.toggleProfileTab('1')}}
+                                        className={classnames({active: context.profileTab === '1'})}
+                                    >Posts</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink 
+                                        onClick={() => {context.toggleProfileTab('2')}}
+                                        className={classnames({active: context.profileTab === '2'})}
+                                    >Comments</NavLink>
+                                </NavItem>
+                            </Nav>
+                            {context.profileTab === '1' ?
+                                <ProfilePosts username={this.props.username}/>
+                                :
+                                <ProfileComments username={this.props.username} />
+                            }
                         </React.Fragment>
                     )
                 }}

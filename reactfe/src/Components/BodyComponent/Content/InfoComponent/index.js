@@ -9,6 +9,60 @@ import {
 } from 'react-router-dom'
 import InfoCardComponent from './InfoCardComponent'
 
+class SubredditHelper extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {data: ''}
+    }
+
+    componentDidMount() {
+        fetch(`/api/reddit/r/${this.props.subreddit}/`)
+        .then(data => data.json())
+        .then(json => {
+            this.setState({data: json})
+        })
+    }
+
+    render() {
+        var {data} = this.state
+        return (
+            <React.Fragment>
+                <InfoCardComponent 
+                    title={data.name}
+                    content={data.description}
+                    button='Subscribe'
+                />
+            </React.Fragment>
+        )
+    }
+}
+
+class UserHelper extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {data:''}       
+    }
+
+    componentDidMount() {
+        fetch(`/api/reddit/u/${this.props.user}/`)
+        .then(data => data.json())
+        .then(json => {
+            this.setState({data: json})
+            console.log('UserHelper: ', json)
+        })
+    }
+    
+    render() {
+        var {data} = this.state
+        return (
+            <InfoCardComponent
+                title={data.username}
+                content={data.dob + '   ' + data.karma}
+            />
+        )
+    }
+}
+
 export default class InfoComponent extends Component {
     render() {
         return (
@@ -51,16 +105,22 @@ export default class InfoComponent extends Component {
                                 )}
                             }
                         />   
-                        {/* <Route exact path='/r/:subreddit/' render={() => {
+                        <Route path='/r/:subreddit' render={(props) => {
                                 return (
                                     <React.Fragment>
-                                        <InfoCardComponent 
-
-                                        />
+                                        <SubredditHelper subreddit={props.match.params.subreddit} />
                                     </React.Fragment>
                                 )}
                             }
-                        />                         */}
+                        />
+                        <Route path='/u/:user' render={(props) => {
+                                return (
+                                    <React.Fragment>
+                                        <UserHelper user={props.match.params.user} />
+                                    </React.Fragment>
+                                )}
+                            }
+                        />                      
                     </Switch>
                 </BrowserRouter>
             </Jumbotron>

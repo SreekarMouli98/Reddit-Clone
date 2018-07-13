@@ -10,4 +10,4 @@ class CommentSerializer_detailed(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        depth = 1
+        depth = 2

@@ -14,7 +14,7 @@ import {
 } from 'reactstrap'
 import ProfileComponent from './Content/ProfileComponent'
 import SubredditComponent from './Content/SubredditComponent'
-import PostComponent from './Content/PostComponent'
+import PostOverviewComponent from './Content/PostOverviewComponent'
 import InfoComponent from './Content/InfoComponent'
 import Home from './Content/Home'
 import Popular from './Content/Popular'
@@ -115,7 +115,7 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
-                                                            <PostComponent
+                                                            <PostOverviewComponent
                                                                 subreddit={props.match.params.subreddit}
                                                                 postid={props.match.params.postid}
                                                             />
