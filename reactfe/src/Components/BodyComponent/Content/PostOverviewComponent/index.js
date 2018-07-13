@@ -56,23 +56,27 @@ export default class PostOverviewComponent extends Component {
                                 votes={post.votes}
                                 subreddit={post.subreddit.name}
                                 username={post.profile.username}
+                                userlink={true}
                             />
-                            <Jumbotron>
-                                {comments.map((comment) => {
-                                    return (
-                                        <Row key={comment.id}>
-                                            <Col>
-                                                <CommentComponent
-                                                    can_vote={true}
-                                                    username={comment.profile.username}
-                                                    content={comment.content}
-                                                    votes={comment.votes}
-                                                />
-                                            </Col>
-                                        </Row>
+                            {comments.length !== 0 &&
+                                <Jumbotron>
+                                    {comments.map((comment) => {
+                                        return (
+                                            <Row key={comment.id}>
+                                                <Col>
+                                                    <CommentComponent
+                                                        can_vote={true}
+                                                        username={comment.profile.username}
+                                                        content={comment.content}
+                                                        votes={comment.votes}
+                                                        userlink={true}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        )}
                                     )}
-                                )}
-                            </Jumbotron>
+                                </Jumbotron>
+                            }
                         </React.Fragment>
                     )
                 }}

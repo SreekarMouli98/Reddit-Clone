@@ -66,17 +66,17 @@ export default class CommentComponent extends Component {
                                     <td rowSpan='2'>
                                         <Card>
                                             <CardHeader>
-                                                {this.props.username && 
+                                                {this.props.userlink && 
                                                     <CardLink 
                                                         href={'/u/' + this.props.username + '/'}
                                                     >{this.props.username}</CardLink>
                                                 }
-                                                {this.props.subreddit &&
+                                                {this.props.subredditlink &&
                                                     <CardLink 
                                                         href={'/r/' + this.props.subreddit + '/post/' + this.props.postid + '/'}
                                                     >r/{this.props.subreddit}</CardLink>
                                                 }
-                                                <small className='text-muted'>  {this.state.votes} votes</small>
+                                                <small className='text-muted'>  {this.state.votes} vote(s)</small>
                                             </CardHeader>
                                             <CardBody>
                                                 <CardText>{this.props.content}</CardText>

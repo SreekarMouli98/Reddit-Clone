@@ -28,9 +28,11 @@ class SubredditHelper extends Component {
         return (
             <React.Fragment>
                 <InfoCardComponent 
+                    reddit={true}
+                    redditlink={true}
                     title={data.name}
                     content={data.description}
-                    button='Subscribe'
+                    subscribe={true}
                 />
             </React.Fragment>
         )
@@ -56,8 +58,10 @@ class UserHelper extends Component {
         var {data} = this.state
         return (
             <InfoCardComponent
+                user={true}
                 title={data.username}
-                content={data.dob + '   ' + data.karma}
+                karma={data.karma}
+                dob={data.dob}
             />
         )
     }
@@ -66,16 +70,15 @@ class UserHelper extends Component {
 export default class InfoComponent extends Component {
     render() {
         return (
-            <Jumbotron>
                 <BrowserRouter>
                     <Switch>
                         <Route exact path='/r/all/' render={() => {
                                 return (
                                     <React.Fragment>
                                         <InfoCardComponent
+                                            reddit={true}
                                             title='All'
                                             content = 'The most active posts from all of Reddit. Come here to see new posts rising and be a part of the conversation.'
-                                            button= 'Do something'
                                         />
                                     </React.Fragment>
                                 )}
@@ -85,9 +88,9 @@ export default class InfoComponent extends Component {
                                 return (
                                     <React.Fragment>
                                         <InfoCardComponent
+                                            reddit={true}
                                             title='Popular'
                                             content='The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.'
-                                            button= 'Do something'
                                         />
                                     </React.Fragment>
                                 )}
@@ -97,9 +100,9 @@ export default class InfoComponent extends Component {
                                 return (
                                     <React.Fragment>
                                         <InfoCardComponent
+                                            reddit={true}
                                             title='Home'
                                             content = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
-                                            button= 'Do something'
                                         />
                                     </React.Fragment>
                                 )}
@@ -123,7 +126,6 @@ export default class InfoComponent extends Component {
                         />                      
                     </Switch>
                 </BrowserRouter>
-            </Jumbotron>
         )
     }
 }

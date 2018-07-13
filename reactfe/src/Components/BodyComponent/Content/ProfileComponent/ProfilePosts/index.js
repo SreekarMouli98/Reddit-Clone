@@ -35,6 +35,7 @@ export default class ProfilePosts extends Component {
                                         title={post.title} 
                                         content={post.content} 
                                         subreddit= {post.subreddit.name} 
+                                        subredditlink={true}
                                     />
                                 </Col>
                             </Row>

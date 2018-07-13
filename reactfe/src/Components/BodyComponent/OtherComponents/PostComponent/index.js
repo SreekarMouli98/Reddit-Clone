@@ -76,15 +76,15 @@ export default class PostComponent extends Component {
                                                     >
                                                         {this.props.title}
                                                     </CardLink>
-                                                    <small className='text-muted'>  {this.state.votes} votes</small>
+                                                    <small className='text-muted'>  {this.state.votes} vote(s)</small>
                                                 </CardTitle>
                                                 <CardText>{this.props.content}</CardText>
-                                                {this.props.subreddit && 
+                                                {this.props.subredditlink && 
                                                     <CardLink href={'/r/' + this.props.subreddit + '/'}>
                                                         {'r/' + this.props.subreddit}
                                                     </CardLink>
                                                 }
-                                                { this.props.username &&
+                                                { this.props.userlink &&
                                                     <CardText>
                                                         Posted by 
                                                         <CardLink href={'/u/' + this.props.username + '/'}>

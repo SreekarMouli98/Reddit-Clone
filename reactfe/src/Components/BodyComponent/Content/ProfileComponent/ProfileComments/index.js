@@ -38,6 +38,7 @@ export default class ProfileComments extends Component {
                                     votes={comment.votes}
                                     postid={comment.parent_post.id}
                                     subreddit={comment.parent_post.subreddit.name}
+                                    subredditlink={true}
                                 />
                             </Col>
                         </Row>

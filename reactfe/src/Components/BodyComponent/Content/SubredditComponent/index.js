@@ -38,8 +38,9 @@ export default class SubredditComponent extends Component {
                                     votes={post.votes}
                                     title={post.title} 
                                     content={post.content} 
-                                    // subreddit= {post.subreddit.name} 
-                                    username= {post.profile.username}
+                                    subreddit={post.subreddit.name}
+                                    username={post.profile.username}
+                                    userlink={true}
                                 />
                             </Col>
                         </Row>

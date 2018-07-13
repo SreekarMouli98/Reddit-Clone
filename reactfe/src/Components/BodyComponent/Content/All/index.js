@@ -38,6 +38,8 @@ export default class All extends Component {
                                     content={post.content} 
                                     subreddit= {post.subreddit.name} 
                                     username= {post.profile.username}
+                                    subredditlink={true}
+                                    userlink={true}
                                 />
                             </Col>
                         </Row>
