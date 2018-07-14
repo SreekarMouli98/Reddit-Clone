@@ -5,9 +5,12 @@ import {
     NavItem,
     NavLink,
 } from 'reactstrap'
+import {
+    withRouter
+} from 'react-router'
 import classnames from 'classnames'
 
-export default class TabComponent extends Component {
+class TabComponent extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -17,8 +20,8 @@ export default class TabComponent extends Component {
                             <NavLink
                                 className={classnames({ active: context.activeTab === '1' })}
                                 onClick={() =>{
-                                    // context.toggleTab('1');
-                                    window.location = '/r/home/';
+                                    context.toggleTab('1');
+                                    this.props.history.push('/r/home/')
                                 }}
                             >
                             Home
@@ -28,8 +31,8 @@ export default class TabComponent extends Component {
                             <NavLink
                                 className={classnames({ active: context.activeTab === '2' })}
                                 onClick={() => {
-                                    // context.toggleTab('2');
-                                    window.location = '/r/popular/';
+                                    context.toggleTab('2');
+                                    this.props.history.push('/r/popular/')
                                 }}
                             >
                             Popular
@@ -39,8 +42,8 @@ export default class TabComponent extends Component {
                             <NavLink
                                 className={classnames({ active: context.activeTab === '3' })}
                                 onClick={() => {
-                                    // context.toggleTab('3');
-                                    window.location = '/r/all/';
+                                    context.toggleTab('3');
+                                    this.props.history.push('/r/all/')
                                 }}
                             >
                             All
@@ -52,3 +55,5 @@ export default class TabComponent extends Component {
         )
     }
 }
+
+export default withRouter(TabComponent)

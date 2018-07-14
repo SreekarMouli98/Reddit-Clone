@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Context from '../provider'
-import SwitchTab from './OtherComponents/SwitchTab'
 import { 
     BrowserRouter,
     Route,
@@ -19,16 +18,19 @@ import InfoComponent from './Content/InfoComponent'
 import Home from './Content/Home'
 import Popular from './Content/Popular'
 import All from './Content/All'
+import NewPostComponent from './OtherComponents/NewPostComponent'
+import SwitchTab from './OtherComponents/SwitchTab'
+import './style.css'
 
 class Handler extends React.Component {
     componentDidMount() {
             this.props.setActiveTab(this.props.activeTab);
     }
-  
+    
     render() {
-      return null;
+        return null;
     }
- }
+}
 
 export default class BodyComponent extends Component {
     render() {
@@ -37,8 +39,9 @@ export default class BodyComponent extends Component {
                 {context => {
                     return (
                         <Container>
-                            <Row>
-                                <Col md='9'>
+                            <Row className='responsive-reorder'>
+                                <Col md='8' id='body-block'>
+                                    <SwitchTab />
                                     <BrowserRouter>
                                         <Switch>
                                             <Route 
@@ -55,7 +58,7 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'1'} />
-                                                            <Home />
+                                                            {/* <Home /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
@@ -67,7 +70,7 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'2'} />
-                                                            <Popular />
+                                                            {/* <Popular /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
@@ -79,7 +82,7 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'3'} />
-                                                            <All />
+                                                            {/* <All /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
@@ -123,10 +126,23 @@ export default class BodyComponent extends Component {
                                                     )
                                                 }}
                                             />
+                                            <Route
+                                                exact
+                                                path = '/new/'
+                                                render={(props) => {
+                                                    return (
+                                                        <React.Fragment>
+                                                            <NewPostComponent 
+                                                                
+                                                            />
+                                                        </React.Fragment>
+                                                    )
+                                                }}
+                                            />
                                         </Switch>
                                     </BrowserRouter>
                                 </Col>
-                                <Col md='3' className='order-md-2'><InfoComponent /></Col>
+                                <Col md='4' id='info-block'><InfoComponent /></Col>
                             </Row>
                         </Container>
                     )

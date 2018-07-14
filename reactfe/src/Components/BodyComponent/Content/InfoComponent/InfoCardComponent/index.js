@@ -10,6 +10,9 @@ import {
     ListGroupItem,
     Badge,
 } from 'reactstrap'
+import {
+    Redirect,
+} from 'react-router-dom'
 
 export default class InfoCardComponent extends Component {
     constructor(props) {
@@ -28,50 +31,67 @@ export default class InfoCardComponent extends Component {
         return (
             <Card>
                 <CardHeader>
-                    {this.props.redditlink ? 
-                        <CardLink className='text-centered' href={'/r/' + this.props.title + '/'}>
-                            {this.props.user && <i class="fa fa-user-circle" aria-hidden="true"></i>}
-                            {this.props.reddit && <i class="fa fa-circle" aria-hidden="true"></i>}
-                            {' ' + this.props.title}
-                        </CardLink>
+                    {this.props.new ?
+                        <React.Fragment>{'Posting to Reddit'}</React.Fragment>
                         :
-                        <CardText className='text-centered'>
-                            {this.props.user && <i class="fa fa-user-circle" aria-hidden="true"></i>}
-                            {this.props.reddit && <i class="fa fa-circle" aria-hidden="true"></i>}
-                            {' ' + this.props.title}
-                        </CardText>
+                        <React.Fragment>
+                            {this.props.redditlink ? 
+                                <CardLink className='text-centered' href={'/r/' + this.props.title + '/'}>
+                                    {this.props.user && <i className="fa fa-user-circle" aria-hidden="true"></i>}
+                                    {this.props.reddit && <i className="fa fa-circle" aria-hidden="true"></i>}
+                                    {' ' + this.props.title}
+                                </CardLink>
+                                :
+                                <CardText className='text-centered'>
+                                    {this.props.user && <i className="fa fa-user-circle" aria-hidden="true"></i>}
+                                    {this.props.reddit && <i className="fa fa-circle" aria-hidden="true"></i>}
+                                    {' ' + this.props.title}
+                                </CardText>
+                            }
+                        </React.Fragment>
                     }
                 </CardHeader>
                 <CardBody>
-                    {this.props.user &&
-                        <ListGroup>
-                            <ListGroupItem>
-                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                {' D.O.B : '}
-                                {this.props.dob}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                                <i class="fa fa-certificate" aria-hidden="true"></i>
-                                {' Karma: '}
-                                <Badge pill>{this.props.karma}</Badge>
-                            </ListGroupItem>
-                        </ListGroup>
-                    }                 
-                    {this.props.reddit &&
+                    {this.props.new ? 
                         <React.Fragment>
-                            <CardText>
-                                {this.props.content}
-                            </CardText>
-                            {this.props.subscribe &&
-                                <Button 
-                                    color={this.state.subscribed ? 'danger' : 'success'}
-                                    onClick={() => this.toggleSubscribe()}
-                                    block
-                                >{this.state.subscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}</Button>
-                            }
+                            <ListGroup>
+                                <ListGroupItem>1. Choose Subreddit</ListGroupItem>
+                                <ListGroupItem>2. Add Title and Content</ListGroupItem>
+                            </ListGroup>
                         </React.Fragment>
-                    } 
-                    <Button color='primary' block>NEW POST</Button>
+                        :
+                        <React.Fragment>
+                            {this.props.user &&
+                                <ListGroup>
+                                    <ListGroupItem>
+                                        <i className="fa fa-calendar" aria-hidden="true"></i>
+                                        {' D.O.B : '}
+                                        {this.props.dob}
+                                    </ListGroupItem>
+                                    <ListGroupItem>
+                                        <i className="fa fa-certificate" aria-hidden="true"></i>
+                                        {' Karma: '}
+                                        <Badge pill>{this.props.karma}</Badge>
+                                    </ListGroupItem>
+                                </ListGroup>
+                            }                 
+                            {this.props.reddit &&
+                                <React.Fragment>
+                                    <CardText>
+                                        {this.props.content}
+                                    </CardText>
+                                    {this.props.subscribe &&
+                                        <Button 
+                                        color={this.state.subscribed ? 'danger' : 'success'}
+                                        onClick={() => this.toggleSubscribe()}
+                                            block
+                                            >{this.state.subscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}</Button>
+                                    }
+                                </React.Fragment>
+                            }
+                            <a href='/new/' className='btn btn-primary btn-block'>NEW POST</a>
+                        </React.Fragment>
+                    }   
                 </CardBody>
             </Card>            
         )

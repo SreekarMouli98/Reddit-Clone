@@ -123,6 +123,16 @@ export default class InfoComponent extends Component {
                                     </React.Fragment>
                                 )}
                             }
+                        />   
+                        <Route path='/new/' render={(props) => {
+                                return (
+                                    <React.Fragment>
+                                        <InfoCardComponent 
+                                            new={true}
+                                        />
+                                    </React.Fragment>
+                                )}
+                            }
                         />                      
                     </Switch>
                 </BrowserRouter>
