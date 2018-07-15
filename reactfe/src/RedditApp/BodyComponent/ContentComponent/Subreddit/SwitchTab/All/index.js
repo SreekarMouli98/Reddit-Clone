@@ -3,7 +3,7 @@ import {
     Row,
     Col
 } from 'reactstrap'
-import PostTemplate from '../../assets/PostTemplate'
+import PostTemplate from '../../../assets/PostTemplate'
 
 export default class All extends Component {
     constructor(props) {

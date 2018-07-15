@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Context from '../provider'
+import Context from '../../provider'
 import { 
     BrowserRouter,
     Route,
@@ -11,12 +11,13 @@ import {
     Row,
     Col,
 } from 'reactstrap'
-import ProfileComponent from './Content/ProfileComponent'
-import SubredditComponent from './Content/SubredditComponent'
-import PostOverviewComponent from './Content/PostOverviewComponent'
-import InfoComponent from './Content/InfoComponent'
-import NewPostComponent from './OtherComponents/NewPostComponent'
-import SwitchTab from './OtherComponents/SwitchTab'
+// import ProfileComponent from './Content/ProfileComponent'
+// import SubredditComponent from './Content/SubredditComponent'
+// import PostOverviewComponent from './Content/PostOverviewComponent'
+// import InfoComponent from './Content/InfoComponent'
+// import NewPostComponent from './OtherComponents/NewPostComponent'
+import InfoComponent  from './InfoComponent'
+import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
 import './style.css'
 
 class Handler extends React.Component {
@@ -39,7 +40,7 @@ export default class BodyComponent extends Component {
                             <Row className='responsive-reorder'>
                                 <Col md='8' id='body-block'>
                                     <SwitchTab />
-                                    <BrowserRouter>
+                                    {/* <BrowserRouter>
                                         <Switch>
                                             <Route 
                                                 exact 
@@ -134,7 +135,7 @@ export default class BodyComponent extends Component {
                                                 }}
                                             />
                                         </Switch>
-                                    </BrowserRouter>
+                                    </BrowserRouter> */}
                                 </Col>
                                 <Col md='4' id='info-block'><InfoComponent /></Col>
                             </Row>

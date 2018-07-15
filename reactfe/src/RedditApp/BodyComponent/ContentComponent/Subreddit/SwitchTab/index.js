@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import Context from "../../../../provider";
+import Context from '../../../../../provider'
 import {
     Container,
     TabContent,
     TabPane,
 } from "reactstrap";
-import Home from '../../../BodyComponent/ContentComponent/SubredditComponent/Home'
-import Popular from '../../../BodyComponent/ContentComponent/SubredditComponent/Popular'
-import All from '../../../BodyComponent/ContentComponent/SubredditComponent/All'
+import Home from './Home'
+import Popular from './Popular'
+import All from './All'
 
 export default class SwitchTab extends Component {
     render() {

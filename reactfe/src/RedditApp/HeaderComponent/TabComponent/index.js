@@ -9,7 +9,6 @@ import {
     withRouter
 } from 'react-router'
 import classnames from 'classnames'
-import SwitchTab from './SwitchTab'
 
 class TabComponent extends Component {
     render() {
@@ -52,7 +51,6 @@ class TabComponent extends Component {
                                 </NavLink>
                             </NavItem>                
                         </Nav>
-                        <SwitchTab />
                     </React.Fragment>
                 )}
             </Context.Consumer>
