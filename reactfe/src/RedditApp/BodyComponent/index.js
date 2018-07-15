@@ -37,8 +37,8 @@ export default class BodyComponent extends Component {
                 {context => {
                     return (
                         <Container>
-                            <Row className='responsive-reorder'>
-                                <Col md='8' id='body-block'>
+                            <Row>
+                                <Col md='8' id='content-block'>
                                     <SwitchTab />
                                     {/* <BrowserRouter>
                                         <Switch>
