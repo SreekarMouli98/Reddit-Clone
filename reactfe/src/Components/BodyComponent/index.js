@@ -15,9 +15,6 @@ import ProfileComponent from './Content/ProfileComponent'
 import SubredditComponent from './Content/SubredditComponent'
 import PostOverviewComponent from './Content/PostOverviewComponent'
 import InfoComponent from './Content/InfoComponent'
-import Home from './Content/Home'
-import Popular from './Content/Popular'
-import All from './Content/All'
 import NewPostComponent from './OtherComponents/NewPostComponent'
 import SwitchTab from './OtherComponents/SwitchTab'
 import './style.css'
@@ -58,7 +55,6 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'1'} />
-                                                            {/* <Home /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
@@ -70,7 +66,6 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'2'} />
-                                                            {/* <Popular /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
@@ -82,7 +77,6 @@ export default class BodyComponent extends Component {
                                                     return (
                                                         <React.Fragment>
                                                             <Handler setActiveTab={context.toggleTab} activeTab={'3'} />
-                                                            {/* <All /> */}
                                                         </React.Fragment>
                                                     )}
                                                 }
