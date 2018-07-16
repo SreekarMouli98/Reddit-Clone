@@ -11,22 +11,49 @@ import {
     Row,
     Col,
 } from 'reactstrap'
-// import ProfileComponent from './Content/ProfileComponent'
-// import SubredditComponent from './Content/SubredditComponent'
-// import PostOverviewComponent from './Content/PostOverviewComponent'
-// import InfoComponent from './Content/InfoComponent'
-// import NewPostComponent from './OtherComponents/NewPostComponent'
+import Profile from './ContentComponent/Profile'
+import Subreddit from './ContentComponent/Subreddit'
+import PostExpanded from './ContentComponent/PostExpanded'
 import InfoComponent  from './InfoComponent'
 import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
+import NewPost from './ContentComponent/assets/NewPost'
 import './style.css'
 
-class Handler extends React.Component {
-    componentDidMount() {
-            this.props.setActiveTab(this.props.activeTab);
+class Wrapper extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            info: 'home',
+            otherProps: [],
+        }
     }
-    
+
+    componentDidMount() {
+        this.props.setActiveTab(this.props.activeTab);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            info: nextProps.info,
+            otherProps: nextProps
+        })
+        console.log(...this.props)
+    }
+
     render() {
-        return null;
+        return (
+            <Row>
+                <Col md='8' id='content-block'>
+                    <SwitchTab />
+                    {this.props.children}
+                </Col>
+                <Col md='4' id='info-block'>
+                    {this.state.info && 
+                        <InfoComponent info={this.props.info} {...this.props}/>
+                    }
+                </Col>
+            </Row>
+        )
     }
 }
 
@@ -37,108 +64,137 @@ export default class BodyComponent extends Component {
                 {context => {
                     return (
                         <Container>
-                            <Row>
-                                <Col md='8' id='content-block'>
-                                    <SwitchTab />
-                                    {/* <BrowserRouter>
-                                        <Switch>
-                                            <Route 
-                                                exact 
-                                                path='/' 
-                                                render={() =>
-                                                    <Redirect to='r/home/' />
-                                                }
-                                            />
-                                            <Route 
-                                                exact 
-                                                path='/r/home/' 
-                                                render={() => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'1'} />
-                                                        </React.Fragment>
-                                                    )}
-                                                }
-                                            />
-                                            <Route 
-                                                exact 
-                                                path='/r/popular/' 
-                                                render={() => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'2'} />
-                                                        </React.Fragment>
-                                                    )}
-                                                }
-                                            />
-                                            <Route 
-                                                exact 
-                                                path='/r/all/' 
-                                                render={() => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'3'} />
-                                                        </React.Fragment>
-                                                    )}
-                                                }
-                                            />
-                                            <Route 
-                                                exact 
-                                                path='/u/:username/' 
-                                                render={(props) => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
-                                                            <ProfileComponent username={props.match.params.username} />
-                                                        </React.Fragment>
-                                                    )
-                                                }}
-                                            />
-                                            <Route
-                                                exact
-                                                path='/r/:subreddit/'
-                                                render={(props) => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
-                                                            <SubredditComponent subreddit={props.match.params.subreddit} />
-                                                        </React.Fragment>
-                                                    )
-                                                }}
-                                            />
-                                            <Route
-                                                exact
-                                                path = '/r/:subreddit/post/:postid/'
-                                                render={(props) => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <Handler setActiveTab={context.toggleTab} activeTab={'4'} />
-                                                            <PostOverviewComponent
-                                                                subreddit={props.match.params.subreddit}
-                                                                postid={props.match.params.postid}
-                                                            />
-                                                        </React.Fragment>
-                                                    )
-                                                }}
-                                            />
-                                            <Route
-                                                exact
-                                                path = '/new/'
-                                                render={(props) => {
-                                                    return (
-                                                        <React.Fragment>
-                                                            <NewPostComponent 
-                                                                
-                                                            />
-                                                        </React.Fragment>
-                                                    )
-                                                }}
-                                            />
-                                        </Switch>
-                                    </BrowserRouter> */}
-                                </Col>
-                                <Col md='4' id='info-block'><InfoComponent /></Col>
-                            </Row>
+                            <Switch>
+                                <Route 
+                                    exact 
+                                    path='/' 
+                                    render={() =>
+                                        <Redirect to='r/home/' />
+                                    }
+                                />
+                                <Route 
+                                    exact 
+                                    path='/r/home/' 
+                                    render={() => 
+                                        <Wrapper 
+                                            setActiveTab={context.toggleTab}
+                                            activeTab={'1'} 
+                                            info='home'
+                                        />
+                                    }
+                                />
+                                <Route 
+                                    exact 
+                                    path='/r/popular/' 
+                                    render={() => 
+                                        <Wrapper 
+                                            setActiveTab={context.toggleTab} 
+                                            activeTab={'2'} 
+                                            info='popular'
+                                        />
+                                    }
+                                />
+                                <Route 
+                                    exact 
+                                    path='/r/all/' 
+                                    render={() =>
+                                        <Wrapper 
+                                            setActiveTab={context.toggleTab} 
+                                            activeTab={'3'} 
+                                            info='all'
+                                        />
+                                    }
+                                />
+                                <Route 
+                                    exact 
+                                    path='/u/:username/' 
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'}
+                                                info='user'
+                                                user={props.match.params.username}
+                                            >
+                                                <Profile username={props.match.params.username} />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/new/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <NewPost />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/post/:postid/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <PostExpanded
+                                                    subreddit={props.match.params.subreddit}
+                                                    postid={props.match.params.postid}
+                                                />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path='/r/:subreddit/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <Subreddit subreddit={props.match.params.subreddit} />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/new/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper
+                                                setActiveTab={context.toggleTab}
+                                                activeTab={'4'}
+                                                info='new'
+                                            >
+                                                <NewPost />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/Select an Option/new/'
+                                    render = {() => 
+                                        <Redirect to ='/new/' />
+                                    }
+                                />
+                            </Switch>
                         </Container>
                     )
                 }}

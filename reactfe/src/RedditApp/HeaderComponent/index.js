@@ -14,12 +14,12 @@ import './style.css'
 export default class HeaderComponent extends Component {
     render() {
         return (
-            <BrowserRouter>
+            // <BrowserRouter>
                 <Container className='vert-align'>
                     <Row><Col><NavbarComponent /></Col></Row>
                     <Row><Col><TabComponent /></Col></Row>
                 </Container>
-            </BrowserRouter>
+            // </BrowserRouter>
         )
     }
 }

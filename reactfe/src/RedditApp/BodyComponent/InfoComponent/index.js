@@ -7,7 +7,7 @@ import {
     Switch,
     Route,
 } from 'react-router-dom'
-import InfoCardComponent from './InfoCardComponent'
+import InfoCard from './InfoCard'
 
 class SubredditHelper extends Component {
     constructor(props) {
@@ -15,24 +15,33 @@ class SubredditHelper extends Component {
         this.state = {data: ''}
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/r/${this.props.subreddit}/`)
+    fetchSubredditData(subreddit) {
+        fetch(`/api/reddit/r/${subreddit}/`)
         .then(data => data.json())
         .then(json => {
             this.setState({data: json})
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.fetchSubredditData(nextProps.subreddit)
+    }
+
+    componentDidMount() {
+        this.fetchSubredditData(this.props.subreddit)
+    }
+
     render() {
         var {data} = this.state
         return (
             <React.Fragment>
-                <InfoCardComponent 
+                <InfoCard 
                     reddit={true}
                     redditlink={true}
                     title={data.name}
                     content={data.description}
                     subscribe={true}
+                    newPostBtn={true}
                 />
             </React.Fragment>
         )
@@ -57,7 +66,7 @@ class UserHelper extends Component {
     render() {
         var {data} = this.state
         return (
-            <InfoCardComponent
+            <InfoCard
                 user={true}
                 title={data.username}
                 karma={data.karma}
@@ -70,93 +79,69 @@ class UserHelper extends Component {
 export default class InfoComponent extends Component {
     constructor(props) {
         super(props)
-        this.state = {temp:false}
+        this.state = {info: 'home'}
     }
 
-    componentWillReceiveProps() {
-        this.forceUpdate()
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            info: nextProps.info,
+        })
+    }
+
+    render_switch({info}) {
+        switch(info) {
+            case 'home':
+                return (
+                    <InfoCard
+                        reddit={true}
+                        title='Home'
+                        content = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
+                        newPostBtn={true}
+                    />
+                )
+                break
+
+            case 'popular':
+                return (
+                    <InfoCard
+                        reddit={true}
+                        title='Popular'
+                        content='The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.'
+                        newPostBtn={true}
+                    />
+                )
+                break
+
+            case 'all':
+                return (
+                    <InfoCard
+                        reddit={true}
+                        title='All'
+                        content = 'The most active posts from all of Reddit. Come here to see new posts rising and be a part of the conversation.'
+                        newPostBtn={true}
+                    />
+                )
+                break
+
+            case 'subreddit':
+                return <SubredditHelper {...this.props} />
+                break
+
+            case 'user':
+                return <UserHelper {...this.props} />
+                break
+
+            case 'new':
+                return <InfoCard new={true} newPostBtn={false}/>
+                break
+        }
     }
 
     render() {
         return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path='/' render={() => {
-                            return (
-                                <React.Fragment>
-                                    <InfoCardComponent
-                                        reddit={true}
-                                        title='Home'
-                                        content = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
-                                    />
-                                </React.Fragment>
-                            )}
-                        }
-                    />   
-                    <Route exact path='/r/home/' render={() => {
-                            return (
-                                <React.Fragment>
-                                    <InfoCardComponent
-                                        reddit={true}
-                                        title='Home'
-                                        content = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
-                                    />
-                                </React.Fragment>
-                            )}
-                        }
-                    />   
-                    <Route exact path='/r/popular/' render={() => {
-                            return (
-                                <React.Fragment>
-                                    <InfoCardComponent
-                                        reddit={true}
-                                        title='Popular'
-                                        content='The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.'
-                                    />
-                                </React.Fragment>
-                            )}
-                        }
-                    />
-                    <Route exact path='/r/all/' render={() => {
-                            return (
-                                <React.Fragment>
-                                    <InfoCardComponent
-                                        reddit={true}
-                                        title='All'
-                                        content = 'The most active posts from all of Reddit. Come here to see new posts rising and be a part of the conversation.'
-                                    />
-                                </React.Fragment>
-                            )}
-                        }
-                    />
-                    <Route path='/r/:subreddit' render={(props) => {
-                            return (
-                                <React.Fragment>
-                                    <SubredditHelper subreddit={props.match.params.subreddit} />
-                                </React.Fragment>
-                            )}
-                        }
-                    />
-                    <Route path='/u/:user' render={(props) => {
-                            return (
-                                <React.Fragment>
-                                    <UserHelper user={props.match.params.user} />
-                                </React.Fragment>
-                            )}
-                        }
-                    />   
-                    <Route path='/new/' render={(props) => {
-                            return (
-                                <React.Fragment>
-                                    <InfoCardComponent 
-                                        new={true}
-                                    />
-                                </React.Fragment>
-                            )}
-                        }
-                    />                      
-                </Switch>
-            </BrowserRouter>
+            <React.Fragment>
+                {this.render_switch(this.state)}
+            </React.Fragment>
         )
     }
 }

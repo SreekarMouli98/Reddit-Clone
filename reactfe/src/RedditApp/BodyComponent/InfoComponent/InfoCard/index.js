@@ -14,7 +14,7 @@ import {
     Redirect,
 } from 'react-router-dom'
 
-export default class InfoCardComponent extends Component {
+export default class InfoCard extends Component {
     constructor(props) {
         super(props)
         this.state = {subscribed: false}
@@ -89,7 +89,9 @@ export default class InfoCardComponent extends Component {
                                     }
                                 </React.Fragment>
                             }
-                            <a href='/new/' className='btn btn-primary btn-block'>NEW POST</a>
+                            {this.props.newPostBtn &&
+                                <a href='/new/' className='btn btn-primary btn-block'>NEW POST</a>
+                            }
                         </React.Fragment>
                     }   
                 </CardBody>
