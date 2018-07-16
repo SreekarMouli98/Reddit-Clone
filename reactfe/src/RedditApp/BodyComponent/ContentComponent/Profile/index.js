@@ -6,12 +6,16 @@ import {
     NavLink,
     Navbar,
     NavbarBrand,
+    Button,
 } from 'reactstrap'
+import {
+    withRouter
+} from 'react-router'
 import classnames from 'classnames'
 import ProfilePosts from './ProfilePosts'
 import ProfileComments from './ProfileComments'
 
-export default class ProfileComponent extends Component {
+class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {profile: '', user: ''}
@@ -37,6 +41,16 @@ export default class ProfileComponent extends Component {
                         <React.Fragment>
                             <Navbar>
                                 <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Activity</NavbarBrand>
+                                {context.loggedIn && 
+                                    <Button
+                                    color='danger'    
+                                    onClick= {() => {
+                                        this.props.history.push('edit/')
+                                    }}
+                                    >
+                                        EDIT PROFILE
+                                    </Button>
+                                }
                             </Navbar>
                             <Nav tabs>
                                 <NavItem>
@@ -64,3 +78,5 @@ export default class ProfileComponent extends Component {
         )
     }
 }
+
+export default withRouter(Profile)

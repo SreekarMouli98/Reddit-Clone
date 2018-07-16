@@ -17,6 +17,7 @@ import PostExpanded from './ContentComponent/PostExpanded'
 import InfoComponent  from './InfoComponent'
 import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
 import NewPost from './ContentComponent/assets/NewPost'
+import EditProfile from './ContentComponent/assets/EditProfile'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -117,6 +118,22 @@ export default class BodyComponent extends Component {
                                                 user={props.match.params.username}
                                             >
                                                 <Profile username={props.match.params.username} />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route 
+                                    exact 
+                                    path='/u/:username/edit/' 
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'}
+                                                info='user'
+                                                user={props.match.params.username}
+                                            >
+                                                <EditProfile user={props.match.params.username}/>
                                             </Wrapper>
                                         )
                                     }}

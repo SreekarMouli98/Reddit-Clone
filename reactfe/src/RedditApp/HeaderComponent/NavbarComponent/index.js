@@ -21,8 +21,8 @@ export default class NavbarComponent extends React.Component {
                     return (
                         <Navbar color="light" light expand="md">
                             <NavbarBrand href="/">Reddit</NavbarBrand>
-                                <NavbarToggler onClick={() => context.toggleNavbar()} />
-                                <Collapse isOpen={context.navbarOpen} navbar>
+                            <NavbarToggler onClick={() => context.toggleNavbar()} />
+                            <Collapse isOpen={context.navbarOpen} navbar>
                                 <Nav className="ml-auto" navbar>
                                     {context.loggedIn ? 
                                         <React.Fragment>
