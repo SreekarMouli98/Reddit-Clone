@@ -1,0 +1,14 @@
+/* the @media block to only apply if the device width is less than 768px wide. 
+This means the following rules will typically only take effect on smaller devices like smartphones. 
+You can adjust this px width as per your requirements */
+
+@media (max-width: 768px) { 
+
+    #info-block {
+
+        /* the 'order' rule is part of flexbox. 
+           We can use it here to cause the 'smaller-block' to be ordered before the 
+           'larger-block' when viewed on a smaller device/screen */
+        order:-1; 
+    }
+}

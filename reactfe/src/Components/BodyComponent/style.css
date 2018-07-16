@@ -1,8 +1,0 @@
-@media only screen and (max-width: 320px) {
-    #info-block {
-        order:-1;
-    }
-    #body-block {
-        order:1;
-    }
-}
