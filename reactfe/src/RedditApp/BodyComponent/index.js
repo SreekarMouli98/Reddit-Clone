@@ -20,7 +20,7 @@ import NewPost from './ContentComponent/assets/NewPost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
-import NewSubreddit from './ContentComponent/assets/NewSubreddit'
+import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -194,11 +194,13 @@ export default class BodyComponent extends Component {
                                             <Wrapper 
                                                 setActiveTab={context.toggleTab} 
                                                 activeTab={'4'} 
-                                                info='subreddit'
-                                                redditlink={true}
-                                                reddit={true}
+                                                info={false}
                                                 subreddit={props.match.params.subreddit}
                                             >
+                                                <EditCreateSubreddit
+                                                    update={true}
+                                                    subreddit={props.match.params.subreddit}
+                                                />
                                             </Wrapper>
                                         )
                                     }}
@@ -276,7 +278,7 @@ export default class BodyComponent extends Component {
                                             activeTab={'4'}
                                             info={false}
                                         >
-                                            <NewSubreddit />
+                                            <EditCreateSubreddit />
                                         </Wrapper>
                                     }
                                 />
