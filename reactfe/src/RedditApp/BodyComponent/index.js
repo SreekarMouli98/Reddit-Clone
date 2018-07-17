@@ -20,7 +20,7 @@ import NewPost from './ContentComponent/assets/NewPost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
-import NewSubreddit from './ContentComponent/assets/NewSubreddit'
+import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -159,6 +159,7 @@ export default class BodyComponent extends Component {
                                                 setActiveTab={context.toggleTab} 
                                                 activeTab={'4'} 
                                                 info='subreddit'
+                                                dont_ask_new_post = {true}
                                                 subreddit={props.match.params.subreddit}
                                             >
                                                 <NewPost />
@@ -180,6 +181,25 @@ export default class BodyComponent extends Component {
                                                 <PostExpanded
                                                     subreddit={props.match.params.subreddit}
                                                     postid={props.match.params.postid}
+                                                />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/edit/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info={false}
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <EditCreateSubreddit
+                                                    update={true}
+                                                    subreddit={props.match.params.subreddit}
                                                 />
                                             </Wrapper>
                                         )
@@ -258,7 +278,7 @@ export default class BodyComponent extends Component {
                                             activeTab={'4'}
                                             info={false}
                                         >
-                                            <NewSubreddit />
+                                            <EditCreateSubreddit />
                                         </Wrapper>
                                     }
                                 />

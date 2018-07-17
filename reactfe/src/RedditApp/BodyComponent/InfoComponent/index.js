@@ -8,22 +8,40 @@ import {
     Row,
     Col,
 } from 'reactstrap'
-import InfoCard from './InfoCard'
+import Context from '../../../provider'
 import AboutUsCard from './AboutUsCard'
+import NewSubredditCard from './NewSubredditCard'
 import SubredditCard from './SubredditCard'
+import UserCard from './UserCard'
+import NewPostDetailCard from './NewPostDetailCard'
 
 class SubredditHelper extends Component {
     constructor(props) {
         super(props)
-        this.state = {data: ''}
+        this.state = {
+            subreddit: '', 
+            profile: '',
+            rules: [],
+        }
     }
 
     fetchSubredditData(subreddit) {
         fetch(`/api/reddit/r/${subreddit}/`)
         .then(data => data.json())
         .then(json => {
-            this.setState({data: json})
+            this.setState({
+                subreddit: json,
+                profile: json.profile
+            })
         })
+        .then(() => {
+                if (this.state.subreddit.rules !== '') {
+                    this.setState({
+                        rules: this.state.subreddit.rules.split(';')
+                    })
+                }
+            }
+        )
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,18 +53,26 @@ class SubredditHelper extends Component {
     }
 
     render() {
-        var {data} = this.state
+        var {subreddit, profile, rules} = this.state
         return (
-            <React.Fragment>
-                <InfoCard 
-                    reddit={true}
-                    redditlink={true}
-                    title={data.name}
-                    content={data.description}
-                    subscribe={true}
-                    newPostBtn={true}
-                />
-            </React.Fragment>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <React.Fragment>
+                            <SubredditCard
+                                name = {subreddit.name}
+                                description = {subreddit.description}
+                                provide_link = {true}
+                                can_subscribe = {true}
+                                ask_new_post = {this.props.dont_ask_new_post === true ? false : true}
+                                can_edit={context.username === profile.username && context.loggedIn === true}
+                                show_rules = {rules.length !== 0}
+                                rules = {rules}
+                        />
+                        </React.Fragment>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }
@@ -54,26 +80,26 @@ class SubredditHelper extends Component {
 class UserHelper extends Component {
     constructor(props) {
         super(props)
-        this.state = {data:''}       
+        this.state = {
+            profile:''
+        }       
     }
 
     componentDidMount() {
         fetch(`/api/reddit/u/${this.props.user}/`)
         .then(data => data.json())
         .then(json => {
-            this.setState({data: json})
-            console.log('UserHelper: ', json)
+            this.setState({profile: json})
         })
     }
     
     render() {
-        var {data} = this.state
+        var {profile} = this.state
         return (
-            <InfoCard
-                user={true}
-                title={data.username}
-                karma={data.karma}
-                dob={data.dob}
+            <UserCard
+                username={profile.username}
+                karma={profile.karma}
+                dob={profile.dob}
             />
         )
     }
@@ -82,7 +108,9 @@ class UserHelper extends Component {
 export default class InfoComponent extends Component {
     constructor(props) {
         super(props)
-        this.state = {info: 'home'}
+        this.state = {
+            info: 'home'
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -95,33 +123,39 @@ export default class InfoComponent extends Component {
         switch(info) {
             case 'home':
                 return (
-                    <InfoCard
-                        reddit={true}
-                        title='Home'
-                        content = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
-                        newPostBtn={true}
+                    <SubredditCard
+                        name = 'Home'
+                        description = 'Your personal Reddit frontpage. Come here to check in with your favorite communities.'
+                        provide_link = {false}
+                        can_subscribe = {false}
+                        ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
 
             case 'popular':
                 return (
-                    <InfoCard
-                        reddit={true}
-                        title='Popular'
-                        content='The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.'
-                        newPostBtn={true}
+                    <SubredditCard
+                        name = 'Popular'
+                        description='The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.'
+                        provide_link = {false}
+                        can_subscribe = {false}
+                        ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
 
             case 'all':
                 return (
-                    <InfoCard
-                        reddit={true}
-                        title='All'
-                        content = 'The most active posts from all of Reddit. Come here to see new posts rising and be a part of the conversation.'
-                        newPostBtn={true}
+                    <SubredditCard
+                        name = 'All'
+                        description = 'The most active posts from all of Reddit. Come here to see new posts rising and be a part of the conversation.'
+                        provide_link = {false}
+                        can_subscribe = {false}
+                        ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
@@ -135,7 +169,7 @@ export default class InfoComponent extends Component {
                 break
 
             case 'new':
-                return <InfoCard new={true} newPostBtn={false}/>
+                return <NewPostDetailCard />
                 break
         }
     }
@@ -143,21 +177,9 @@ export default class InfoComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <Row>
-                    <Col>
-                        {this.render_switch(this.state)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <SubredditCard />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <AboutUsCard/>
-                    </Col>
-                </Row>
+                {this.render_switch(this.state)}
+                <NewSubredditCard />
+                <AboutUsCard/>
             </React.Fragment>
         )
     }

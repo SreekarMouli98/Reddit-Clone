@@ -10,10 +10,36 @@ import {
     Row,
 } from 'reactstrap'
 
-export default class NewSubreddit extends Component {
+export default class EditCreateSubreddit extends Component {
     constructor(props) {
         super(props)
-        this.state = {rules: [], rule_count: 0}
+        this.state = {
+            subreddit: '',
+            rules: [],
+        }
+    }
+
+    fill_form() {
+        document.getElementById('subreddit-name').value = this.state.subreddit.name
+        document.getElementById('subreddit-description').value = this.state.subreddit.description
+        this.setState({
+            rules: this.state.subreddit.rules.split(';')
+        })
+
+    }
+
+    componentDidMount() {
+        if (this.props.update) {
+            console.log('update mode')
+            fetch(`/api/reddit/r/${this.props.subreddit}/`)
+            .then(data => data.json())
+            .then(json => {
+                this.setState({
+                    subreddit: json,
+                })
+            })
+            .then(() => this.fill_form())
+        }
     }
 
     addRule() {
@@ -42,13 +68,13 @@ export default class NewSubreddit extends Component {
                     <FormGroup row>
                         <Label sm={2}>Name</Label>
                         <Col sm={10}>
-                            <Input type='text' placeholder='Name of the Subreddit'/> 
+                            <Input type='text' id='subreddit-name' placeholder='Name of the Subreddit'/> 
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Label sm={2}>Description</Label>
                         <Col sm={10}>
-                            <Input type='textarea' placeholder='Provide a description of your subreddit.'/> 
+                            <Input type='textarea' id='subreddit-description' placeholder='Provide a description of your subreddit.'/> 
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -72,7 +98,7 @@ export default class NewSubreddit extends Component {
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={{size:12, offset:11}}>
-                            <Button color='primary'>CREATE</Button>
+                            <Button color='primary'>{this.props.update ? 'UPDATE': 'CREATE'}</Button>
                         </Col>
                     </FormGroup>    
                     {this.state.rules.map(rule => (
