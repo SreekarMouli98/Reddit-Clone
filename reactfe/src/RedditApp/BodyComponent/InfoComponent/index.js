@@ -9,9 +9,8 @@ import {
     Col,
 } from 'reactstrap'
 import Context from '../../../provider'
-// import InfoCard from './InfoCard'
 import AboutUsCard from './AboutUsCard'
-import NewSubredditCard from './SubredditCard'
+import NewSubredditCard from './NewSubredditCard'
 import SubredditCard from './SubredditCard'
 import UserCard from './UserCard'
 import NewPostDetailCard from './NewPostDetailCard'
@@ -22,6 +21,7 @@ class SubredditHelper extends Component {
         this.state = {
             subreddit: '', 
             profile: '',
+            rules: [],
         }
     }
 
@@ -34,6 +34,14 @@ class SubredditHelper extends Component {
                 profile: json.profile
             })
         })
+        .then(() => {
+                if (this.state.subreddit.rules !== '') {
+                    this.setState({
+                        rules: this.state.subreddit.rules.split(';')
+                    })
+                }
+            }
+        )
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,7 +53,7 @@ class SubredditHelper extends Component {
     }
 
     render() {
-        var {subreddit, profile} = this.state
+        var {subreddit, profile, rules} = this.state
         return (
             <Context.Consumer>
                 {context => {
@@ -58,6 +66,8 @@ class SubredditHelper extends Component {
                                 can_subscribe = {true}
                                 ask_new_post = {this.props.dont_ask_new_post === true ? false : true}
                                 can_edit={context.username === profile.username && context.loggedIn === true}
+                                show_rules = {rules.length !== 0}
+                                rules = {rules}
                         />
                         </React.Fragment>
                     )
@@ -119,6 +129,7 @@ export default class InfoComponent extends Component {
                         provide_link = {false}
                         can_subscribe = {false}
                         ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
@@ -131,6 +142,7 @@ export default class InfoComponent extends Component {
                         provide_link = {false}
                         can_subscribe = {false}
                         ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
@@ -143,6 +155,7 @@ export default class InfoComponent extends Component {
                         provide_link = {false}
                         can_subscribe = {false}
                         ask_new_post = {true}
+                        show_rules = {false}
                     />
                 )
                 break
@@ -164,21 +177,9 @@ export default class InfoComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <Row>
-                    <Col>
-                        {this.render_switch(this.state)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <NewSubredditCard />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <AboutUsCard/>
-                    </Col>
-                </Row>
+                {this.render_switch(this.state)}
+                <NewSubredditCard />
+                <AboutUsCard/>
             </React.Fragment>
         )
     }
