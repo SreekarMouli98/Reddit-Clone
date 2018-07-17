@@ -159,6 +159,7 @@ export default class BodyComponent extends Component {
                                                 setActiveTab={context.toggleTab} 
                                                 activeTab={'4'} 
                                                 info='subreddit'
+                                                dont_ask_new_post = {true}
                                                 subreddit={props.match.params.subreddit}
                                             >
                                                 <NewPost />
@@ -181,6 +182,23 @@ export default class BodyComponent extends Component {
                                                     subreddit={props.match.params.subreddit}
                                                     postid={props.match.params.postid}
                                                 />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/edit/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                redditlink={true}
+                                                reddit={true}
+                                                subreddit={props.match.params.subreddit}
+                                            >
                                             </Wrapper>
                                         )
                                     }}
