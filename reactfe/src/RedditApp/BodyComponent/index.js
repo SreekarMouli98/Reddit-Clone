@@ -18,6 +18,8 @@ import InfoComponent  from './InfoComponent'
 import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
 import NewPost from './ContentComponent/assets/NewPost'
 import EditProfile from './ContentComponent/assets/EditProfile'
+import About from './ContentComponent/assets/About'
+import Help from './ContentComponent/assets/Help'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -43,17 +45,26 @@ class Wrapper extends React.Component {
 
     render() {
         return (
-            <Row>
-                <Col md='8' id='content-block'>
-                    <SwitchTab />
-                    {this.props.children}
-                </Col>
-                <Col md='4' id='info-block'>
-                    {this.state.info && 
-                        <InfoComponent info={this.props.info} {...this.props}/>
-                    }
-                </Col>
-            </Row>
+            <React.Fragment>
+                {this.state.info ?
+                    <Row>
+                        <Col md='8' id='content-block'>
+                            <SwitchTab />
+                            {this.props.children}
+                        </Col>
+                        <Col md='4' id='info-block'>
+                            <InfoComponent info={this.props.info} {...this.props}/>
+                        </Col>
+                    </Row>
+                    :
+                    <Row>
+                        <Col>
+                            <SwitchTab />
+                            {this.props.children}
+                        </Col>
+                    </Row>
+                }
+            </React.Fragment>
         )
     }
 }
@@ -209,6 +220,32 @@ export default class BodyComponent extends Component {
                                     path = '/Select an Option/new/'
                                     render = {() => 
                                         <Redirect to ='/new/' />
+                                    }
+                                />
+                                <Route
+                                    exact
+                                    path = '/about/'
+                                    render = {() =>
+                                        <Wrapper
+                                            setActiveTab={context.toggleTab}
+                                            activeTab={'4'}
+                                            info={false}
+                                        >
+                                            <About />
+                                        </Wrapper>
+                                    }
+                                />
+                                <Route
+                                    exact
+                                    path = '/help/'
+                                    render = {() =>
+                                        <Wrapper
+                                            setActiveTab={context.toggleTab}
+                                            activeTab={'4'}
+                                            info={false}
+                                        >
+                                            <Help />
+                                        </Wrapper>
                                     }
                                 />
                             </Switch>
