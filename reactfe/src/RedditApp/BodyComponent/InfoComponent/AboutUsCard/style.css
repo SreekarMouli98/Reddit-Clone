@@ -1,0 +1,8 @@
+.my-links {
+    transition: all 0.5s;
+}
+
+.my-links:hover {
+    cursor: pointer;
+    color: red;
+}
