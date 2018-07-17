@@ -218,7 +218,7 @@ export default class BodyComponent extends Component {
                                 />
                                 <Route
                                     exact
-                                    path = '/Select acn Option/new/'
+                                    path = '/Select an Option/new/'
                                     render = {() => 
                                         <Redirect to ='/new/' />
                                     }
