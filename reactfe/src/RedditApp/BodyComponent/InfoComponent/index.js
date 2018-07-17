@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import {
-    Jumbotron,
-} from 'reactstrap'
-import {
     BrowserRouter,
     Switch,
     Route,
 } from 'react-router-dom'
+import {
+    Row,
+    Col,
+} from 'reactstrap'
 import InfoCard from './InfoCard'
+import AboutUsCard from './AboutUsCard'
 
 class SubredditHelper extends Component {
     constructor(props) {
@@ -140,7 +142,16 @@ export default class InfoComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.render_switch(this.state)}
+                <Row>
+                    <Col>
+                        {this.render_switch(this.state)}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <AboutUsCard/>
+                    </Col>
+                </Row>
             </React.Fragment>
         )
     }
