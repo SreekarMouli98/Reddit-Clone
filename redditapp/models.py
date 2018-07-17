@@ -16,10 +16,10 @@ class Profile(models.Model):
 class Subreddit(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='subreddits')
     name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     subscribers = models.ManyToManyField(Profile, blank=True, related_name='subscriptions')
     moderators = models.ManyToManyField(Profile, blank=True, related_name='moderates')
+    rules=models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)

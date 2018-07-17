@@ -10,6 +10,7 @@ import {
 } from 'reactstrap'
 import InfoCard from './InfoCard'
 import AboutUsCard from './AboutUsCard'
+import SubredditCard from './SubredditCard'
 
 class SubredditHelper extends Component {
     constructor(props) {
@@ -145,6 +146,11 @@ export default class InfoComponent extends Component {
                 <Row>
                     <Col>
                         {this.render_switch(this.state)}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <SubredditCard />
                     </Col>
                 </Row>
                 <Row>

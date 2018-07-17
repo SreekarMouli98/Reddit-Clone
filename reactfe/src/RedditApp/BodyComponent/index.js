@@ -20,6 +20,7 @@ import NewPost from './ContentComponent/assets/NewPost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
+import NewSubreddit from './ContentComponent/assets/NewSubreddit'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -245,6 +246,19 @@ export default class BodyComponent extends Component {
                                             info={false}
                                         >
                                             <Help />
+                                        </Wrapper>
+                                    }
+                                />
+                                <Route
+                                    exact
+                                    path = '/create/'
+                                    render = {() =>
+                                        <Wrapper
+                                            setActiveTab={context.toggleTab}
+                                            activeTab={'4'}
+                                            info={false}
+                                        >
+                                            <NewSubreddit />
                                         </Wrapper>
                                     }
                                 />
