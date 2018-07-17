@@ -9,6 +9,7 @@ You can adjust this px width as per your requirements */
         /* the 'order' rule is part of flexbox. 
            We can use it here to cause the 'smaller-block' to be ordered before the 
            'larger-block' when viewed on a smaller device/screen */
-        order:-1; 
+        order: -1;
+        /* display: none; */
     }
 }
