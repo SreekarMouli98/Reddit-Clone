@@ -9,6 +9,7 @@ import {
 import {
     withRouter,
 } from 'react-router'
+import Context from '../../../../../provider'
 
 class NewPostComponent extends Component {
     constructor(props) {
@@ -16,6 +17,9 @@ class NewPostComponent extends Component {
         this.state = {
             subreddits: [],
             subreddit_selected: '',
+            title: '',
+            content: '',
+            username: '',
         }
     }
 
@@ -27,6 +31,7 @@ class NewPostComponent extends Component {
                 subreddits: json,
             })
         })
+        console.log('NewPost mounted - props: ', this.props)
     }
 
     handleSubredditSelect(event) {
@@ -37,12 +42,49 @@ class NewPostComponent extends Component {
         )
     }
 
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault()
+        let data = {
+            title: this.state.title,
+            content: this.state.content,
+            votes: 0,
+            profile: this.props.username,
+            subreddit: this.state.subreddit_selected,
+        }
+        fetch(`/api/reddit/r/${this.state.subreddit_selected}/posts/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:data
+        })
+        .then(res => {
+            res.status >= 200 && res.status <= 300 ?
+                console.log('Success!')
+            :
+                console.log('Something went wrong!')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     render() {
         return (
             <Form>
                 <FormGroup row>
                     <Col sm={5}>
-                        <Input type="select" onChange={(e) => this.handleSubredditSelect(e)}> 
+                        <Input 
+                            type="select"
+                            onChange={(e) => this.handleSubredditSelect(e)}
+                        > 
                             <option key='0'>Select an Option</option>
                             {this.state.subreddits.map((subreddit) => {
                                 return (
@@ -54,17 +96,28 @@ class NewPostComponent extends Component {
                 </FormGroup>
                 <FormGroup row>
                     <Col>
-                        <Input type='text' placeholder='Title' />
+                        <Input name='title' type='text' placeholder='Title' />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Col>
-                        <Input type='textarea' placeholder='Content' rows='10'/>
+                        <Input name='content' type='textarea' placeholder='Content' rows='10'/>
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Col>
-                        <Button color='primary' block>POST</Button>
+                        <Button 
+                            block
+                            color='primary' 
+                            onClick={
+                                this.props.context.loggedIn ?
+                                    this.props.context.toggleLoginModal()
+                                    :
+                                    this.handleSubmit
+                            } 
+                        >
+                            POST
+                        </Button>
                     </Col>
                 </FormGroup>
             </Form>
@@ -72,4 +125,16 @@ class NewPostComponent extends Component {
     }
 }
 
-export default withRouter(NewPostComponent)
+class NewPostWrapper extends Component {
+    render() {
+        return (
+            <Context.Consumer>
+                {context => 
+                    <NewPostComponent context={context} username={context.username}/>
+                }
+            </Context.Consumer>
+        )
+    }
+}
+
+export default withRouter(NewPostWrapper)
