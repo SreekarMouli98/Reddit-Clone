@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardBody,
     Form,
@@ -9,7 +12,11 @@ import {
     Col,
 } from 'reactstrap'
 
-export default class NewComment extends Component {
+class NewComment extends Component {
+    handleSubmit() {
+        this.props.history.push(`/r/${this.props.match.params.subreddit}/posts/${this.props.match.params.postid}/`)        
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -38,3 +45,5 @@ export default class NewComment extends Component {
         )
     }
 }
+
+export default withRouter(NewComment)

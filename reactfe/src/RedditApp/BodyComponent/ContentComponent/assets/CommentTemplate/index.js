@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardBody,
     CardHeader,
     CardText,
-    CardLink,
     Table,
     Button,
     InputGroup,
 } from 'reactstrap'
 import Context from '../../../../../provider'
 
-export default class CommentTemplate extends Component { 
+class CommentTemplate extends Component { 
     constructor(props) {
         super(props)
         this.state = {
@@ -53,28 +55,51 @@ export default class CommentTemplate extends Component {
                                                 <Button 
                                                     color={this.state.upvoted ? 'success' : 'light'} 
                                                     onClick={() => this.toggleUpvote()}
-                                                ><i className="fa fa-arrow-up" aria-hidden="true"></i>
+                                                >
+                                                    <i className="fa fa-arrow-up" aria-hidden="true"></i>
                                                 </Button>
                                                 <Button 
                                                     color={this.state.downvoted ? 'success' : 'light'}
                                                     onClick={() => this.toggleDownvote()}
-                                                ><i className="fa fa-arrow-down" aria-hidden="true"></i>
+                                                >
+                                                    <i className="fa fa-arrow-down" aria-hidden="true"></i>
                                                 </Button>
                                             </InputGroup>
                                         </td>
                                     }
                                     <td rowSpan='2'>
-                                        <Card>
+                                        <Card 
+                                            className={this.props.clickable ? 'cursor-on-hover': ''}
+                                            onClick={() => {
+                                                this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/`)
+                                            }}
+                                        >
                                             <CardHeader>
                                                 {this.props.userlink && 
-                                                    <CardLink 
-                                                        href={'/u/' + this.props.username + '/'}
-                                                    >{this.props.username}</CardLink>
+                                                    <a
+                                                        className='black-text black-text-on-hover cursor-on-hover'
+                                                        href='/'
+                                                        onClick={(event) => {
+                                                            event.stopPropagation()
+                                                            event.preventDefault()
+                                                            this.props.history.push(`/u/${this.props.username}/`)
+                                                        }}
+                                                    >
+                                                        {this.props.username}
+                                                    </a>
                                                 }
                                                 {this.props.subredditlink &&
-                                                    <CardLink 
-                                                        href={'/r/' + this.props.subreddit + '/post/' + this.props.postid + '/'}
-                                                    >r/{this.props.subreddit}</CardLink>
+                                                    <a
+                                                        className='cursor-on-hover'
+                                                        href='/'
+                                                        onClick={(event) => {
+                                                            event.stopPropagation()
+                                                            event.preventDefault()
+                                                            this.props.history.push(`/r/${this.props.subreddit}/`)
+                                                        }}
+                                                    >
+                                                        r/{this.props.subreddit}
+                                                    </a>
                                                 }
                                                 <small className='text-muted'>  {this.state.votes} vote(s)</small>
                                             </CardHeader>
@@ -92,3 +117,5 @@ export default class CommentTemplate extends Component {
         )
     }
 }
+
+export default withRouter(CommentTemplate)

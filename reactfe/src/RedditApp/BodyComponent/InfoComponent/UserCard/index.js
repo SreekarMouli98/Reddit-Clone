@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardHeader,
     CardBody,
@@ -8,20 +11,13 @@ import {
     ListGroupItem,
     Badge,
 } from 'reactstrap'
-import {
-    Redirect,
-} from 'react-router-dom'
 
-export default class UserCard extends Component {
-    constructor(props) {
-        super(props)
-    }
-
+class UserCard extends Component {
     render() {
         return (
             <Card>
                 <CardHeader>
-                    <CardText className='text-centered' href={'/r/' + this.props.username + '/'}>
+                    <CardText className='text-centered' onClick={()=>this.props.history.push(`/r/${this.props.username}/`)}>
                         <i className="fa fa-user-circle" aria-hidden="true"></i> {this.props.username}
                     </CardText>
                 </CardHeader>
@@ -43,3 +39,5 @@ export default class UserCard extends Component {
         )
     }
 }
+
+export default withRouter(UserCard)

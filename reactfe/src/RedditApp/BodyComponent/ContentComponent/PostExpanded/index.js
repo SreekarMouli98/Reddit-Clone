@@ -83,7 +83,7 @@ export default class PostExpanded extends Component {
                                                                             content={comment.content}
                                                                             votes={comment.votes}
                                                                             userlink={true}
-                                                                            />
+                                                                        />
                                                                     </Col>
                                                                 </Row>
                                                             )}

@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardBody,
-    CardLink,
 } from 'reactstrap'
 import './style.css'
 
-export default class AboutUsCard extends Component {
+class AboutUsCard extends Component {
     render() {
         return (
             <Card>
@@ -15,11 +17,40 @@ export default class AboutUsCard extends Component {
                         A Reddit Clone
                         <footer className='blockquote-footer'>by Sreekar Mouli. T</footer>
                     </div>
-                    <CardLink className='my-links' href='/about/'>About</CardLink>
-                    <CardLink className='my-links'> Blog</CardLink>
-                    <CardLink className='my-links' href='/help/'>Help</CardLink>
+                    <a 
+                        href='/'
+                        className='padding-all'
+                        onClick={(event)=>{
+                            event.preventDefault()
+                            this.props.history.push('/about/')
+                        }}
+                    >
+                        About
+                    </a>
+                    <a 
+                        href='#'
+                        className='padding-all striked-text'
+                        onClick={(event) => {
+                            event.preventDefault()
+                            this.props.history.push('/blog/')
+                        }}
+                    >
+                        Blog
+                    </a>
+                    <a 
+                        href='#'
+                        className='padding-all'
+                        onClick={(event)=>{
+                            event.preventDefault()
+                            this.props.history.push('/help/')
+                        }}
+                    >
+                        Help
+                    </a>
                 </CardBody>
             </Card>
         )
     }
 }
+
+export default withRouter(AboutUsCard)

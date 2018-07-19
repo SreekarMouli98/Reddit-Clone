@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import Context from '../../provider'
 import { 
-    BrowserRouter,
     Route,
-    Redirect,
     Switch,
 } from "react-router-dom"
+import {
+    withRouter
+} from 'react-router'
 import {
     Container,
     Row,
@@ -24,53 +25,47 @@ import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
 import './style.css'
 
 class Wrapper extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            info: 'home',
-            otherProps: [],
-        }
+    changeTab(nextTab) {
+        this.props.setActiveTab(nextTab)
     }
 
     componentDidMount() {
-        this.props.setActiveTab(this.props.activeTab);
+        this.changeTab(this.props.activeTab)
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            info: nextProps.info,
-            otherProps: nextProps
-        })
-        console.log(...this.props)
+        if (this.props.activeTab !== nextProps.activeTab) {
+            this.changeTab(nextProps.activeTab)
+        }
     }
 
     render() {
         return (
             <React.Fragment>
-                {this.state.info ?
-                    <Row>
-                        <Col md='8' id='content-block'>
-                            <SwitchTab />
-                            {this.props.children}
-                        </Col>
-                        <Col md='4' id='info-block'>
-                            <InfoComponent info={this.props.info} {...this.props}/>
-                        </Col>
-                    </Row>
+                {this.props.info ?
+                        <Row>
+                            <Col md='8' id='content-block'>
+                                <SwitchTab />
+                                {this.props.children}
+                            </Col>
+                            <Col md='4' id='info-block'>
+                                <InfoComponent info={this.props.info} {...this.props}/>
+                            </Col>
+                        </Row>
                     :
-                    <Row>
-                        <Col>
-                            <SwitchTab />
-                            {this.props.children}
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col>
+                                <SwitchTab />
+                                {this.props.children}
+                            </Col>
+                        </Row>
                 }
             </React.Fragment>
         )
     }
 }
 
-export default class BodyComponent extends Component {
+class BodyComponent extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -81,8 +76,10 @@ export default class BodyComponent extends Component {
                                 <Route 
                                     exact 
                                     path='/' 
-                                    render={() =>
-                                        <Redirect to='r/home/' />
+                                    render={() => 
+                                        <React.Fragment>
+                                           {this.props.history.push('/r/home/')}
+                                        </React.Fragment>
                                     }
                                 />
                                 <Route 
@@ -238,9 +235,11 @@ export default class BodyComponent extends Component {
                                 />
                                 <Route
                                     exact
-                                    path = '/Select an Option/new/'
+                                    path = '/r/Select an Option/new/'
                                     render = {() => 
-                                        <Redirect to ='/new/' />
+                                        <React.Fragment>
+                                            {this.props.history.push('/new/')}
+                                        </React.Fragment>
                                     }
                                 />
                                 <Route
@@ -290,3 +289,5 @@ export default class BodyComponent extends Component {
         )
     }
 }
+
+export default withRouter(BodyComponent)

@@ -4,7 +4,6 @@ import {
     FormGroup,
     Label,
     Input,
-    FormText,
     Button,
     Col
 } from 'reactstrap'
@@ -26,10 +25,14 @@ export default class EditProfile extends Component {
         })
     }
 
+    handleSubmit() {
+        this.props.history.push(`/u/${this.state.profile.username}/`)
+    }
+
     render() {
         return (
             <React.Fragment>
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <FormGroup row>
                         <Label sm={3}>First Name</Label>
                         <Col sm={9}>

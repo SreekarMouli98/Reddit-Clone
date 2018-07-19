@@ -1,0 +1,24 @@
+.black-text {
+    color: black;
+}
+
+.black-text-on-hover:hover {
+    color: black;
+}
+
+.cursor-on-hover:hover {
+    cursor: pointer;
+}
+
+.padding-all {
+    padding: 5px;
+}
+
+.striked-text {
+    color: black;
+    text-decoration: line-through;
+}
+
+.striked-text:hover {
+    text-decoration: line-through;
+}

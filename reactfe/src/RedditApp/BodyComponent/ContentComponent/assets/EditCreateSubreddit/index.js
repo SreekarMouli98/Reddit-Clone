@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Form,
     Col,
     Label,
@@ -10,7 +13,7 @@ import {
     Row,
 } from 'reactstrap'
 
-export default class EditCreateSubreddit extends Component {
+class EditCreateSubreddit extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -25,9 +28,9 @@ export default class EditCreateSubreddit extends Component {
         this.setState({
             rules: this.state.subreddit.rules.split(';')
         })
-
+        
     }
-
+    
     componentDidMount() {
         if (this.props.update) {
             console.log('update mode')
@@ -41,7 +44,7 @@ export default class EditCreateSubreddit extends Component {
             .then(() => this.fill_form())
         }
     }
-
+    
     addRule() {
         const rule = document.getElementById('new-rule').value
         if(rule) {
@@ -52,7 +55,7 @@ export default class EditCreateSubreddit extends Component {
         }
         console.log(this.state)
     }
-
+    
     deleteRule(rule) {
         this.setState(previousState => {
             return {
@@ -60,11 +63,15 @@ export default class EditCreateSubreddit extends Component {
             };
         });
     }
-
+    
+    handleSubmit() {
+        this.props.history.push(`/r/${this.state.subreddit.name}/`)                
+    }
+    
     render() {
         return (
             <React.Fragment>
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <FormGroup row>
                         <Label sm={2}>Name</Label>
                         <Col sm={10}>
@@ -116,3 +123,5 @@ export default class EditCreateSubreddit extends Component {
         )
     }
 }   
+
+export default withRouter(EditCreateSubreddit)

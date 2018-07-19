@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardBody,
     CardTitle,
     CardText,
-    CardLink,
     Table,
     Button,
     InputGroup,
@@ -12,7 +14,7 @@ import {
 import Context from '../../../../../provider'
 import './style.css'
 
-export default class PostTemplate extends Component { 
+class PostTemplate extends Component { 
     constructor(props) {
         super(props)
         this.state = {
@@ -44,6 +46,7 @@ export default class PostTemplate extends Component {
     }
 
     render() {
+        var {clickable} = this.props
         return (
             <Context.Consumer>
                 {context => {
@@ -68,29 +71,52 @@ export default class PostTemplate extends Component {
                                         </td>
                                     }
                                     <td rowSpan='3'>
-                                        <Card>
+                                        <Card
+                                            className={clickable ? 'cursor-on-hover' : ''}
+                                            onClick={() => {
+                                                if (clickable) {
+                                                    context.toggleTab('4')
+                                                    this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/`)
+                                                }
+                                            }}
+                                        >
                                             <CardBody>
                                                 <CardTitle>
-                                                    <CardLink 
-                                                        href={'/r/' + this.props.subreddit + '/post/' +  this.props.postid + '/'}
-                                                    >
+                                                    <CardText>
                                                         {this.props.title}
-                                                    </CardLink>
-                                                    <small className='text-muted'>  {this.state.votes} vote(s)</small>
+                                                        <small className='text-muted'>  {this.state.votes} vote(s)</small>
+                                                    </CardText>
                                                 </CardTitle>
                                                 <CardText>{this.props.content}</CardText>
                                                 {this.props.subredditlink && 
-                                                    <CardLink href={'/r/' + this.props.subreddit + '/'}>
+                                                    <a
+                                                        href='/'
+                                                        onClick = {(event) => {
+                                                            event.stopPropagation()
+                                                            event.preventDefault()
+                                                            context.toggleTab('4')
+                                                            this.props.history.push(`/r/${this.props.subreddit}/`)
+                                                        }}
+                                                    >
                                                         {'r/' + this.props.subreddit}
-                                                    </CardLink>
+                                                    </a>
                                                 }
                                                 { this.props.userlink &&
-                                                    <CardText>
-                                                        Posted by 
-                                                        <CardLink href={'/u/' + this.props.username + '/'}>
-                                                            {' ' + this.props.username}
-                                                        </CardLink>
-                                                    </CardText> 
+                                                    <div>
+                                                        {'Posted by '}
+                                                        <a
+                                                            className='black-text black-text-on-hover'
+                                                            href='/'
+                                                            onClick = {(event) => {
+                                                                event.stopPropagation()
+                                                                event.preventDefault()
+                                                                context.toggleTab('4')
+                                                                this.props.history.push(`/u/${this.props.username}/`)
+                                                            }}
+                                                        >
+                                                            {this.props.username}
+                                                        </a>
+                                                    </div> 
                                                 }
                                             </CardBody>
                                         </Card>
@@ -104,3 +130,5 @@ export default class PostTemplate extends Component {
         )
     }
 }
+
+export default withRouter(PostTemplate)

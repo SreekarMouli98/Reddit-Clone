@@ -43,10 +43,10 @@ class Profile extends Component {
                                 <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Activity</NavbarBrand>
                                 {context.loggedIn && 
                                     <Button
-                                    color='danger'    
-                                    onClick= {() => {
-                                        this.props.history.push('edit/')
-                                    }}
+                                        color='danger'    
+                                        onClick= {() => {
+                                            this.props.history.push('edit/')
+                                        }}
                                     >
                                         EDIT PROFILE
                                     </Button>
@@ -57,13 +57,17 @@ class Profile extends Component {
                                     <NavLink 
                                         onClick={() => {context.toggleProfileTab('1')}}
                                         className={classnames({active: context.profileTab === '1'})}
-                                    >Posts</NavLink>
+                                    >
+                                        Posts
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink 
                                         onClick={() => {context.toggleProfileTab('2')}}
                                         className={classnames({active: context.profileTab === '2'})}
-                                    >Comments</NavLink>
+                                    >
+                                        Comments
+                                    </NavLink>
                                 </NavItem>
                             </Nav>
                             {context.profileTab === '1' ?

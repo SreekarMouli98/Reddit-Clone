@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardHeader,
     CardBody,
@@ -9,12 +12,9 @@ import {
     ListGroup,
     ListGroupItem,
 } from 'reactstrap'
-import {
-    Redirect,
-} from 'react-router-dom'
 import Context from '../../../../provider'
 
-export default class SubredditCard extends Component {
+class SubredditCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -38,7 +38,7 @@ export default class SubredditCard extends Component {
                             <Card>
                                 <CardHeader>
                                     {this.props.provide_link ? 
-                                        <CardLink className='text-centered' href={'/r/' + this.props.name + '/'}>
+                                        <CardLink className='text-centered' onClick={()=>this.props.history.push(`/r/${this.props.name}/`)}>
                                             <i className="fa fa-circle" aria-hidden="true"></i> {this.props.name}
                                         </CardLink>
                                         :
@@ -64,7 +64,9 @@ export default class SubredditCard extends Component {
                                         <Button 
                                         color='warning' 
                                         block
-                                        onClick={() => window.location = `/r/${this.props.name}/edit/`}
+                                        onClick={() => 
+                                            this.props.history.push(`/r/${this.props.name}/edit/`)
+                                        }
                                         >
                                             EDIT
                                         </Button>
@@ -74,10 +76,10 @@ export default class SubredditCard extends Component {
                                         color='primary'
                                             block
                                             onClick={() => {
-                                                context.loggedIn === false ? 
+                                                context.loggedIn === false ?
                                                     context.toggleLoginModal()
-                                                    :
-                                                    window.location = `/new/`
+                                                :
+                                                    this.props.history.push('/new/')
                                             }}
                                             >
                                             NEW POST
@@ -104,3 +106,5 @@ export default class SubredditCard extends Component {
         )
     }
 }
+
+export default withRouter(SubredditCard)

@@ -1,13 +1,4 @@
 import React, {Component} from 'react'
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-} from 'react-router-dom'
-import {
-    Row,
-    Col,
-} from 'reactstrap'
 import Context from '../../../provider'
 import AboutUsCard from './AboutUsCard'
 import NewSubredditCard from './NewSubredditCard'
@@ -170,6 +161,10 @@ export default class InfoComponent extends Component {
 
             case 'new':
                 return <NewPostDetailCard />
+                break
+
+            default:
+                return <div>ERROR</div>
                 break
         }
     }

@@ -4,21 +4,11 @@ import {
     CardHeader,
     CardBody,
     CardText,
-    CardLink,
-    Button,
     ListGroup,
     ListGroupItem,
-    Badge,
 } from 'reactstrap'
-import {
-    Redirect,
-} from 'react-router-dom'
 
 export default class NewPostDetailCard extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         return (
             <Card>

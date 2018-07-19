@@ -41,6 +41,7 @@ export default class Subreddit extends Component {
                                     subreddit={post.subreddit.name}
                                     username={post.profile.username}
                                     userlink={true}
+                                    clickable={true}
                                 />
                             </Col>
                         </Row>

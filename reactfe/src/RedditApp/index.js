@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom'
 import HeaderComponent from './HeaderComponent'
 import BodyComponent from './BodyComponent'
-
+import './style.css'
 
 export default class RedditApp extends Component {
   render() {

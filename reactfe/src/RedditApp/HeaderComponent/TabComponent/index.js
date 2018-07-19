@@ -20,7 +20,9 @@ class TabComponent extends Component {
                             <NavItem>
                                 <NavLink
                                     className={classnames({ active: context.activeTab === '1' })}
-                                    onClick={() =>{
+                                    href='#'
+                                    onClick={(event) =>{
+                                        event.preventDefault()
                                         context.toggleTab('1');
                                         this.props.history.push('/r/home/')
                                     }}
@@ -31,7 +33,9 @@ class TabComponent extends Component {
                             <NavItem>
                                 <NavLink
                                     className={classnames({ active: context.activeTab === '2' })}
-                                    onClick={() => {
+                                    href='#'
+                                    onClick={(event) => {
+                                        event.preventDefault()
                                         context.toggleTab('2');
                                         this.props.history.push('/r/popular/')
                                     }}
@@ -42,7 +46,9 @@ class TabComponent extends Component {
                             <NavItem>
                                 <NavLink
                                     className={classnames({ active: context.activeTab === '3' })}
-                                    onClick={() => {
+                                    href='#'
+                                    onClick={(event) => {
+                                        event.preventDefault()
                                         context.toggleTab('3');
                                         this.props.history.push('/r/all/')
                                     }}

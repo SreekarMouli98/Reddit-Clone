@@ -40,6 +40,7 @@ export default class All extends Component {
                                     username= {post.profile.username}
                                     subredditlink={true}
                                     userlink={true}
+                                    clickable={true}
                                 />
                             </Col>
                         </Row>

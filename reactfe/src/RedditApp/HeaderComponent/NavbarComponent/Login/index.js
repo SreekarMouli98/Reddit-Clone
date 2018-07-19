@@ -12,8 +12,11 @@ import {
     Label, 
     Input,
 } from 'reactstrap'
+import {
+    withRouter,
+} from 'react-router'
 
-export default class Login extends Component {
+class Login extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -40,6 +43,7 @@ export default class Login extends Component {
                                                     onClick={() => {
                                                         context.toggleLoginModal()
                                                         context.toggleLoggedIn()
+                                                        console.log('User logged in!')
                                                     }}
                                                 >Login</Button>{' '}
                                             </Col>
@@ -47,7 +51,15 @@ export default class Login extends Component {
                                     </Form>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <a href='/'>Unable to login?</a>
+                                    <div
+                                        className = 'my-links'
+                                        onClick = {() => {
+                                            context.toggleLoginModal()
+                                            this.props.history.push('/')
+                                        }}
+                                    >
+                                        Unable to Login?
+                                    </div>
                                 </ModalFooter>
                             </Modal>
                         </React.Fragment>
@@ -57,3 +69,5 @@ export default class Login extends Component {
         )
     }
 }
+
+export default withRouter(Login)
