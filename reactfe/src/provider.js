@@ -5,8 +5,9 @@ const Context = React.createContext();
 class Provider extends Component {
   state = {
   
-    loggedIn: false,
-    username: 'Mouli',
+    loggedIn: true,
+    userId:12,
+    username: 'cap',
     password: '',
     loginModalOpen: false,
     signupModalOpen: false,
@@ -36,7 +37,16 @@ class Provider extends Component {
 
     toggleProfileTab: (tab) => {
       this.setState({profileTab: tab})
+    },
+
+    setUsername: (username) => {
+      this.setState({username: username})
+    },
+
+    setUserId: (id) => {
+      this.setState({userId: id})
     }
+
   }
   
   render() {

@@ -25,18 +25,31 @@ import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
 import './style.css'
 
 class Wrapper extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            info: false
+        }
+    }
+
     changeTab(nextTab) {
         this.props.setActiveTab(nextTab)
     }
 
+    changeInfo(info) {
+        this.setState({info: info})
+    }
+
     componentDidMount() {
         this.changeTab(this.props.activeTab)
+        this.changeInfo(this.props.info)
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.activeTab !== nextProps.activeTab) {
             this.changeTab(nextProps.activeTab)
         }
+        this.changeInfo(nextProps.info)
     }
 
     render() {
@@ -49,7 +62,7 @@ class Wrapper extends React.Component {
                                 {this.props.children}
                             </Col>
                             <Col md='4' id='info-block'>
-                                <InfoComponent info={this.props.info} {...this.props}/>
+                                <InfoComponent info={this.state.info} {...this.props}/>
                             </Col>
                         </Row>
                     :
@@ -213,7 +226,10 @@ class BodyComponent extends Component {
                                                 info='subreddit'
                                                 subreddit={props.match.params.subreddit}
                                             >
-                                                <Subreddit subreddit={props.match.params.subreddit} />
+                                                <Subreddit 
+                                                    update={false}
+                                                    subreddit={props.match.params.subreddit} 
+                                                />
                                             </Wrapper>
                                         )
                                     }}

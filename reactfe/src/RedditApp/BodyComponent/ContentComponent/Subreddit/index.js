@@ -14,13 +14,11 @@ export default class Subreddit extends Component {
     }
 
     componentDidMount() {   
-        console.log('subreddit mounted: ', this.props.subreddit)
         fetch(`/api/reddit/r/${this.props.subreddit}/posts/`)
         .then(result => {   
             return result.json();
         })
         .then(data => {
-            console.log(data)
             this.setState({posts: data})
         })
     }

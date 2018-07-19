@@ -13,6 +13,7 @@ import {
     ListGroupItem,
 } from 'reactstrap'
 import Context from '../../../../provider'
+import DeleteTemplate from '../../ContentComponent/assets/DeleteTemplate'
 
 class SubredditCard extends Component {
     constructor(props) {
@@ -53,24 +54,31 @@ class SubredditCard extends Component {
                                     </CardText>
                                     {this.props.can_subscribe &&
                                         <Button 
-                                        color={this.state.subscribed ? 'danger' : 'success'}
-                                        onClick={() => this.toggleSubscribe()}
-                                        block
+                                            color={this.state.subscribed ? 'danger' : 'success'}
+                                            onClick={() => this.toggleSubscribe()}
+                                            block
                                         >
                                             {this.state.subscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}
                                         </Button>
                                     }
                                     {this.props.can_edit && 
                                         <Button 
-                                        color='warning' 
-                                        block
-                                        onClick={() => 
-                                            this.props.history.push(`/r/${this.props.name}/edit/`)
-                                        }
+                                            color='warning'
+                                            onClick={() => 
+                                                this.props.history.push(`/r/${this.props.name}/edit/`)
+                                            }
+                                            block
                                         >
                                             EDIT
                                         </Button>
                                     }
+                                    {/* {this.props.can_delete &&  */}
+                                        <DeleteTemplate 
+                                            title = {this.props.name}
+                                            toDeleteURL = {`/api/reddit/r/${this.props.name}/`}
+                                            successURL = {'/'}
+                                        />
+                                    {/* } */}
                                     {this.props.ask_new_post &&
                                         <Button 
                                         color='primary'

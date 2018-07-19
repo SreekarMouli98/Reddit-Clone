@@ -8,16 +8,30 @@ import {
     Button,
     CardText,
 } from 'reactstrap'
+import Context from '../../../../provider'
 
 class NewSubredditCard extends Component {
+    handleClick(context) {
+        context.loggedIn ? 
+            this.props.history.push('/create/')
+            :
+            context.toggleLoginModal()
+    }
+
     render() {
         return (
-            <Card>
-                <CardBody>
-                    <CardText>Wanna have your own community? Create your own subreddit here!</CardText>
-                    <Button color='primary' block onClick={()=>this.props.history.push('/create/')}>CREATE SUBREDDIT</Button>
-                </CardBody>
-            </Card>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <Card>
+                            <CardBody>
+                                <CardText>Wanna have your own community? Create your own subreddit here!</CardText>
+                                <Button color='primary' block onClick={()=>this.handleClick(context)}>CREATE SUBREDDIT</Button>
+                            </CardBody>
+                        </Card>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

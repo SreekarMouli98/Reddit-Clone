@@ -24,7 +24,7 @@ class NavbarComponent extends React.Component {
                     return (
                         <Navbar color="light" light expand="md">
                             <NavbarBrand 
-                                href='#'
+                                href='/'
                                 onClick={(event) => {
                                     event.preventDefault()
                                     this.props.history.push('/')
@@ -39,7 +39,7 @@ class NavbarComponent extends React.Component {
                                         <React.Fragment>
                                             <NavItem>
                                                 <NavLink 
-                                                    href='#'
+                                                    href='/'
                                                     onClick = {(event) => {
                                                         event.preventDefault()
                                                         this.props.history.push(`/u/${context.username}/`)

@@ -72,7 +72,7 @@ export default class Signup extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-              },
+            },
             body: json,
         })
         .then(res => {
