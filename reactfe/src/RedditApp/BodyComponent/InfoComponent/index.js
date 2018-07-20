@@ -59,6 +59,7 @@ class SubredditHelper extends Component {
                                 ask_new_post = {this.props.dont_ask_new_post === true ? false : true}
                                 // If you get an error here, that probably means that the json data was wrong!!
                                 can_edit={context.username === this.state.profile.username && context.loggedIn === true}
+                                can_delete={context.username === this.state.profile.username && context.loggedIn === true}
                                 show_rules = {this.state.rules.length !== 0}
                                 rules = {this.state.rules}
                             />      
