@@ -35,7 +35,8 @@ class DeleteTemplate extends Component {
 
     }
 
-    delete() {
+    delete(event) {
+        event.stopPropagation()
         fetch(this.props.toDeleteURL, {
             method: 'DELETE',
         })
@@ -48,7 +49,8 @@ class DeleteTemplate extends Component {
         
     }
 
-    cancel() {
+    cancel(event) {
+        event.stopPropagation()
         this.toggleModal()
     }
 
@@ -74,13 +76,13 @@ class DeleteTemplate extends Component {
                         </a>
                 }
                 <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal} className={this.props.className}>
-                    <ModalHeader toggle={this.toggleModal}>{this.props.title}</ModalHeader>
+                    <ModalHeader toggle={this.cancel}>{this.props.title}</ModalHeader>
                     <ModalBody>
                         Are you sure you want to delete? (can't undo this)
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" onClick={this.delete}>DELETE</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleModal}>CANCEL</Button>
+                        <Button color="secondary" onClick={this.cancel}>CANCEL</Button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>
