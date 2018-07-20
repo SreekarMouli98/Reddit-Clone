@@ -72,13 +72,13 @@ class SubredditCard extends Component {
                                             EDIT
                                         </Button>
                                     }
-                                    {/* {this.props.can_delete &&  */}
+                                    {this.props.can_delete && 
                                         <DeleteTemplate 
                                             title = {this.props.name}
                                             toDeleteURL = {`/api/reddit/r/${this.props.name}/`}
                                             successURL = {'/'}
                                         />
-                                    {/* } */}
+                                    }
                                     {this.props.ask_new_post &&
                                         <Button 
                                         color='primary'
