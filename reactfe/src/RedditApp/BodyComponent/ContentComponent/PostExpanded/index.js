@@ -58,6 +58,8 @@ export default class PostExpanded extends Component {
                                         subreddit={post.subreddit.name}
                                         username={post.profile.username}
                                         userlink={true}
+                                        can_edit={context.username === post.profile.username && context.loggedIn === true}
+                                        can_delete={context.username === post.profile.username && context.loggedIn === true}    
                                     />
                                 </Col>
                             </Row>

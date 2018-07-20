@@ -7,12 +7,14 @@ import {
     CardBody,
     CardTitle,
     CardText,
+    CardFooter,
     Table,
     Button,
     InputGroup,
 } from 'reactstrap'
 import Context from '../../../../../provider'
 import './style.css'
+import DeleteTemplate from '../DeleteTemplate'
 
 class PostTemplate extends Component { 
     constructor(props) {
@@ -22,9 +24,6 @@ class PostTemplate extends Component {
             downvoted: false,
             votes: this.props.votes,
         }
-    }
-
-    componentDidMount() {
     }
 
     toggleUpvote() {
@@ -119,6 +118,30 @@ class PostTemplate extends Component {
                                                     </div> 
                                                 }
                                             </CardBody>
+                                            {(this.props.can_edit || this.props.can_delete) &&
+                                                <CardFooter>
+                                                    {this.props.can_edit &&
+                                                        <a
+                                                            href='#'
+                                                            className='black-text black-text-on-hover padding-all'
+                                                            onClick={(event) => {
+                                                                event.stopPropagation()
+                                                                event.preventDefault()
+                                                                this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/edit/`)
+                                                            }}
+                                                            >
+                                                                edit
+                                                            </a>
+                                                    }
+                                                    {this.props.can_delete &&
+                                                        <DeleteTemplate
+                                                            onClick={(event) => event.preventDefault()}
+                                                            toDeleteURL={`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`}
+                                                            successURL={`/`}
+                                                        />
+                                                    }
+                                                </CardFooter>
+                                            }
                                         </Card>
                                     </td>
                                 </tr>

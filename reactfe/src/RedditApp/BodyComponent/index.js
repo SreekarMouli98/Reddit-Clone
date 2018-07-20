@@ -17,7 +17,7 @@ import Subreddit from './ContentComponent/Subreddit'
 import PostExpanded from './ContentComponent/PostExpanded'
 import InfoComponent  from './InfoComponent'
 import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
-import NewPost from './ContentComponent/assets/NewPost'
+import EditCreatePost from './ContentComponent/assets/EditCreatePost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
@@ -172,7 +172,28 @@ class BodyComponent extends Component {
                                                 dont_ask_new_post = {true}
                                                 subreddit={props.match.params.subreddit}
                                             >
-                                                <NewPost />
+                                                <EditCreatePost />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/post/:postid/edit/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                dont_ask_new_post = {true}
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <EditCreatePost 
+                                                    update={true}
+                                                    subreddit={props.match.params.subreddit}
+                                                    postid={props.match.params.postid}    
+                                                />
                                             </Wrapper>
                                         )
                                     }}
@@ -244,7 +265,7 @@ class BodyComponent extends Component {
                                                 activeTab={'4'}
                                                 info='new'
                                             >
-                                                <NewPost />
+                                                <EditCreatePost />
                                             </Wrapper>
                                         )
                                     }}

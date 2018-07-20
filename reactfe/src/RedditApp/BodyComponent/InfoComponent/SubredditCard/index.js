@@ -74,6 +74,8 @@ class SubredditCard extends Component {
                                     }
                                     {this.props.can_delete && 
                                         <DeleteTemplate 
+                                            button={true}
+                                            block={true}
                                             title = {this.props.name}
                                             toDeleteURL = {`/api/reddit/r/${this.props.name}/`}
                                             successURL = {'/'}

@@ -55,7 +55,24 @@ class DeleteTemplate extends Component {
     render() {
         return (
             <React.Fragment>
-                <Button color="danger" onClick={this.toggleModal} block>DELETE</Button>
+                {this.props.button ?
+                    this.props.block ? 
+                        <Button color="danger" onClick={this.toggleModal} block>DELETE</Button>
+                        :
+                        <Button color="danger" onClick={this.toggleModal} >DELETE</Button>
+                    :
+                        <a
+                            href='#'
+                            className='black-text black-text-on-hover padding-all'
+                            onClick={(event) => {
+                                event.stopPropagation()
+                                event.preventDefault()
+                                this.toggleModal()
+                            }}
+                        >
+                            delete
+                        </a>
+                }
                 <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal} className={this.props.className}>
                     <ModalHeader toggle={this.toggleModal}>{this.props.title}</ModalHeader>
                     <ModalBody>
@@ -63,7 +80,7 @@ class DeleteTemplate extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" onClick={this.delete}>DELETE</Button>{' '}
-                        <Button color="secondary" onClick={this.cancel}>CANCEL</Button>
+                        <Button color="secondary" onClick={this.toggleModal}>CANCEL</Button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>
