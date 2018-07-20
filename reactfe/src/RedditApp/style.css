@@ -22,3 +22,11 @@
 .striked-text:hover {
     text-decoration: line-through;
 }
+
+.padding-left {
+    padding-right: 0px;
+}
+
+.no-padding {
+    border-top: 0px
+}

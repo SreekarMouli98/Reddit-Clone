@@ -11,37 +11,102 @@ import {
     Button,
     Col,
 } from 'reactstrap'
+import Context from '../../../../../provider'
 
 class NewComment extends Component {
-    handleSubmit() {
-        this.props.history.push(`/r/${this.props.match.params.subreddit}/posts/${this.props.match.params.postid}/`)        
+    constructor(props) {
+        super(props)
+        this.state = {
+            content: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+    
+    success() {
+        console.log('Comment success!')
+        this.setState({
+            content: '',
+        })
+        this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/`)        
+    }
+    
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSubmit(context) {
+        let json = {
+            content: this.state.content,
+            votes: 0,
+            profile: context.userId,
+            parent_post: this.props.postid,
+            parent_comment: null
+        }
+        json = JSON.stringify(json)
+        fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+        .then(response => {
+            response.ok ?
+                this.success()
+                :
+                console.log(response)
+        })
     }
 
     render() {
         return (
-            <React.Fragment>
-                <Card>
-                    <CardBody>
-                        <Form>
-                            <FormGroup row>
-                                <Col>
-                                    <Input type='textarea' width='20' height='10' placeholder='What are your thoughts?'/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col>
-                                    <Button 
-                                        color='primary' 
-                                        onClick = {() => {
-                                            console.log('comment submitted')
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <React.Fragment>
+                            <Card>
+                                <CardBody>
+                                    <Form
+                                        onSubmit={(event) => {
+                                            event.stopPropagation()
+                                            event.preventDefault()
+                                            context.loggedIn ? 
+                                                this.handleSubmit(context)
+                                                :
+                                                context.toggleLoginModal()
                                         }}
-                                    >COMMENT</Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
-                    </CardBody>
-                </Card>
-            </React.Fragment>
+                                        >
+                                        <FormGroup row>
+                                            <Col>
+                                                <Input 
+                                                    type='textarea' 
+                                                    name='content'
+                                                    value={this.state.content}
+                                                    onChange={this.handleChange}
+                                                    placeholder='What are your thoughts?'
+                                                    />
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Col>
+                                                <Button 
+                                                    color='primary' 
+                                                >
+                                                    COMMENT
+                                                </Button>
+                                            </Col>
+                                        </FormGroup>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </React.Fragment>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

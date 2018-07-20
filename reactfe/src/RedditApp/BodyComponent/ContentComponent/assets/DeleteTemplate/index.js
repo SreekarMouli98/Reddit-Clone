@@ -75,7 +75,7 @@ class DeleteTemplate extends Component {
                             delete
                         </a>
                 }
-                <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal} className={this.props.className}>
+                <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.cancel}>{this.props.title}</ModalHeader>
                     <ModalBody>
                         Are you sure you want to delete? (can't undo this)

@@ -10,8 +10,13 @@ import {
     Table,
     Button,
     InputGroup,
+    Row,
+    Col,
 } from 'reactstrap'
 import Context from '../../../../../provider'
+import DeleteTemplate from '../DeleteTemplate'
+import EditComment from '../EditComment'
+
 
 class CommentTemplate extends Component { 
     constructor(props) {
@@ -71,37 +76,57 @@ class CommentTemplate extends Component {
                                         <Card 
                                             className={this.props.clickable ? 'cursor-on-hover': ''}
                                             onClick={() => {
-                                                this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/`)
+                                                this.props.clickable && this.props.history.push(`/r/${this.props.subreddit}/post/${this.props.postid}/`)
                                             }}
                                         >
                                             <CardHeader>
-                                                {this.props.userlink && 
-                                                    <a
-                                                        className='black-text black-text-on-hover cursor-on-hover'
-                                                        href='/'
-                                                        onClick={(event) => {
-                                                            event.stopPropagation()
-                                                            event.preventDefault()
-                                                            this.props.history.push(`/u/${this.props.username}/`)
-                                                        }}
-                                                    >
-                                                        {this.props.username}
-                                                    </a>
-                                                }
-                                                {this.props.subredditlink &&
-                                                    <a
-                                                        className='cursor-on-hover'
-                                                        href='/'
-                                                        onClick={(event) => {
-                                                            event.stopPropagation()
-                                                            event.preventDefault()
-                                                            this.props.history.push(`/r/${this.props.subreddit}/`)
-                                                        }}
-                                                    >
-                                                        r/{this.props.subreddit}
-                                                    </a>
-                                                }
-                                                <small className='text-muted'>  {this.state.votes} vote(s)</small>
+                                                <Row>
+                                                    <Col sm={7}>
+                                                        {this.props.userlink && 
+                                                            <a
+                                                                className='black-text black-text-on-hover cursor-on-hover'
+                                                                href='/'
+                                                                onClick={(event) => {
+                                                                    event.stopPropagation()
+                                                                    event.preventDefault()
+                                                                    this.props.history.push(`/u/${this.props.username}/`)
+                                                                }}
+                                                            >
+                                                                {this.props.username}
+                                                            </a>
+                                                        }
+                                                        {this.props.subredditlink &&
+                                                            <a
+                                                                className='cursor-on-hover'
+                                                                href='/'
+                                                                onClick={(event) => {
+                                                                    event.stopPropagation()
+                                                                    event.preventDefault()
+                                                                    this.props.history.push(`/r/${this.props.subreddit}/`)
+                                                                }}
+                                                            >
+                                                                r/{this.props.subreddit}
+                                                            </a>
+                                                        }
+                                                        <small className='text-muted'>  {this.state.votes} vote(s)</small>
+                                                    </Col>
+                                                    <Col sm={5}>
+                                                        {this.props.can_edit && 
+                                                            <EditComment
+                                                                updateURL = {`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/${this.props.commentid}/`}
+                                                                successURL = {`/r/${this.props.subreddit}/post/${this.props.postid}/`}
+                                                                content = {this.props.content}
+                                                                votes = {this.props.votes}
+                                                            />
+                                                        }
+                                                        {this.props.can_delete && 
+                                                            <DeleteTemplate
+                                                                toDeleteURL = {`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/${this.props.commentid}/`}
+                                                                successURL = {`/r/${this.props.subreddit}/post/${this.props.postid}/`}
+                                                            />
+                                                        }
+                                                    </Col>
+                                                </Row>
                                             </CardHeader>
                                             <CardBody>
                                                 <CardText>{this.props.content}</CardText>
