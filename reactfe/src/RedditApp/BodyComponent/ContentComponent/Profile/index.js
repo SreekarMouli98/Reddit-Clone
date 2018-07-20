@@ -21,16 +21,23 @@ class Profile extends Component {
         this.state = {profile: '', user: ''}
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/u/${this.props.username}/`)
+    fetchProfile(username) {
+        fetch(`/api/reddit/u/${username}/`)
         .then(data => data.json())
         .then((profile) => {
             this.setState({
                 profile: profile,
                 user: profile.user,
             })
-            console.log(this.state)
         })
+    }
+
+    componentDidMount() {
+        this.fetchProfile(this.props.username)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchProfile(nextProps.username)
     }
 
     render() {
@@ -40,8 +47,13 @@ class Profile extends Component {
                     return (
                         <React.Fragment>
                             <Navbar>
-                                <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Activity</NavbarBrand>
-                                {context.loggedIn && 
+                                {(this.state.user.first_name !== '' || this.state.user.last_name !== '') ?
+                                    <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Profile</NavbarBrand>
+                                    :
+                                    <NavbarBrand>{this.state.profile.username}'s Profile</NavbarBrand>
+                                }
+
+                                {context.loggedIn && context.username === this.state.profile.username && 
                                     <Button
                                         color='danger'    
                                         onClick= {() => {

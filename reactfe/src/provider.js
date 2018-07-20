@@ -4,11 +4,10 @@ const Context = React.createContext();
 
 class Provider extends Component {
   state = {
-  
-    loggedIn: true,
-    userId:12,
-    username: 'cap',
-    password: '',
+    
+    loggedIn: false,
+    userId:0,
+    username: '',
     loginModalOpen: false,
     signupModalOpen: false,
     navbarOpen: false,

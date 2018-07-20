@@ -122,7 +122,7 @@ class Login extends Component {
                                         </FormGroup>
                                     </Form>
                                 </ModalBody>
-                                <ModalFooter>
+                                {/* <ModalFooter>
                                     <div
                                         className = 'my-links'
                                         onClick = {() => {
@@ -132,7 +132,7 @@ class Login extends Component {
                                     >
                                         Unable to Login?
                                     </div>
-                                </ModalFooter>
+                                </ModalFooter> */}
                             </Modal>
                         </React.Fragment>
                     )}

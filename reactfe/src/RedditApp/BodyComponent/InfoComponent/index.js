@@ -79,14 +79,22 @@ class UserHelper extends Component {
         }       
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/u/${this.props.user}/`)
+    fetchUser(user) {
+        fetch(`/api/reddit/u/${user}/`)
         .then(data => data.json())
         .then(json => {
             this.setState({profile: json})
         })
     }
+
+    componentDidMount() {
+        this.fetchUser(this.props.user)
+    }
     
+    componentWillReceiveProps(nextProps) {
+        this.fetchUser(nextProps.user)
+    }
+
     render() {
         var {profile} = this.state
         return (

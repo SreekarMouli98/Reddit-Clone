@@ -23,7 +23,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.user.first_name = user_data.get('first_name', instance.user.first_name)
         instance.user.last_name = user_data.get('last_name', instance.user.last_name)
         instance.user.email = user_data.get('email', instance.user.email)
-        instance.user.password = user_data.get('password', instance.user.password)
+        new_password = user_data.get('password')
+        if new_password:
+            instance.user.set_password(new_password)
         instance.user.save()
         instance.save()
         return instance

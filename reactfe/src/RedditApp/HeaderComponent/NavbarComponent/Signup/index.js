@@ -12,25 +12,6 @@ import {
     Button, 
 } from 'reactstrap'
 
-class SignupSuccess extends Component {
-    render() {
-        return (
-            <Context.Consumer>
-                {context => {
-                    return (
-                        <React.Fragment>
-                            {console.log('signup success')}
-                            {context.toggleLoggedIn()}
-                            {context.toggleSignupModal()}
-                            {context.username = this.props.username}
-                        </React.Fragment>
-                    )
-                }}
-            </Context.Consumer>
-        )
-    }
-}
-
 export default class Signup extends Component {
     constructor(props) {
         super(props)
@@ -41,20 +22,26 @@ export default class Signup extends Component {
             username: '',
             dob: '',
             password: '',
-            signup_successful: false,
         }
-        this.handle_change = this.handle_change.bind(this)   
-        this.handle_submit = this.handle_submit.bind(this)   
+        this.handleChange = this.handleChange.bind(this)   
+        this.handleSubmit = this.handleSubmit.bind(this)   
     }
 
-    handle_change(event) {
+    signupSuccess(context, json) {
+        console.log('signup success', json)
+        context.toggleLoggedIn()
+        context.toggleSignupModal()
+        context.setUsername(this.state.username)
+        context.setUserId(json.id)
+    }
+
+    handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value,
         })
     }
 
-    handle_submit(event) {
-        event.preventDefault()
+    handleSubmit(context) {
         let json = {
             user: {
                 first_name: this.state.first_name,
@@ -75,15 +62,23 @@ export default class Signup extends Component {
             },
             body: json,
         })
-        .then(res => {
-            res.status > 200 && res.status < 300 ?
-                this.setState({signup_successful: true,})
-            :
-                console.log('Something went wrong!')
+        .then(response => {
+            response.ok ?
+                response.json().then(json => 
+                    this.signupSuccess(context, json)
+                )
+                :
+                console.log(response)
         })
-        .catch(e => {
-            console.log(e)
-        })
+        // .then(res => {
+        //     res.status > 200 && res.status < 300 ?
+        //         this.setState({signup_successful: true,})
+        //     :
+        //         console.log('Something went wrong!')
+        // })
+        // .catch(e => {
+        //     console.log(e)
+        // })
     }
 
     render() {
@@ -93,13 +88,13 @@ export default class Signup extends Component {
                     return (
                         <React.Fragment>
                             <Button color="lite" onClick={() => context.toggleSignupModal()}>Signup</Button>
-                            {this.state.signup_successful &&
-                                <SignupSuccess username={this.state.username}/>
-                            }
                             <Modal isOpen={context.signupModalOpen} toggle={() => context.toggleSignupModal()}>
                                 <ModalHeader toggle={() => context.toggleSignupModal()}></ModalHeader>
                                 <ModalBody>
-                                    <Form onSubmit={this.handle_submit}>
+                                    <Form onSubmit={(event) => {
+                                        event.preventDefault()
+                                        this.handleSubmit(context)
+                                    }}>
                                         <FormGroup>
                                             <Input 
                                                 id='firstname' 
@@ -107,7 +102,7 @@ export default class Signup extends Component {
                                                 type='text' 
                                                 value={this.state.first_name}
                                                 placeholder='First Name' 
-                                                onChange={this.handle_change}
+                                                onChange={this.handleChange}
                                             />
                                         </FormGroup>
                                         <FormGroup>
@@ -117,7 +112,7 @@ export default class Signup extends Component {
                                                 type='text' 
                                                 value={this.state.last_name}
                                                 placeholder='Last Name' 
-                                                onChange={this.handle_change}
+                                                onChange={this.handleChange}
                                             />
                                         </FormGroup>
                                         <FormGroup>
@@ -127,7 +122,7 @@ export default class Signup extends Component {
                                                 type='text' 
                                                 value={this.state.username}
                                                 placeholder='Username' 
-                                                onChange={this.handle_change}
+                                                onChange={this.handleChange}
                                                 required
                                             />
                                         </FormGroup>
@@ -138,7 +133,7 @@ export default class Signup extends Component {
                                                 type='email' 
                                                 value={this.state.email}
                                                 placeholder='Email' 
-                                                onChange={this.handle_change}
+                                                onChange={this.handleChange}
                                                 required
                                             />
                                         </FormGroup>
@@ -150,7 +145,7 @@ export default class Signup extends Component {
                                                     name='dob' 
                                                     type='date' 
                                                     value={this.state.dob}
-                                                    onChange={this.handle_change}
+                                                    onChange={this.handleChange}
                                                     required
                                                 />
                                             </Col>
@@ -162,7 +157,7 @@ export default class Signup extends Component {
                                                 type='password' 
                                                 value={this.state.password}
                                                 placeholder='Password' 
-                                                onChange={this.handle_change}
+                                                onChange={this.handleChange}
                                                 required
                                             />
                                         </FormGroup>
