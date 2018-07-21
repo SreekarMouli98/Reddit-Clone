@@ -11,6 +11,7 @@ import {
     Nav, 
     NavItem, 
     NavLink,
+    ButtonGroup
 } from 'reactstrap';
 import Login from './Login'
 import Logout from './Logout'
@@ -52,8 +53,12 @@ class NavbarComponent extends React.Component {
                                         </React.Fragment>
                                         :
                                         <React.Fragment>
-                                            <NavItem><Login /></NavItem>
-                                            <NavItem><Signup /></NavItem>
+                                            <NavItem>
+                                                <ButtonGroup>
+                                                    <Login />
+                                                    <Signup />
+                                                </ButtonGroup>
+                                            </NavItem>
                                         </React.Fragment>
                                     }
                                 </Nav>
