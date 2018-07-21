@@ -6,6 +6,7 @@ import {
     NavLink,
     Navbar,
     NavbarBrand,
+    ButtonGroup,
     Button,
 } from 'reactstrap'
 import {
@@ -14,6 +15,7 @@ import {
 import classnames from 'classnames'
 import ProfilePosts from './ProfilePosts'
 import ProfileComments from './ProfileComments'
+import DeleteTemplate from '../assets/DeleteTemplate';
 
 class Profile extends Component {
     constructor(props) {
@@ -54,14 +56,23 @@ class Profile extends Component {
                                 }
 
                                 {context.loggedIn && context.username === this.state.profile.username && 
-                                    <Button
-                                        color='danger'    
-                                        onClick= {() => {
-                                            this.props.history.push('edit/')
-                                        }}
-                                    >
-                                        EDIT PROFILE
-                                    </Button>
+                                    <ButtonGroup>
+                                        <Button
+                                            color='info'    
+                                            onClick= {() => {
+                                                this.props.history.push(`/u/${this.state.profile.username}/edit/`)
+                                            }}
+                                        >
+                                            EDIT
+                                        </Button>
+                                        <DeleteTemplate
+                                            button={true}
+                                            block={false}
+                                            toDeleteURL={`/api/reddit/u/${this.state.profile.username}/`}
+                                            successURL={'/'}
+                                            forceLogout={true}
+                                        />
+                                    </ButtonGroup>
                                 }
                             </Navbar>
                             <Nav tabs>

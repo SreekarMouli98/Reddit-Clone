@@ -14,7 +14,7 @@ export default class All extends Component {
         }
     }
 
-    componentDidMount() {   
+    fetchAllPosts() {
         fetch('/api/reddit/r/all/')
         .then(result => {
             return result.json();
@@ -22,6 +22,14 @@ export default class All extends Component {
         .then(data => {
             this.setState({posts: data})
         })
+    }
+
+    componentDidMount() {   
+        this.fetchAllPosts()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchAllPosts()
     }
     
     render() {

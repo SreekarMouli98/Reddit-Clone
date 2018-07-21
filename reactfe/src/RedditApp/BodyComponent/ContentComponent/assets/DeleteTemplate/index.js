@@ -9,6 +9,7 @@ import {
 import {
     withRouter
 } from 'react-router'
+import Context from '../../../../../provider'
 
 class DeleteTemplate extends Component {
     constructor(props) {
@@ -28,21 +29,20 @@ class DeleteTemplate extends Component {
         }))
     }
 
-    deleteSuccess() {
+    deleteSuccess(context) {
         console.log('Delete Successful')
         this.toggleModal()
         if (this.props.successURL) this.props.history.push(this.props.successURL)
-
+        if (this.props.forceLogout) context.toggleLoggedIn()
     }
 
-    delete(event) {
-        event.stopPropagation()
+    delete(context) {
         fetch(this.props.toDeleteURL, {
             method: 'DELETE',
         })
         .then(response => {
             response.ok ? 
-                    this.deleteSuccess()
+                    this.deleteSuccess(context)
                 :
                 console.log('Delete failed!', response)
         })
@@ -56,36 +56,50 @@ class DeleteTemplate extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                {this.props.button ?
-                    this.props.block ? 
-                        <Button color="danger" onClick={this.toggleModal} block>DELETE</Button>
-                        :
-                        <Button color="danger" onClick={this.toggleModal} >DELETE</Button>
-                    :
-                        <a
-                            href='#'
-                            className='black-text black-text-on-hover padding-all'
-                            onClick={(event) => {
-                                event.stopPropagation()
-                                event.preventDefault()
-                                this.toggleModal()
-                            }}
-                        >
-                            delete
-                        </a>
-                }
-                <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.cancel}>{this.props.title}</ModalHeader>
-                    <ModalBody>
-                        Are you sure you want to delete? (can't undo this)
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="danger" onClick={this.delete}>DELETE</Button>{' '}
-                        <Button color="secondary" onClick={this.cancel}>CANCEL</Button>
-                    </ModalFooter>
-                </Modal>
-            </React.Fragment>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <React.Fragment>
+                            {this.props.button ?
+                                this.props.block ? 
+                                    <Button color="danger" onClick={this.toggleModal} block>DELETE</Button>
+                                    :
+                                    <Button color="danger" onClick={this.toggleModal} >DELETE</Button>
+                                :
+                                    <a
+                                        href='#'
+                                        className='black-text black-text-on-hover padding-all'
+                                        onClick={(event) => {
+                                            event.stopPropagation()
+                                            event.preventDefault()
+                                            this.toggleModal()
+                                        }}
+                                    >
+                                        delete
+                                    </a>
+                            }
+                            <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
+                                <ModalHeader toggle={this.cancel}>{this.props.title}</ModalHeader>
+                                <ModalBody>
+                                    Are you sure you want to delete? (can't undo this)
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button 
+                                        color="danger" 
+                                        onClick={(event) => {
+                                            event.stopPropagation()
+                                            this.delete(context)
+                                        }}
+                                    >
+                                        DELETE
+                                    </Button>
+                                    <Button color="secondary" onClick={this.cancel}>CANCEL</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </React.Fragment>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

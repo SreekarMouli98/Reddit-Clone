@@ -69,14 +69,15 @@ class EditProfile extends Component {
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
                 email: this.state.email,
-                password: this.state.new_password !== '' ? this.state.new_password : this.state.password,
             },
             dob: this.state.dob,
             karma: this.state.karma,
             username: this.state.username
         }
+        if (this.state.new_password) {
+            json.user['password'] = this.state.new_password 
+        }
         json = JSON.stringify(json)
-        console.log(json)
         fetch(`/api/reddit/u/${this.props.user}/`, {
             method: 'PUT',
             headers: {
