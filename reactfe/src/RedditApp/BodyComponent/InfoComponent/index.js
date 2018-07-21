@@ -1,13 +1,4 @@
 import React, {Component} from 'react'
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-} from 'react-router-dom'
-import {
-    Row,
-    Col,
-} from 'reactstrap'
 import Context from '../../../provider'
 import AboutUsCard from './AboutUsCard'
 import NewSubredditCard from './NewSubredditCard'
@@ -20,7 +11,9 @@ class SubredditHelper extends Component {
         super(props)
         this.state = {
             subreddit: '', 
-            profile: '',
+            profile: {
+                username: '',
+            },
             rules: [],
         }
     }
@@ -53,22 +46,23 @@ class SubredditHelper extends Component {
     }
 
     render() {
-        var {subreddit, profile, rules} = this.state
         return (
             <Context.Consumer>
                 {context => {
                     return (
                         <React.Fragment>
                             <SubredditCard
-                                name = {subreddit.name}
-                                description = {subreddit.description}
+                                name = {this.state.subreddit.name}
+                                description = {this.state.subreddit.description}
                                 provide_link = {true}
-                                can_subscribe = {true}
+                                can_subscribe = {context.username !== this.state.profile.username}
                                 ask_new_post = {this.props.dont_ask_new_post === true ? false : true}
-                                can_edit={context.username === profile.username && context.loggedIn === true}
-                                show_rules = {rules.length !== 0}
-                                rules = {rules}
-                        />
+                                // If you get an error here, that probably means that the json data was wrong!!
+                                can_edit={context.username === this.state.profile.username && context.loggedIn === true}
+                                can_delete={context.username === this.state.profile.username && context.loggedIn === true}
+                                show_rules = {this.state.rules.length !== 0}
+                                rules = {this.state.rules}
+                            />      
                         </React.Fragment>
                     )
                 }}
@@ -85,14 +79,22 @@ class UserHelper extends Component {
         }       
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/u/${this.props.user}/`)
+    fetchUser(user) {
+        fetch(`/api/reddit/u/${user}/`)
         .then(data => data.json())
         .then(json => {
             this.setState({profile: json})
         })
     }
+
+    componentDidMount() {
+        this.fetchUser(this.props.user)
+    }
     
+    componentWillReceiveProps(nextProps) {
+        this.fetchUser(nextProps.user)
+    }
+
     render() {
         var {profile} = this.state
         return (
@@ -170,6 +172,10 @@ export default class InfoComponent extends Component {
 
             case 'new':
                 return <NewPostDetailCard />
+                break
+
+            default:
+                return <div>ERROR</div>
                 break
         }
     }

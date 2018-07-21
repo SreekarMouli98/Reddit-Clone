@@ -1,10 +1,5 @@
 import React, {Component} from 'react'
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardText,
-    CardLink,
     Row,
     Col,
 } from 'reactstrap'
@@ -40,6 +35,7 @@ export default class ProfileComments extends Component {
                                     postid={comment.parent_post.id}
                                     subreddit={comment.parent_post.subreddit.name}
                                     subredditlink={true}
+                                    clickable={true}
                                 />
                             </Col>
                         </Row>

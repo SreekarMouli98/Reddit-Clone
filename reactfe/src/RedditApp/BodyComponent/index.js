@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import Context from '../../provider'
 import { 
-    BrowserRouter,
     Route,
-    Redirect,
     Switch,
 } from "react-router-dom"
+import {
+    withRouter
+} from 'react-router'
 import {
     Container,
     Row,
@@ -16,7 +17,7 @@ import Subreddit from './ContentComponent/Subreddit'
 import PostExpanded from './ContentComponent/PostExpanded'
 import InfoComponent  from './InfoComponent'
 import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
-import NewPost from './ContentComponent/assets/NewPost'
+import EditCreatePost from './ContentComponent/assets/EditCreatePost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
@@ -27,50 +28,57 @@ class Wrapper extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            info: 'home',
-            otherProps: [],
+            info: false
         }
     }
 
+    changeTab(nextTab) {
+        this.props.setActiveTab(nextTab)
+    }
+
+    changeInfo(info) {
+        this.setState({info: info})
+    }
+
     componentDidMount() {
-        this.props.setActiveTab(this.props.activeTab);
+        this.changeTab(this.props.activeTab)
+        this.changeInfo(this.props.info)
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            info: nextProps.info,
-            otherProps: nextProps
-        })
-        console.log(...this.props)
+        if (this.props.activeTab !== nextProps.activeTab) {
+            this.changeTab(nextProps.activeTab)
+        }
+        this.changeInfo(nextProps.info)
     }
 
     render() {
         return (
             <React.Fragment>
-                {this.state.info ?
-                    <Row>
-                        <Col md='8' id='content-block'>
-                            <SwitchTab />
-                            {this.props.children}
-                        </Col>
-                        <Col md='4' id='info-block'>
-                            <InfoComponent info={this.props.info} {...this.props}/>
-                        </Col>
-                    </Row>
+                {this.props.info ?
+                        <Row>
+                            <Col md='8' id='content-block'>
+                                <SwitchTab />
+                                {this.props.children}
+                            </Col>
+                            <Col md='4' id='info-block'>
+                                <InfoComponent info={this.state.info} {...this.props}/>
+                            </Col>
+                        </Row>
                     :
-                    <Row>
-                        <Col>
-                            <SwitchTab />
-                            {this.props.children}
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col>
+                                <SwitchTab />
+                                {this.props.children}
+                            </Col>
+                        </Row>
                 }
             </React.Fragment>
         )
     }
 }
 
-export default class BodyComponent extends Component {
+class BodyComponent extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -81,8 +89,10 @@ export default class BodyComponent extends Component {
                                 <Route 
                                     exact 
                                     path='/' 
-                                    render={() =>
-                                        <Redirect to='r/home/' />
+                                    render={() => 
+                                        <React.Fragment>
+                                           {this.props.history.push('/r/home/')}
+                                        </React.Fragment>
                                     }
                                 />
                                 <Route 
@@ -162,7 +172,28 @@ export default class BodyComponent extends Component {
                                                 dont_ask_new_post = {true}
                                                 subreddit={props.match.params.subreddit}
                                             >
-                                                <NewPost />
+                                                <EditCreatePost />
+                                            </Wrapper>
+                                        )
+                                    }}
+                                />
+                                <Route
+                                    exact
+                                    path = '/r/:subreddit/post/:postid/edit/'
+                                    render={(props) => {
+                                        return (
+                                            <Wrapper 
+                                                setActiveTab={context.toggleTab} 
+                                                activeTab={'4'} 
+                                                info='subreddit'
+                                                dont_ask_new_post = {true}
+                                                subreddit={props.match.params.subreddit}
+                                            >
+                                                <EditCreatePost 
+                                                    update={true}
+                                                    subreddit={props.match.params.subreddit}
+                                                    postid={props.match.params.postid}    
+                                                />
                                             </Wrapper>
                                         )
                                     }}
@@ -216,7 +247,10 @@ export default class BodyComponent extends Component {
                                                 info='subreddit'
                                                 subreddit={props.match.params.subreddit}
                                             >
-                                                <Subreddit subreddit={props.match.params.subreddit} />
+                                                <Subreddit 
+                                                    update={false}
+                                                    subreddit={props.match.params.subreddit} 
+                                                />
                                             </Wrapper>
                                         )
                                     }}
@@ -231,16 +265,18 @@ export default class BodyComponent extends Component {
                                                 activeTab={'4'}
                                                 info='new'
                                             >
-                                                <NewPost />
+                                                <EditCreatePost />
                                             </Wrapper>
                                         )
                                     }}
                                 />
                                 <Route
                                     exact
-                                    path = '/Select an Option/new/'
+                                    path = '/r/Select an Option/new/'
                                     render = {() => 
-                                        <Redirect to ='/new/' />
+                                        <React.Fragment>
+                                            {this.props.history.push('/new/')}
+                                        </React.Fragment>
                                     }
                                 />
                                 <Route
@@ -290,3 +326,5 @@ export default class BodyComponent extends Component {
         )
     }
 }
+
+export default withRouter(BodyComponent)

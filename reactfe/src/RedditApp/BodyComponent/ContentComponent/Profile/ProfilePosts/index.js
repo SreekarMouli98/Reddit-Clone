@@ -4,6 +4,7 @@ import {
     Col
 } from 'reactstrap'
 import PostTemplate from '../../assets/PostTemplate'
+import Context from '../../../../../provider'
 
 export default class ProfilePosts extends Component {
     constructor(props) {
@@ -24,25 +25,34 @@ export default class ProfilePosts extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                {this.state.posts.map((post) => {
-                        return (
-                            <Row key={post.id}>
-                                <Col sm={12}>
-                                    <PostTemplate
-                                        postid = {post.id}
-                                        votes={post.votes}
-                                        title={post.title} 
-                                        content={post.content} 
-                                        subreddit= {post.subreddit.name} 
-                                        subredditlink={true}
-                                    />
-                                </Col>
-                            </Row>
-                        )
-                    })
-                }
-            </React.Fragment>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <React.Fragment>
+                            {this.state.posts.map((post) => {
+                                return (
+                                    <Row key={post.id}>
+                                            <Col sm={12}>
+                                                <PostTemplate
+                                                    postid = {post.id}
+                                                    votes={post.votes}
+                                                    title={post.title} 
+                                                    content={post.content} 
+                                                    subreddit= {post.subreddit.name} 
+                                                    subredditlink={true}
+                                                    clickable={true}
+                                                    can_edit={context.username === post.profile.username && context.loggedIn === true}
+                                                    can_delete={context.username === post.profile.username && context.loggedIn === true}
+                                                />
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                            }
+                        </React.Fragment>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

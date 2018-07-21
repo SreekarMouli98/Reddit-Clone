@@ -6,6 +6,7 @@ import {
     NavLink,
     Navbar,
     NavbarBrand,
+    ButtonGroup,
     Button,
 } from 'reactstrap'
 import {
@@ -14,6 +15,7 @@ import {
 import classnames from 'classnames'
 import ProfilePosts from './ProfilePosts'
 import ProfileComments from './ProfileComments'
+import DeleteTemplate from '../assets/DeleteTemplate';
 
 class Profile extends Component {
     constructor(props) {
@@ -21,16 +23,23 @@ class Profile extends Component {
         this.state = {profile: '', user: ''}
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/u/${this.props.username}/`)
+    fetchProfile(username) {
+        fetch(`/api/reddit/u/${username}/`)
         .then(data => data.json())
         .then((profile) => {
             this.setState({
                 profile: profile,
                 user: profile.user,
             })
-            console.log(this.state)
         })
+    }
+
+    componentDidMount() {
+        this.fetchProfile(this.props.username)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchProfile(nextProps.username)
     }
 
     render() {
@@ -40,16 +49,30 @@ class Profile extends Component {
                     return (
                         <React.Fragment>
                             <Navbar>
-                                <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Activity</NavbarBrand>
-                                {context.loggedIn && 
-                                    <Button
-                                    color='danger'    
-                                    onClick= {() => {
-                                        this.props.history.push('edit/')
-                                    }}
-                                    >
-                                        EDIT PROFILE
-                                    </Button>
+                                {(this.state.user.first_name !== '' || this.state.user.last_name !== '') ?
+                                    <NavbarBrand>{this.state.user.first_name} {this.state.user.last_name}'s Profile</NavbarBrand>
+                                    :
+                                    <NavbarBrand>{this.state.profile.username}'s Profile</NavbarBrand>
+                                }
+
+                                {context.loggedIn && context.username === this.state.profile.username && 
+                                    <ButtonGroup>
+                                        <Button
+                                            color='info'    
+                                            onClick= {() => {
+                                                this.props.history.push(`/u/${this.state.profile.username}/edit/`)
+                                            }}
+                                        >
+                                            EDIT
+                                        </Button>
+                                        <DeleteTemplate
+                                            button={true}
+                                            block={false}
+                                            toDeleteURL={`/api/reddit/u/${this.state.profile.username}/`}
+                                            successURL={'/'}
+                                            forceLogout={true}
+                                        />
+                                    </ButtonGroup>
                                 }
                             </Navbar>
                             <Nav tabs>
@@ -57,13 +80,17 @@ class Profile extends Component {
                                     <NavLink 
                                         onClick={() => {context.toggleProfileTab('1')}}
                                         className={classnames({active: context.profileTab === '1'})}
-                                    >Posts</NavLink>
+                                    >
+                                        Posts
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink 
                                         onClick={() => {context.toggleProfileTab('2')}}
                                         className={classnames({active: context.profileTab === '2'})}
-                                    >Comments</NavLink>
+                                    >
+                                        Comments
+                                    </NavLink>
                                 </NavItem>
                             </Nav>
                             {context.profileTab === '1' ?

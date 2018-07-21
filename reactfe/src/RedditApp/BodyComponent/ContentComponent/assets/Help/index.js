@@ -4,11 +4,10 @@ import {
      Jumbotron,
 } from 'reactstrap'
 import {
-    Link,
-    Redirect,
-} from 'react-router-dom'
+    withRouter,
+} from 'react-router'
 
-export default class Help extends Component {
+class Help extends Component {
     render() {
         return (
             <Context.Consumer>
@@ -19,7 +18,11 @@ export default class Help extends Component {
                             <Jumbotron>
                                 Reddit is a place where users share their thoughts, opinions about topics.These topics can cover a
                                 variety of topics including news, science, movies, video games,music, books, fitness and food.
-                                <Link id='my-links' to='#' onClick={() => context.toggleSignupModal()}> Create your account now </Link>
+                                <div 
+                                    onClick={() => {
+                                        context.toggleSignupModal()
+                                    }}
+                                > Create your account now </div>
                                 and have fun!
                             </Jumbotron>
                             <hr />
@@ -27,9 +30,9 @@ export default class Help extends Component {
                             <Jumbotron>
                                 <p>
                                     Subscribe to your favourite subreddit to get feed directly from those. Visit
-                                    <a href='/r/popular/'> Popular </a>
+                                    <div onClick={()=>{this.props.history.push('/r/popular/')}}> Popular </div>
                                     or 
-                                    <a href='/r/all/'> All </a>
+                                    <div onClick={()=>{this.props.history.push('/r/all/')}}> All </div>
                                     to get the feed from lastest and greatest subreddits.
                                 </p>
                                 <p>
@@ -48,3 +51,5 @@ export default class Help extends Component {
         )
     }
 }
+
+export default withRouter(Help)

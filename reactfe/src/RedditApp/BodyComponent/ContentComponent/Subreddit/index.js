@@ -4,6 +4,7 @@ import {
     Col,
 } from 'reactstrap'
 import PostTemplate from '../assets/PostTemplate'
+import Context from '../../../../provider'
 
 export default class Subreddit extends Component {
     constructor(props) {
@@ -14,39 +15,46 @@ export default class Subreddit extends Component {
     }
 
     componentDidMount() {   
-        console.log('subreddit mounted: ', this.props.subreddit)
         fetch(`/api/reddit/r/${this.props.subreddit}/posts/`)
         .then(result => {   
             return result.json();
         })
         .then(data => {
-            console.log(data)
             this.setState({posts: data})
         })
     }
 
     render() {
         return (
-            <React.Fragment>
-                {this.state.posts.map((post) => {
+            <Context.Consumer>
+                {context => {
                     return (
-                        <Row key={post.id}>
-                            <Col sm={12}>
-                                <PostTemplate
-                                    can_vote={true}
-                                    postid={post.id}
-                                    votes={post.votes}
-                                    title={post.title} 
-                                    content={post.content} 
-                                    subreddit={post.subreddit.name}
-                                    username={post.profile.username}
-                                    userlink={true}
-                                />
-                            </Col>
-                        </Row>
+                        <React.Fragment>
+                            {this.state.posts.map((post) => {
+                                return (
+                                    <Row key={post.id}>
+                                        <Col sm={12}>
+                                            <PostTemplate
+                                                can_vote={true}
+                                                postid={post.id}
+                                                votes={post.votes}
+                                                title={post.title} 
+                                                content={post.content} 
+                                                subreddit={post.subreddit.name}
+                                                username={post.profile.username}
+                                                userlink={true}
+                                                clickable={true}
+                                                can_edit={context.username === post.profile.username && context.loggedIn === true}
+                                                can_delete={context.username === post.profile.username && context.loggedIn === true}    
+                                            />
+                                        </Col>
+                                    </Row>
+                                )
+                            })}
+                        </React.Fragment>   
                     )
-                })}
-            </React.Fragment>   
+                }}
+            </Context.Consumer>
         )
     }
 }

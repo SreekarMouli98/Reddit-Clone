@@ -11,7 +11,7 @@ class ListCommentsOfPost(ListCreateAPIView):
             return CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'])
+        return Comment.objects.filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id']).order_by('-updated_at', '-votes')
 
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
@@ -30,7 +30,7 @@ class ListCommentsOfUser(ListCreateAPIView):
             return CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(profile__username=self.kwargs['username'])
+        return Comment.objects.filter(profile__username=self.kwargs['username']).order_by('-updated_at')
 
 class DetailCommentsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()

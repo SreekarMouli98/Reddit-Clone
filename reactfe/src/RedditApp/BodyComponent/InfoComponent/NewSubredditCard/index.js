@@ -1,23 +1,39 @@
 import React, {Component} from 'react'
 import {
+    withRouter
+} from 'react-router'
+import {
     Card,
     CardBody,
     Button,
     CardText,
 } from 'reactstrap'
-import {
-    Redirect,
-} from 'react-router-dom'
+import Context from '../../../../provider'
 
-export default class NewSubredditCard extends Component {
+class NewSubredditCard extends Component {
+    handleClick(context) {
+        context.loggedIn ? 
+            this.props.history.push('/create/')
+            :
+            context.toggleLoginModal()
+    }
+
     render() {
         return (
-            <Card>
-                <CardBody>
-                    <CardText>Wanna have your own community? Create your own subreddit here!</CardText>
-                    <Button color='primary' block onClick={() => window.location='/create/'}>CREATE SUBREDDIT</Button>
-                </CardBody>
-            </Card>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <Card>
+                            <CardBody>
+                                <CardText>Wanna have your own community? Create your own subreddit here!</CardText>
+                                <Button color='primary' block onClick={()=>this.handleClick(context)}>CREATE SUBREDDIT</Button>
+                            </CardBody>
+                        </Card>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }
+
+export default withRouter(NewSubredditCard)

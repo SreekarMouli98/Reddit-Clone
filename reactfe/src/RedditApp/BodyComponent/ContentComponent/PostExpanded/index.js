@@ -3,6 +3,7 @@ import Context from '../../../../provider'
 import {
     Row,
     Col,
+    Table,
     Jumbotron,
 } from 'reactstrap'
 import PostTemplate from '../assets/PostTemplate'
@@ -21,8 +22,8 @@ export default class PostExpanded extends Component {
         }
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
+    fetchPostsAndComments(subreddit, postid) {
+        fetch(`/api/reddit/r/${subreddit}/posts/${postid}/`)
         .then(data => data.json())
         .then(json => {
             this.setState({
@@ -30,14 +31,23 @@ export default class PostExpanded extends Component {
             })
         })
         .then(
-            fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/`)
+            fetch(`/api/reddit/r/${subreddit}/posts/${postid}/comments/`)
             .then(data => data.json())
             .then(json => {
+                console.log(json)
                 this.setState({
                     comments: json,
                 })
             })
         )
+    }
+
+    componentDidMount() {
+        this.fetchPostsAndComments(this.props.subreddit, this.props.postid)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchPostsAndComments(nextProps.subreddit, nextProps.postid)
     }
 
     render() {
@@ -47,54 +57,52 @@ export default class PostExpanded extends Component {
                 {context => {
                     return (
                         <React.Fragment>
-                            <Row>
-                                <Col>
-                                    <PostTemplate 
-                                        can_vote={true}
-                                        postid={post.id}
-                                        title={post.title}
-                                        content={post.content}  
-                                        votes={post.votes}
-                                        subreddit={post.subreddit.name}
-                                        username={post.profile.username}
-                                        userlink={true}
-                                    />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Jumbotron>
-                                        <Row>
-                                            <Col sm={{size:11, offset:1}}>
-                                                <NewComment />
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                {comments.length !== 0 &&
-                                                    <React.Fragment>
-                                                        {comments.map((comment) => {
-                                                            return (
-                                                                <Row key={comment.id}>
-                                                                    <Col>
-                                                                        <CommentTemplate
-                                                                            can_vote={true}
-                                                                            username={comment.profile.username}
-                                                                            content={comment.content}
-                                                                            votes={comment.votes}
-                                                                            userlink={true}
-                                                                            />
-                                                                    </Col>
-                                                                </Row>
-                                                            )}
-                                                        )}
-                                                    </React.Fragment>
-                                                }
-                                            </Col>
-                                        </Row>
-                                    </Jumbotron>
-                                </Col>
-                            </Row>
+                            <PostTemplate 
+                                can_vote={true}
+                                postid={post.id}
+                                title={post.title}
+                                content={post.content}  
+                                votes={post.votes}
+                                subreddit={post.subreddit.name}
+                                username={post.profile.username}
+                                userlink={true}
+                                can_edit={context.username === post.profile.username && context.loggedIn === true}
+                                can_delete={context.username === post.profile.username && context.loggedIn === true}    
+                            />
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <NewComment 
+                                            subreddit={this.props.subreddit}
+                                            postid={this.props.postid}
+                                        />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {comments.length !== 0 &&
+                                        <React.Fragment>
+                                            {comments.map((comment) => {
+                                                return (
+                                                    <tr key={comment.id}>
+                                                        <CommentTemplate
+                                                            can_vote={true}
+                                                            username={comment.profile.username}
+                                                            content={comment.content}
+                                                            votes={comment.votes}
+                                                            userlink={true}
+                                                            subreddit={comment.parent_post.subreddit.name}
+                                                            postid={comment.parent_post.id}
+                                                            commentid={comment.id}
+                                                            can_edit={context.username === comment.profile.username && context.loggedIn === true}
+                                                            can_delete={context.username === comment.profile.username && context.loggedIn === true}
+                                                        />
+                                                    </tr>
+                                                )}
+                                            )}
+                                        </React.Fragment>
+                                    }
+                                </tbody>
+                            </Table>
                         </React.Fragment>
                     )
                 }}

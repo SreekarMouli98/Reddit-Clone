@@ -21,6 +21,9 @@ class Subreddit(models.Model):
     moderators = models.ManyToManyField(Profile, blank=True, related_name='moderates')
     rules=models.CharField(max_length=500, null=True, blank=True)
 
+    class Meta:
+        unique_together = ("name", )
+
     def __str__(self):
         return '%s' % (self.name)
 
