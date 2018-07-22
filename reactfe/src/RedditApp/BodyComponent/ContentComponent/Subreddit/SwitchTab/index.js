@@ -18,7 +18,7 @@ export default class SwitchTab extends Component {
                         <Container>
                             <TabContent activeTab={context.activeTab}>
                                 <TabPane tabId="1">
-                                    <Home />
+                                    <Home context={context}/>
                                 </TabPane>
                                 <TabPane tabId="2">
                                     <Popular />

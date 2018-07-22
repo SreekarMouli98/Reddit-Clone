@@ -14,6 +14,10 @@ class ListSubreddits(ListCreateAPIView):
 
 class DetailSubreddit(RetrieveUpdateDestroyAPIView):
     queryset = Subreddit.objects.all()
-    serializer_class = SubredditSerializer_detailed
     lookup_field = 'name'
     lookup_url_kwarg = 'r_name'
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SubredditSerializer_detailed
+        return SubredditSerializer

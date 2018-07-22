@@ -52,16 +52,18 @@ class SubredditHelper extends Component {
                     return (
                         <React.Fragment>
                             <SubredditCard
+                                subredditid = {this.state.subreddit.id}
                                 name = {this.state.subreddit.name}
                                 description = {this.state.subreddit.description}
                                 provide_link = {true}
-                                can_subscribe = {context.username !== this.state.profile.username}
+                                can_subscribe = {context.loggedIn ? context.username !== this.state.profile.username : true}
                                 ask_new_post = {this.props.dont_ask_new_post === true ? false : true}
-                                // If you get an error here, that probably means that the json data was wrong!!
                                 can_edit={context.username === this.state.profile.username && context.loggedIn === true}
                                 can_delete={context.username === this.state.profile.username && context.loggedIn === true}
                                 show_rules = {this.state.rules.length !== 0}
                                 rules = {this.state.rules}
+                                subscribers = {this.state.subreddit.subscribers}
+                                context= {context}
                             />      
                         </React.Fragment>
                     )
@@ -121,7 +123,7 @@ export default class InfoComponent extends Component {
         })
     }
 
-    render_switch({info}) {
+    render_switch({info}, context) {
         switch(info) {
             case 'home':
                 return (
@@ -132,6 +134,7 @@ export default class InfoComponent extends Component {
                         can_subscribe = {false}
                         ask_new_post = {true}
                         show_rules = {false}
+                        context = {context}
                     />
                 )
                 break
@@ -145,6 +148,7 @@ export default class InfoComponent extends Component {
                         can_subscribe = {false}
                         ask_new_post = {true}
                         show_rules = {false}
+                        context = {context}
                     />
                 )
                 break
@@ -158,6 +162,7 @@ export default class InfoComponent extends Component {
                         can_subscribe = {false}
                         ask_new_post = {true}
                         show_rules = {false}
+                        context = {context}
                     />
                 )
                 break
@@ -182,11 +187,17 @@ export default class InfoComponent extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                {this.render_switch(this.state)}
-                <NewSubredditCard />
-                <AboutUsCard/>
-            </React.Fragment>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <React.Fragment>
+                            {this.render_switch(this.state, context)}
+                            <NewSubredditCard />
+                            <AboutUsCard/>
+                        </React.Fragment>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

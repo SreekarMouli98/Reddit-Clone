@@ -4,6 +4,13 @@ from redditapp.serializers import *
 from rest_framework.generics import *
 from django.db.models import Count
 
+class ListHomePosts(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer_detailed
+
+    def get_queryset(self):
+        return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).filter(subreddit__subscribers__username=self.kwargs['username']).order_by('-updated_at', '-total_votes')
+
 class ListAllPosts(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer_detailed
