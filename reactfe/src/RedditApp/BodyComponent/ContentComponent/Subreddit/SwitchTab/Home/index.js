@@ -21,7 +21,6 @@ export default class Home extends Component {
             fetch(`/api/reddit/r/home/${context.username}/`)
             .then(data => data.json())
             .then(json => {
-                console.log(json)
                 this.setState({
                     posts: json
                 })

@@ -43,7 +43,8 @@ class NewComment extends Component {
             votes: 0,
             profile: context.userId,
             parent_post: this.props.postid,
-            parent_comment: null
+            parent_comment: null,
+            upvotes: [context.userId]
         }
         json = JSON.stringify(json)
         fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/`, {
