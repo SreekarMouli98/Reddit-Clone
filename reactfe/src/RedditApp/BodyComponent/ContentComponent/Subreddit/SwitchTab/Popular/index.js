@@ -14,12 +14,20 @@ export default class Popular extends Component {
         }
     }
 
-    componentDidMount() {   
+    fetchPosts() {
         fetch('/api/reddit/r/popular/')
         .then(data => data.json())
         .then(json => {
             this.setState({posts: json})
         })
+    }
+
+    componentDidMount() {   
+        this.fetchPosts()
+    }
+
+    componentWillMount(nextProps) {
+        this.fetchPosts()
     }
     
     render() {

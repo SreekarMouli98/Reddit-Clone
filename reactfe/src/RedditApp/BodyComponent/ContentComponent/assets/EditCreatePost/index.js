@@ -81,6 +81,9 @@ class EditCreatePost extends Component {
             profile: context.userId,
             subreddit: Number(this.state.subreddit_id),
         }
+        if (this.props.update === false) {
+            json['upvotes'] = [context.userId]
+        }
         json = JSON.stringify(json)
         const url = `/api/reddit/${this.state.subreddit_selected}/posts/${this.props.update ? this.props.postid + '/' : ''}`
         fetch(url, {
