@@ -17,7 +17,11 @@ class ListCommentsOfPost(ListCreateAPIView):
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer_detailed
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CommentSerializer_detailed
+        return CommentSerializer
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())

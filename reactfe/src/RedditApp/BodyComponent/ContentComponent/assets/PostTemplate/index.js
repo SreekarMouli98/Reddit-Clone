@@ -68,90 +68,108 @@ class PostTemplate extends Component {
     }
 
     addUpvote() {
-        this.setState(prev => ({
-            upvotes: prev.upvotes.concat(this.props.context.userId),
-            upvoted: true,
-            votes: prev.votes + 1,
-        }))
+        return new Promise((resolve, reject) => {
+            this.setState(prev => ({
+                upvotes: prev.upvotes.concat(this.props.context.userId),
+                upvoted: true,
+                votes: prev.votes + 1,
+            }), () => {
+                return resolve()
+            })
+        })
     }
 
     removeUpvote() {
-        var new_upvotes = this.state.upvotes.concat()
-        new_upvotes.pop(this.props.context.userId)
-        this.setState(prev => ({
-            upvotes: new_upvotes,
-            upvoted: false,
-            votes: prev.votes - 1,
-        }))
+        return new Promise((resolve, reject) => {
+            var new_upvotes = this.state.upvotes.concat()
+            new_upvotes.pop(this.props.context.userId)
+            this.setState(prev => ({
+                upvotes: new_upvotes,
+                upvoted: false,
+                votes: prev.votes - 1,
+            }), () => {
+                return resolve()
+            })
+        })
     }
 
     addDownvote() {
-        this.setState(prev => ({
-            downvotes: prev.downvotes.concat(this.props.context.userId),
-            downvoted: true,
-            votes: prev.votes - 1,
-        }))
+        return new Promise((resolve, reject) => {
+            this.setState(prev => ({
+                downvotes: prev.downvotes.concat(this.props.context.userId),
+                downvoted: true,
+                votes: prev.votes - 1,
+            }), () => {
+                return resolve()
+            })
+        })
     }
 
     removeDownvote() {
-        var new_downvotes = this.state.downvotes.concat()
-        new_downvotes.pop(this.props.context.userId)
-        this.setState(prev => ({
-            downvotes: new_downvotes,
-            downvoted: false,
-            votes: prev.votes + 1,
-        }))
+        return new Promise((resolve, reject) => {
+            var new_downvotes = this.state.downvotes.concat()
+            new_downvotes.pop(this.props.context.userId)
+            this.setState(prev => ({
+                downvotes: new_downvotes,
+                downvoted: false,
+                votes: prev.votes + 1,
+            }), () => {
+                return resolve()
+            })
+        })
     }
 
     postVotesData() {
-        // var json = {
-        //     upvotes: this.state.upvotes,
-        //     downvotes: this.state.downvotes
-        // }
-        const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`
-        fetch(url, {
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: {
-                content: "new content"
+        return new Promise((resolve, reject) => {
+            var json = {
+                upvotes: this.state.upvotes,
+                downvotes: this.state.downvotes
             }
+            json = JSON.stringify(json)
+            const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: json
+            })
+            .then(response => {
+                response.ok ?
+                    console.log('success')
+                    :
+                    console.log(response)
+            })
         })
-        .then(response => {
-            console.log('response status:', response)
-            return response.json()
-        })
-        .then(res => console.log('response data:', res))
     }
 
-    toggleUpvote() {
-        // if (this.alreadyDownvoted()) {
-        //     this.removeDownvote()
-        //     this.addUpvote()
-        // }
-        // else if (this.alreadyUpvoted()) {
-        //     this.removeUpvote()
-        // }
-        // else {
-        //     this.addUpvote()
-        // }
-        this.postVotesData()
+    async toggleUpvote() {
+        if (this.alreadyDownvoted()) {
+            await this.removeDownvote()
+            await this.addUpvote()
+        }
+        else if (this.alreadyUpvoted()) {
+            await this.removeUpvote()
+        }
+        else {
+            await this.addUpvote()
+        }
+        await this.postVotesData()
     }
 
-    toggleDownvote() {
-        // if (this.alreadyUpvoted()) {
-        //     this.removeUpvote()
-        //     this.addDownvote()
-        // }
-        // else if(this.alreadyDownvoted()) {
-        //     this.removeDownvote()
-        // }
-        // else {
-        //     this.addDownvote()
-        // }
-        this.postVotesData()
+    async toggleDownvote() {
+        if (this.alreadyUpvoted()) {
+            await this.removeUpvote()
+            await this.addDownvote()
+        }
+        else if(this.alreadyDownvoted()) {
+            await this.removeDownvote()
+        }
+        else {
+            await this.addDownvote()
+        }
+        await this.postVotesData()
     }
 
     render() {
