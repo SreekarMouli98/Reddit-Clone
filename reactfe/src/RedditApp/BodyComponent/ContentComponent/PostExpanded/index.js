@@ -34,7 +34,6 @@ export default class PostExpanded extends Component {
             fetch(`/api/reddit/r/${subreddit}/posts/${postid}/comments/`)
             .then(data => data.json())
             .then(json => {
-                console.log(json)
                 this.setState({
                     comments: json,
                 })
@@ -58,11 +57,13 @@ export default class PostExpanded extends Component {
                     return (
                         <React.Fragment>
                             <PostTemplate 
+                                context={context}
                                 can_vote={true}
                                 postid={post.id}
                                 title={post.title}
                                 content={post.content}  
-                                votes={post.votes}
+                                upvotes={post.upvotes}
+                                downvotes={post.downvotes}
                                 subreddit={post.subreddit.name}
                                 username={post.profile.username}
                                 userlink={true}
@@ -85,10 +86,12 @@ export default class PostExpanded extends Component {
                                                 return (
                                                     <tr key={comment.id}>
                                                         <CommentTemplate
+                                                            context={context}
                                                             can_vote={true}
                                                             username={comment.profile.username}
                                                             content={comment.content}
-                                                            votes={comment.votes}
+                                                            upvotes={comment.upvotes}
+                                                            downvotes={comment.downvotes}
                                                             userlink={true}
                                                             subreddit={comment.parent_post.subreddit.name}
                                                             postid={comment.parent_post.id}

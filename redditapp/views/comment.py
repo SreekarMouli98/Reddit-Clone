@@ -2,6 +2,7 @@ from redditapp.models import *
 from django.views.generic import *
 from redditapp.serializers import *
 from rest_framework.generics import *
+from django.db.models import Count
 
 class ListCommentsOfPost(ListCreateAPIView):
     def get_serializer_class(self):
@@ -11,7 +12,7 @@ class ListCommentsOfPost(ListCreateAPIView):
             return CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id']).order_by('-updated_at', '-votes')
+        return Comment.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes').filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'])
 
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):

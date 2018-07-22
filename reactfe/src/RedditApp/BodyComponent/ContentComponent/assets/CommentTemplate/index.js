@@ -22,28 +22,138 @@ class CommentTemplate extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            upvotes: [],
+            downvotes: [],
             upvoted: false,
             downvoted: false,
             votes: this.props.votes,
         }
     }
 
-    toggleUpvote() {
+    getIds(json) {
+        var ls = []
+        if (json) {
+            for (var i = 0; i<json.length; i++) {
+                ls.push(json[i]['id'])
+            }
+        }
+        return ls
+    }
+    
+    setData(context, upvotes, downvotes) {
+        this.setState({
+            upvotes: this.getIds(upvotes),
+            downvotes: this.getIds(downvotes)
+        }, () => {
+            this.setState(prev => ({
+                upvoted: prev.upvotes.indexOf(context.userId) !== -1 && context.loggedIn,
+                downvoted: prev.downvotes.indexOf(context.userId) !== -1  && context.loggedIn,
+                votes: prev.upvotes.length - prev.downvotes.length,
+            }))
+        })
+    }
+
+    componentDidMount() {
+        this.setData(this.props.context, this.props.upvotes, this.props.downvotes)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setData(nextProps.context, nextProps.upvotes, nextProps.downvotes)
+    }
+
+    alreadyUpvoted() {
+        return this.state.upvotes.indexOf(this.props.context.userId) !== -1
+    }
+
+    alreadyDownvoted() {
+        return this.state.downvotes.indexOf(this.props.context.userId) !== -1
+    }
+
+    addUpvote() {
         this.setState(prev => ({
-                upvoted: !prev.upvoted,
-                downvoted: false,
-                votes : (!prev.upvoted) ? prev.votes + (prev.downvoted ? 2 : 1) : prev.votes - (prev.downvoted ? 2 : 1),
-            })
-        )
+            upvotes: prev.upvotes.concat(this.props.context.userId),
+            upvoted: true,
+            votes: prev.votes + 1,
+        }))
+    }
+
+    removeUpvote() {
+        var new_upvotes = this.state.upvotes.concat()
+        new_upvotes.pop(this.props.context.userId)
+        this.setState(prev => ({
+            upvotes: new_upvotes,
+            upvoted: false,
+            votes: prev.votes - 1,
+        }))
+    }
+
+    addDownvote() {
+        this.setState(prev => ({
+            downvotes: prev.downvotes.concat(this.props.context.userId),
+            downvoted: true,
+            votes: prev.votes - 1,
+        }))
+    }
+
+    removeDownvote() {
+        var new_downvotes = this.state.downvotes.concat()
+        new_downvotes.pop(this.props.context.userId)
+        this.setState(prev => ({
+            downvotes: new_downvotes,
+            downvoted: false,
+            votes: prev.votes + 1,
+        }))
+    }
+
+    postVotesData() {
+        // var json = {
+        //     upvotes: this.state.upvotes,
+        //     downvotes: this.state.downvotes
+        // }
+        const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/comments/${this.props.commentid}/`
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: {
+                content: "new content"
+            }
+        })
+        .then(response => {
+            console.log('response status:', response)
+            return response.json()
+        })
+        .then(res => console.log('response data:', res))
+    }
+
+    toggleUpvote() {
+        // if (this.alreadyDownvoted()) {
+        //     this.removeDownvote()
+        //     this.addUpvote()
+        // }
+        // else if (this.alreadyUpvoted()) {
+        //     this.removeUpvote()
+        // }
+        // else {
+        //     this.addUpvote()
+        // }
+        this.postVotesData()
     }
 
     toggleDownvote() {
-        this.setState(prev => ({
-                downvoted: !prev.downvoted,
-                upvoted: false,
-                votes : (!prev.downvoted) ? prev.votes - (prev.upvoted ? 2 : 1) : prev.votes + (prev.upvoted ? 2 : 1),
-            })
-        )
+        // if (this.alreadyUpvoted()) {
+        //     this.removeUpvote()
+        //     this.addDownvote()
+        // }
+        // else if(this.alreadyDownvoted()) {
+        //     this.removeDownvote()
+        // }
+        // else {
+        //     this.addDownvote()
+        // }
+        this.postVotesData()
     }
 
     render() {

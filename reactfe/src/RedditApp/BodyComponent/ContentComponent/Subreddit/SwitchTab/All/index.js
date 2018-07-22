@@ -43,9 +43,11 @@ export default class All extends Component {
                                     <Row key={post.id}>
                                         <Col sm={12}>
                                             <PostTemplate
+                                                context={context}
                                                 can_vote={true}
                                                 postid={post.id}
-                                                votes={post.votes}
+                                                upvotes={post.upvotes}
+                                                downvotes={post.downvotes}
                                                 title={post.title} 
                                                 content={post.content} 
                                                 subreddit= {post.subreddit.name} 

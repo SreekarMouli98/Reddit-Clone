@@ -35,9 +35,11 @@ export default class Subreddit extends Component {
                                     <Row key={post.id}>
                                         <Col sm={12}>
                                             <PostTemplate
+                                                context={context}
                                                 can_vote={true}
                                                 postid={post.id}
-                                                votes={post.votes}
+                                                upvotes={post.upvotes}
+                                                downvotes={post.downvotes}
                                                 title={post.title} 
                                                 content={post.content} 
                                                 subreddit={post.subreddit.name}
