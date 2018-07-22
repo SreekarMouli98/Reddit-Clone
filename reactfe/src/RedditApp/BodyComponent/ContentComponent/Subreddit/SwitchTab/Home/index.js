@@ -49,30 +49,36 @@ export default class Home extends Component {
                                 </React.Fragment>
                                 :
                                 <React.Fragment>
-                                    {this.state.posts.map((post) => {
-                                        return (
-                                            <Row key={post.id}>
-                                                <Col sm={12}>
-                                                    <PostTemplate
-                                                        context={context}
-                                                        can_vote={true}
-                                                        postid={post.id}
-                                                        upvotes={post.upvotes}
-                                                        downvotes={post.downvotes}
-                                                        title={post.title} 
-                                                        content={post.content} 
-                                                        subreddit= {post.subreddit.name} 
-                                                        username= {post.profile.username}
-                                                        subredditlink={true}
-                                                        userlink={true}
-                                                        clickable={true}
-                                                        can_edit={context.username === post.profile.username && context.loggedIn === true}
-                                                        can_delete={context.username === post.profile.username && context.loggedIn === true}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        )
-                                    })}
+                                    {this.state.posts.length !== 0 ?
+                                        this.state.posts.map((post) => {
+                                            return (
+                                                <Row key={post.id}>
+                                                    <Col sm={12}>
+                                                        <PostTemplate
+                                                            context={context}
+                                                            can_vote={true}
+                                                            postid={post.id}
+                                                            upvotes={post.upvotes}
+                                                            downvotes={post.downvotes}
+                                                            title={post.title} 
+                                                            content={post.content} 
+                                                            subreddit= {post.subreddit.name} 
+                                                            username= {post.profile.username}
+                                                            subredditlink={true}
+                                                            userlink={true}
+                                                            clickable={true}
+                                                            can_edit={context.username === post.profile.username && context.loggedIn === true}
+                                                            can_delete={context.username === post.profile.username && context.loggedIn === true}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            )
+                                        })
+                                        :
+                                        <h3 className='text-center'>
+                                            Seems like you haven't subscribed to anything!
+                                        </h3>
+                                    }
                                 </React.Fragment>                            
                             }
                         </Container>

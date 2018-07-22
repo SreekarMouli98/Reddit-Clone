@@ -84,7 +84,7 @@ class EditCreateSubreddit extends Component {
             description: this.state.description,
             rules: this.state.rules.join(';'),
             profile: context.userId,
-            subscribers: [],
+            subscribers: [context.userId],
             moderators: [],
         }
         json = JSON.stringify(json)
