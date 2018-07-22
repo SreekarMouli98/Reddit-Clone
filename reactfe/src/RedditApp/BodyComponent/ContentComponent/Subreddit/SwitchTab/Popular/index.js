@@ -16,11 +16,9 @@ export default class Popular extends Component {
 
     componentDidMount() {   
         fetch('/api/reddit/r/popular/')
-        .then(result => {
-            return result.json();
-        })
-        .then(data => {
-            this.setState({posts: data})
+        .then(data => data.json())
+        .then(json => {
+            this.setState({posts: json})
         })
     }
     
@@ -35,9 +33,11 @@ export default class Popular extends Component {
                                     <Row key={post.id}>
                                         <Col sm={12}>
                                         <PostTemplate
+                                            context={context}
                                             can_vote={true}
                                             postid={post.id}
-                                            votes={post.votes}
+                                            upvotes={post.upvotes}
+                                            downvotes={post.downvotes}
                                             title={post.title} 
                                             content={post.content} 
                                             subreddit= {post.subreddit.name} 

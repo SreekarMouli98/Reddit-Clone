@@ -34,8 +34,10 @@ export default class ProfilePosts extends Component {
                                     <Row key={post.id}>
                                             <Col sm={12}>
                                                 <PostTemplate
-                                                    postid = {post.id}
-                                                    votes={post.votes}
+                                                    context={context}
+                                                    postid={post.id}
+                                                    upvotes={post.upvotes}
+                                                    downvotes={post.downvotes}
                                                     title={post.title} 
                                                     content={post.content} 
                                                     subreddit= {post.subreddit.name} 

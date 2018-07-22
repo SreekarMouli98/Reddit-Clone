@@ -5,6 +5,7 @@ import {
 } from 'reactstrap'
 import '../../assets/CommentTemplate'
 import CommentTemplate from '../../assets/CommentTemplate';
+import Context from '../../../../../provider'
 
 export default class ProfileComments extends Component {
     constructor(props) {
@@ -24,25 +25,33 @@ export default class ProfileComments extends Component {
 
     render() {
         return (
-            <React.Fragment>
-            {this.state.comments.map((comment) => {
+            <Context.Consumer>
+                {context => {
                     return (
-                        <Row key={comment.id}>
-                            <Col>
-                                <CommentTemplate
-                                    content={comment.content}                            
-                                    votes={comment.votes}
-                                    postid={comment.parent_post.id}
-                                    subreddit={comment.parent_post.subreddit.name}
-                                    subredditlink={true}
-                                    clickable={true}
-                                />
-                            </Col>
-                        </Row>
+                        <React.Fragment>
+                            {this.state.comments.map((comment) => {
+                                return (
+                                    <Row key={comment.id}>
+                                            <Col>
+                                                <CommentTemplate
+                                                    context={context}
+                                                    content={comment.content}                            
+                                                    upvotes={comment.upvotes}
+                                                    downvotes={comment.downvotes}
+                                                    postid={comment.parent_post.id}
+                                                    subreddit={comment.parent_post.subreddit.name}
+                                                    subredditlink={true}
+                                                    clickable={true}
+                                                    />
+                                            </Col>
+                                        </Row>
+                                    )
+                                }
+                            )}
+                        </React.Fragment>
                     )
-                }
-            )}
-            </React.Fragment>
+                }}
+            </Context.Consumer>
         )
     }
 }
