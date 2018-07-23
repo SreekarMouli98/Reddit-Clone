@@ -12,15 +12,22 @@ export default class ProfilePosts extends Component {
         this.state = {posts: []}
     }
 
-    componentDidMount() {
-        fetch(`/api/reddit/u/${this.props.username}/posts/`)
+    fetchPosts(username) {
+        fetch(`/api/reddit/u/${username}/posts/`)
         .then(data => data.json())
         .then(json => {
             this.setState({
                 posts: json,
             })
-            console.log(this.state)
         })
+    }
+
+    componentDidMount() {
+        this.fetchPosts(this.props.username)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchPosts(nextProps.username)
     }
 
     render() {
@@ -29,9 +36,10 @@ export default class ProfilePosts extends Component {
                 {context => {
                     return (
                         <React.Fragment>
-                            {this.state.posts.map((post) => {
-                                return (
-                                    <Row key={post.id}>
+                            {this.state.posts.length !== 0 ? 
+                                this.state.posts.map((post) => {
+                                    return (
+                                        <Row key={post.id}>
                                             <Col sm={12}>
                                                 <PostTemplate
                                                     context={context}
@@ -50,6 +58,10 @@ export default class ProfilePosts extends Component {
                                         </Row>
                                     )
                                 })
+                                :
+                                <h3 className='text-center'>
+                                    User hasn't made any posts yet!
+                                </h3>
                             }
                         </React.Fragment>
                     )

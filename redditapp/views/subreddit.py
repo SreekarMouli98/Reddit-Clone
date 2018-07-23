@@ -21,3 +21,10 @@ class DetailSubreddit(RetrieveUpdateDestroyAPIView):
         if self.request.method == 'GET':
             return SubredditSerializer_detailed
         return SubredditSerializer
+
+class ListSubredditsOfUser(ListAPIView):
+    queryset = Subreddit.objects.all()
+    serializer_class = SubredditSerializer
+
+    def get_queryset(self):
+        return Subreddit.objects.filter(profile__username = self.kwargs['username']).order_by('name')

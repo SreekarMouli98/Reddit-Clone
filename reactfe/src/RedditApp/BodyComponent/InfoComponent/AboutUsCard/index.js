@@ -27,16 +27,17 @@ class AboutUsCard extends Component {
                     >
                         About
                     </a>
-                    <a 
+                    {/* <a 
                         href='#'
                         className='padding-all striked-text'
                         onClick={(event) => {
                             event.preventDefault()
                             this.props.history.push('/blog/')
                         }}
+
                     >
                         Blog
-                    </a>
+                    </a> */}
                     <a 
                         href='#'
                         className='padding-all'
