@@ -128,11 +128,11 @@ class SubredditCard extends Component {
                             <Card>
                                 <CardHeader>
                                     {this.props.provide_link ? 
-                                        <CardLink className='text-centered' onClick={()=>this.props.history.push(`/r/${this.props.name}/`)}>
+                                        <CardLink className='cursor-on-hover' onClick={()=>this.props.history.push(`/r/${this.props.name}/`)}>
                                             <i className="fa fa-circle" aria-hidden="true"></i> {this.props.name}
                                         </CardLink>
                                         :
-                                        <CardText className='text-centered'>
+                                        <CardText className='cursor-on-hover'>
                                             <i className="fa fa-circle" aria-hidden="true"></i> {this.props.name}
                                         </CardText>
                                     }
