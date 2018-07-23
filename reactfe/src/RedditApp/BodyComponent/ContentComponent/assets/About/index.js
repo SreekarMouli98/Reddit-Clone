@@ -19,10 +19,20 @@ class About extends Component {
                 <Jumbotron>
                     <ListGroup>
                         <ListGroupItem>Reddit is an area where you share your thoughts and opinions on a particular topic</ListGroupItem>
-                        <ListGroupItem>Go ahead and create a Subreddit of your own.</ListGroupItem>
                         <ListGroupItem>Subreddit's can cover a variety of topics including news, science, movies, video games, music, books, fitness and food</ListGroupItem>
                         <ListGroupItem>
-                            Go ahead and <div className='my-about-link' onClick={()=>this.props.history.push('/create/')}>create your own Subreddit</div>. Have fun!
+                            {'Go ahead and '}
+                            <a 
+                                href='#' 
+                                className='black-text black-text-on-hover cursor-on-hover' 
+                                onClick={(event)=> {
+                                    event.preventDefault()
+                                    this.props.history.push('/create/')
+                                }}
+                                >
+                                create your own Subreddit
+                            </a>
+                            . Have fun! 
                         </ListGroupItem>
                     </ListGroup>
                 </Jumbotron>

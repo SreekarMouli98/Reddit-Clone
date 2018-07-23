@@ -22,6 +22,7 @@ import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'
 import Help from './ContentComponent/assets/Help'
 import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
+import SearchPage from './ContentComponent/SearchPage'
 import './style.css'
 
 class Wrapper extends React.Component {
@@ -315,6 +316,21 @@ class BodyComponent extends Component {
                                             info={false}
                                         >
                                             <EditCreateSubreddit />
+                                        </Wrapper>
+                                    }
+                                />
+                                <Route
+                                    exact
+                                    path = '/search/:keyword/'
+                                    render = {(props) => 
+                                        <Wrapper
+                                            setActiveTab={context.toggleTab}
+                                            activeTab={'4'}
+                                            info='haha'
+                                            >
+                                            <SearchPage 
+                                                keyword={props.match.params.keyword}
+                                            />
                                         </Wrapper>
                                     }
                                 />

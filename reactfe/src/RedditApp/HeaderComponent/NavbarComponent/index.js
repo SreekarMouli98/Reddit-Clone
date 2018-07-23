@@ -4,18 +4,18 @@ import {
     withRouter
 } from 'react-router'
 import {
-    Collapse,
-    Navbar, 
-    NavbarToggler, 
-    NavbarBrand, 
-    Nav, 
-    NavItem, 
-    NavLink,
+    Navbar,
+    NavbarBrand,
+    Form,
+    Input,
+    InputGroup,
+    Button,
     ButtonGroup
 } from 'reactstrap';
 import Login from './Login'
 import Logout from './Logout'
 import Signup from './Signup'
+import Search from './Search'
 
 class NavbarComponent extends React.Component {
     render() {
@@ -23,48 +23,42 @@ class NavbarComponent extends React.Component {
             <Context.Consumer>
                 {context => {
                     return (
-                        <Navbar color="light" light expand="md">
-                            <NavbarBrand 
-                                href='/'
-                                onClick={(event) => {
-                                    event.preventDefault()
+                        <Navbar light className='bg-light'>
+                            <NavbarBrand
+                                className='cursor-on-hover'
+                                onClick={() =>
                                     this.props.history.push('/')
-                                }}
-                            >
-                                Reddit
+                                }
+                                >
+                                Reddit.alpha
                             </NavbarBrand>
-                            <NavbarToggler onClick={() => context.toggleNavbar()} />
-                            <Collapse isOpen={context.navbarOpen} navbar>
-                                <Nav className="ml-auto" navbar>
-                                    {context.loggedIn ? 
-                                        <React.Fragment>
-                                            <NavItem>
-                                                <NavLink 
-                                                    href='/'
-                                                    onClick = {(event) => {
-                                                        event.preventDefault()
-                                                        this.props.history.push(`/u/${context.username}/`)
-                                                    }}
-                                                >
-                                                    {context.username}
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem><Logout /></NavItem>
-                                        </React.Fragment>
-                                        :
-                                        <React.Fragment>
-                                            <NavItem>
-                                                <ButtonGroup>
-                                                    <Login />
-                                                    <Signup />
-                                                </ButtonGroup>
-                                            </NavItem>
-                                        </React.Fragment>
-                                    }
-                                </Nav>
-                            </Collapse>
+                            <Form inline>
+                                <InputGroup>
+                                    <Search />
+                                </InputGroup>
+                                {context.loggedIn ?
+                                    <InputGroup>
+                                        <Button
+                                            color='link'
+                                            className='text-muted'
+                                            onClick = {(event) => {
+                                                event.preventDefault()
+                                                this.props.history.push(`/u/${context.username}/`)
+                                            }}
+                                            >
+                                            {context.username}
+                                        </Button>
+                                        <Logout />
+                                    </InputGroup>
+                                    :
+                                    <ButtonGroup>
+                                        <Login />
+                                        <Signup />
+                                    </ButtonGroup>
+                                }
+                            </Form>
                         </Navbar>
-                    )   
+                    )
                 }}
             </Context.Consumer>
         )
