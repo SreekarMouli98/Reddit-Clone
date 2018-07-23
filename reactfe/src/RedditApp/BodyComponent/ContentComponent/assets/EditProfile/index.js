@@ -149,6 +149,7 @@ class EditProfile extends Component {
                                             name='username'
                                             value={this.state.username} 
                                             onChange={this.handleChange}
+                                            placeholder='(no spaces)'
                                             required
                                         />
                                     </Col>

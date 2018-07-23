@@ -129,7 +129,7 @@ class EditCreateSubreddit extends Component {
                                             type='text'
                                             id='subreddit-name'
                                             name='name' 
-                                            placeholder='Name of the Subreddit' 
+                                            placeholder='Name of the Subreddit (no spaces)' 
                                             onChange={this.handleChange}
                                             required
                                         /> 

@@ -121,7 +121,10 @@ class EditCreatePost extends Component {
                                 onSubmit={(event) => {
                                     event.preventDefault()
                                     context.loggedIn ?
-                                        this.handleSubmit(context)
+                                        this.state.subreddit_selected.length === 0 ?
+                                            console.log('select subreddit')
+                                            :
+                                            this.handleSubmit(context)
                                         :
                                         context.toggleLoginModal()
                                 }}
@@ -147,7 +150,7 @@ class EditCreatePost extends Component {
                                         <Input 
                                             name='title' 
                                             type='text' 
-                                            placeholder='Title'
+                                            placeholder='Title (no spaces)'
                                             value={this.state.title}
                                             onChange={this.handleChange}
                                             required
