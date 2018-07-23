@@ -188,7 +188,7 @@ export default class InfoComponent extends Component {
                 break
 
             default:
-                return <div>ERROR</div>
+                return <div></div>
                 break
         }
     }
