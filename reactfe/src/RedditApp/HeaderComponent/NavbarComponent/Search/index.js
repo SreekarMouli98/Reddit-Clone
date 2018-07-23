@@ -27,7 +27,7 @@ class Search extends Component {
         event.preventDefault()
         if (this.state.keyword.length !== 0) {
             document.getElementById('search-keyword').value = ''
-            this.props.history.push(`/search/${this.state.keyword}/`
+            this.props.history.push(`/search/${this.state.keyword}/`)
         }
     }
 
