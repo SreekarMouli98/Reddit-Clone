@@ -15,6 +15,7 @@ import {
 import classnames from 'classnames'
 import ProfilePosts from './ProfilePosts'
 import ProfileComments from './ProfileComments'
+import ProfileSubreddits from './ProfileSubreddits'
 import DeleteTemplate from '../assets/DeleteTemplate';
 
 class Profile extends Component {
@@ -78,25 +79,48 @@ class Profile extends Component {
                             <Nav tabs>
                                 <NavItem>
                                     <NavLink 
-                                        onClick={() => {context.toggleProfileTab('1')}}
                                         className={classnames({active: context.profileTab === '1'})}
+                                        href='#'
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            context.toggleProfileTab('1')
+                                        }}
                                     >
                                         Posts
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink 
-                                        onClick={() => {context.toggleProfileTab('2')}}
                                         className={classnames({active: context.profileTab === '2'})}
+                                        href='#'
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            context.toggleProfileTab('2')
+                                        }}
                                     >
                                         Comments
                                     </NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink 
+                                        className={classnames({active: context.profileTab === '3'})}
+                                        href='#'
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            context.toggleProfileTab('3')
+                                        }}
+                                    >
+                                        Subreddits
+                                    </NavLink>
+                                </NavItem>                                
                             </Nav>
                             {context.profileTab === '1' ?
                                 <ProfilePosts username={this.props.username}/>
                                 :
-                                <ProfileComments username={this.props.username} />
+                                context.profileTab === '2' ?
+                                    <ProfileComments username={this.props.username} />
+                                    :
+                                    <ProfileSubreddits username={this.props.username} />
                             }
                         </React.Fragment>
                     )

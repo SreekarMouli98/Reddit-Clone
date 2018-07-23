@@ -20,23 +20,32 @@ class EditCreatePost extends Component {
             subreddit_id: 0,
             title: '',
             content: '',
-            votes: 0
+            upvotes: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleSubredditSelect = this.handleSubredditSelect.bind(this)
     }
 
+    getIds(json) {
+        let ls = []
+        if (json) {
+            for (var i = 0; i < json.length; i++) {
+                ls[i] = json[i]['id']
+            }
+        }
+        return ls
+    } 
+
     componentDidMount() {
         if (this.props.update) {
             fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
             .then(data => data.json())
             .then(json => {
-                console.log()
                 this.setState({
                     title: json.title,
                     content: json.content,
-                    votes: json.votes,
+                    upvotes: this.getIds(json.upvotes),
                     subreddit_id: json.subreddit.id,
                     subreddit_selected: 'r/' + json.subreddit.name
                 })
@@ -77,9 +86,9 @@ class EditCreatePost extends Component {
         let json = {
             title: this.state.title,
             content: this.state.content,
-            votes: this.state.votes,
             profile: context.userId,
             subreddit: Number(this.state.subreddit_id),
+            upvotes: this.props.update ? this.state.upvotes : this.state.upvotes.concat(context.userId),
         }
         if (this.props.update === false) {
             json['upvotes'] = [context.userId]

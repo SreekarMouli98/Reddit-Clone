@@ -21,4 +21,5 @@ urlpatterns = [
     path('u/<str:username>/posts/<int:p_id>/', DetailPostsOfUser.as_view(), name='profile-posts-detail'),
     path('u/<str:username>/comments/', ListCommentsOfUser.as_view(), name='profile-comments'),
     path('u/<str:username>/comments/<int:c_id>/', DetailCommentsOfUser.as_view(), name='profile-comments-detail'),
+    path('u/<str:username>/subreddits/', ListSubredditsOfUser.as_view(), name='profile-subreddits')
 ]

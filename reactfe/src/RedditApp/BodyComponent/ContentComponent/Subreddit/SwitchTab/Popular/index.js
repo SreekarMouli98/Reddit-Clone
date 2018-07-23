@@ -26,7 +26,7 @@ export default class Popular extends Component {
         this.fetchPosts()
     }
 
-    componentWillMount(nextProps) {
+    componentWillReceiveProps(nextProps) {
         this.fetchPosts()
     }
     

@@ -29,25 +29,31 @@ export default class ProfileComments extends Component {
                 {context => {
                     return (
                         <React.Fragment>
-                            {this.state.comments.map((comment) => {
-                                return (
-                                    <Row key={comment.id}>
-                                            <Col>
-                                                <CommentTemplate
-                                                    context={context}
-                                                    content={comment.content}                            
-                                                    upvotes={comment.upvotes}
-                                                    downvotes={comment.downvotes}
-                                                    postid={comment.parent_post.id}
-                                                    subreddit={comment.parent_post.subreddit.name}
-                                                    subredditlink={true}
-                                                    clickable={true}
-                                                    />
-                                            </Col>
-                                        </Row>
-                                    )
-                                }
-                            )}
+                            {this.state.comments.length !== 0 ?
+                                this.state.comments.map((comment) => {
+                                    return (
+                                        <Row key={comment.id}>
+                                                <Col>
+                                                    <CommentTemplate
+                                                        context={context}
+                                                        content={comment.content}                            
+                                                        upvotes={comment.upvotes}
+                                                        downvotes={comment.downvotes}
+                                                        postid={comment.parent_post.id}
+                                                        subreddit={comment.parent_post.subreddit.name}
+                                                        subredditlink={true}
+                                                        clickable={true}
+                                                        />
+                                                </Col>
+                                            </Row>
+                                        )
+                                    }
+                                )
+                                :
+                                <h3 className='text-center'>
+                                    User hasn't made any comments yet!
+                                </h3>
+                            }
                         </React.Fragment>
                     )
                 }}

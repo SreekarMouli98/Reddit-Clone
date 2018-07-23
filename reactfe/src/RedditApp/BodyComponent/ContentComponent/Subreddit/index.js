@@ -14,14 +14,22 @@ export default class Subreddit extends Component {
         }
     }
 
-    componentDidMount() {   
-        fetch(`/api/reddit/r/${this.props.subreddit}/posts/`)
+    fetchSubredditData(subreddit) {
+        fetch(`/api/reddit/r/${subreddit}/posts/`)
         .then(result => {   
             return result.json();
         })
         .then(data => {
             this.setState({posts: data})
         })
+    }
+
+    componentDidMount() {   
+        this.fetchSubredditData(this.props.subreddit)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchSubredditData(nextProps.subreddit)
     }
 
     render() {

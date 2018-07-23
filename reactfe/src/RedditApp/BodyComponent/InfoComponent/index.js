@@ -37,14 +37,14 @@ class SubredditHelper extends Component {
         )
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.fetchSubredditData(nextProps.subreddit)
-    }
-
     componentDidMount() {
         this.fetchSubredditData(this.props.subreddit)
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.fetchSubredditData(nextProps.subreddit)
+    }
+    
     render() {
         return (
             <Context.Consumer>
@@ -117,10 +117,18 @@ export default class InfoComponent extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    setInfo(info) {
         this.setState({
-            info: nextProps.info,
+            info: info,
         })
+    }
+
+    componentDidMount() {
+        this.setInfo(this.props.info)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setInfo(nextProps.info)
     }
 
     render_switch({info}, context) {
