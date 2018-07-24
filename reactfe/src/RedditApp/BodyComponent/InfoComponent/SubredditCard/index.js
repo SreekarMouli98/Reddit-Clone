@@ -52,71 +52,39 @@ class SubredditCard extends Component {
         this.setData(nextProps.subscribers, nextProps.context)
     }
 
-    alreadySubscribed() {
-        return this.state.subscribers.indexOf(this.props.context.userId) !== -1
-    }
-
-    subscribe() {
-        return new Promise((resolve, reject) => {
-            this.setState(prev => ({
-                subscribers: prev.subscribers.concat(this.props.context.userId),
-                subscribed: true
-            }), () => {
-                console.log('subscribed', this.state)
-                return resolve()
-            })
-        })
-    }
-
-    unsubscribe() {
-        return new Promise((resolve, reject) => {
-            var new_subscribers = this.state.subscribers.concat()
-            new_subscribers.pop(this.props.context.userId)
-            this.setState({
-                subscribers: new_subscribers,
-                subscribed: false
-            }, () => {
-                console.log('unsubscribed', this.state)
-                return resolve()
-            })
-        })
-    }
-
-    postSubscription() {
-        return new Promise((resolve, reject) => {
-            let json = {
-                subscribers: this.state.subscribers
-            }
-            json = JSON.stringify(json)
-            console.log(json)
-            fetch(`/api/reddit/r/${this.props.name}/`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: json
-            })
-            .then(response => {
-                response.ok ?
-                console.log('success')
-                :
-                console.log(response)
-            })
-            .then(() => {
-                return resolve()
-            })
-        })
-    }
-
-    async toggleSubscription() {
-        if (this.alreadySubscribed()) {
-            await this.unsubscribe()
+    toggleSubscription() {
+        var subscribers = this.state.subscribers.concat()
+        var subscribed = false
+        var {userId} = this.props.context
+        if (subscribers.indexOf(userId) !== -1) {
+            subscribers.pop(userId)
+            subscribed = false
         }
         else {
-            await this.subscribe()
+            subscribers.push(userId)
+            subscribed = true
         }
-        await this.postSubscription()
+        let json = {
+            subscribers: subscribers
+        }
+        json = JSON.stringify(json)
+        fetch(`/api/reddit/r/${this.props.name}/`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+        .then(response => {
+            response.ok ?
+                this.setState({
+                    subscribers: subscribers,
+                    subscribed: subscribed
+                })
+                :
+                console.log(response)
+        })
     }
     
     render() {
