@@ -28,7 +28,8 @@ export default class Signup extends Component {
     }
 
     signupSuccess(context, json) {
-        console.log('signup success', json)
+        console.log('signup success')
+        localStorage.setItem('token', json.token)
         context.toggleLoggedIn()
         context.toggleSignupModal()
         context.setUsername(this.state.username)
@@ -64,21 +65,12 @@ export default class Signup extends Component {
         })
         .then(response => {
             response.ok ?
-                response.json().then(json => 
+                response.json().then(json => {
                     this.signupSuccess(context, json)
-                )
+                })
                 :
                 console.log(response)
         })
-        // .then(res => {
-        //     res.status > 200 && res.status < 300 ?
-        //         this.setState({signup_successful: true,})
-        //     :
-        //         console.log('Something went wrong!')
-        // })
-        // .catch(e => {
-        //     console.log(e)
-        // })
     }
 
     render() {
