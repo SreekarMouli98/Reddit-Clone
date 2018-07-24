@@ -2,6 +2,7 @@ from redditapp.models import *
 from django.views.generic import *
 from redditapp.serializers import *
 from rest_framework.generics import *
+from rest_framework.permissions import *
 
 class ListProfiles(ListCreateAPIView):
     queryset = Profile.objects.all()
@@ -11,6 +12,7 @@ class ListProfiles(ListCreateAPIView):
 class DetailProfile(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
 
@@ -22,4 +24,3 @@ class DetailProfile(RetrieveUpdateDestroyAPIView):
         user = instance.user
         instance.delete()
         user.delete()
-
