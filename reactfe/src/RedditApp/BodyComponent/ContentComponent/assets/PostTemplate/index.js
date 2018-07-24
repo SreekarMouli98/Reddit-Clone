@@ -46,7 +46,7 @@ class PostTemplate extends Component {
             this.setState(prev => ({
                 upvoted: prev.upvotes.indexOf(context.userId) !== -1 && context.loggedIn,
                 downvoted: prev.downvotes.indexOf(context.userId) !== -1  && context.loggedIn,
-                votes: prev.upvotes.length - prev.downvotes.length,
+                votes: prev.upvotes.length - prev.downvotes.length
             }))
         })
     }
@@ -59,117 +59,108 @@ class PostTemplate extends Component {
         this.setData(nextProps.context, nextProps.upvotes, nextProps.downvotes)
     }
 
-    alreadyUpvoted() {
-        return this.state.upvotes.indexOf(this.props.context.userId) !== -1
-    }
-
-    alreadyDownvoted() {
-        return this.state.downvotes.indexOf(this.props.context.userId) !== -1
-    }
-
-    addUpvote() {
-        return new Promise((resolve, reject) => {
-            this.setState(prev => ({
-                upvotes: prev.upvotes.concat(this.props.context.userId),
-                upvoted: true,
-                votes: prev.votes + 1,
-            }), () => {
-                return resolve()
-            })
-        })
-    }
-
-    removeUpvote() {
-        return new Promise((resolve, reject) => {
-            var new_upvotes = this.state.upvotes.concat()
-            new_upvotes.pop(this.props.context.userId)
-            this.setState(prev => ({
-                upvotes: new_upvotes,
-                upvoted: false,
-                votes: prev.votes - 1,
-            }), () => {
-                return resolve()
-            })
-        })
-    }
-
-    addDownvote() {
-        return new Promise((resolve, reject) => {
-            this.setState(prev => ({
-                downvotes: prev.downvotes.concat(this.props.context.userId),
-                downvoted: true,
-                votes: prev.votes - 1,
-            }), () => {
-                return resolve()
-            })
-        })
-    }
-
-    removeDownvote() {
-        return new Promise((resolve, reject) => {
-            var new_downvotes = this.state.downvotes.concat()
-            new_downvotes.pop(this.props.context.userId)
-            this.setState(prev => ({
-                downvotes: new_downvotes,
-                downvoted: false,
-                votes: prev.votes + 1,
-            }), () => {
-                return resolve()
-            })
-        })
-    }
-
-    postVotesData() {
-        return new Promise((resolve, reject) => {
-            var json = {
-                upvotes: this.state.upvotes,
-                downvotes: this.state.downvotes
-            }
-            json = JSON.stringify(json)
-            const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`
-            fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: json
-            })
-            .then(response => {
-                response.ok ?
-                    console.log('success')
-                    :
-                    console.log(response)
-            })
-        })
-    }
-
-    async toggleUpvote() {
-        if (this.alreadyDownvoted()) {
-            await this.removeDownvote()
-            await this.addUpvote()
+    toggleUpvote() {
+        var upvotes = this.state.upvotes.concat()
+        var downvotes = this.state.downvotes.concat()
+        var votes = this.state.votes
+        var upvoted = false
+        var downvoted = false
+        var {userId} = this.props.context
+        if (downvotes.indexOf(userId) !== -1) {
+            downvotes.pop(userId)
+            upvotes.push(userId)
+            upvoted = true
+            downvoted = false
+            votes += 2
         }
-        else if (this.alreadyUpvoted()) {
-            await this.removeUpvote()
+        else if (upvotes.indexOf(userId) !== -1) {
+            upvotes.pop(userId)
+            upvoted = false
+            votes -= 1
         }
         else {
-            await this.addUpvote()
+            upvotes.push(userId)
+            upvoted = true
+            votes += 1
         }
-        await this.postVotesData()
+        var json = {
+            upvotes: upvotes,
+            downvotes: downvotes
+        }
+        json = JSON.stringify(json)
+        const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+        .then(response => {
+            response.ok ?
+                this.setState({
+                    upvotes: upvotes,
+                    downvotes: downvotes,
+                    upvoted: upvoted,
+                    downvoted: downvoted,
+                    votes: votes
+                })
+                :
+                console.log(response)
+        })
     }
 
-    async toggleDownvote() {
-        if (this.alreadyUpvoted()) {
-            await this.removeUpvote()
-            await this.addDownvote()
+    toggleDownvote() {
+        var upvotes = this.state.upvotes.concat()
+        var downvotes = this.state.downvotes.concat()
+        var votes = this.state.votes
+        var upvoted = false
+        var downvoted = false
+        var {userId} = this.props.context
+        if (upvotes.indexOf(userId) !== -1) {
+            upvotes.pop(userId)
+            downvotes.push(userId)
+            downvoted = true
+            upvoted = false
+            votes -= 2
         }
-        else if(this.alreadyDownvoted()) {
-            await this.removeDownvote()
+        else if (downvotes.indexOf(userId) !== -1) {
+            downvotes.pop(userId)
+            downvoted = false
+            votes += 1
         }
         else {
-            await this.addDownvote()
+            downvotes.push(userId)
+            downvoted = true
+            votes -= 1
         }
-        await this.postVotesData()
+        var json = {
+            upvotes: upvotes,
+            downvotes: downvotes
+        }
+        json = JSON.stringify(json)
+        const url = `/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+        .then(response => {
+            response.ok ?
+                this.setState({
+                    upvotes: upvotes,
+                    downvotes: downvotes,
+                    upvoted: upvoted,
+                    downvoted: downvoted,
+                    votes: votes
+                })
+                :
+                console.log(response)
+        })
     }
 
     render() {
@@ -186,12 +177,22 @@ class PostTemplate extends Component {
                                             <ButtonGroup vertical>
                                                 <Button 
                                                     color={this.state.upvoted ? 'success' : 'light'} 
-                                                    onClick={() => this.toggleUpvote()}
+                                                    onClick={() => 
+                                                        context.loggedIn ? 
+                                                            this.toggleUpvote()
+                                                            :
+                                                            context.toggleLoginModal()
+                                                    }
                                                 ><i className="fa fa-arrow-up" aria-hidden="true"></i>
                                                 </Button>
                                                 <Button 
                                                     color={this.state.downvoted ? 'success' : 'light'}
-                                                    onClick={() => this.toggleDownvote()}
+                                                    onClick={() => 
+                                                        context.loggedIn ?
+                                                            this.toggleDownvote()
+                                                            :
+                                                            context.toggleLoginModal()
+                                                    }
                                                 ><i className="fa fa-arrow-down" aria-hidden="true"></i>
                                                 </Button>
                                             </ButtonGroup>
