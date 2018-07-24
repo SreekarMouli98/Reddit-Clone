@@ -1,10 +1,13 @@
 from redditapp.models import *
+from django.db.models import Count
 from django.views.generic import *
 from redditapp.serializers import *
 from rest_framework.generics import *
-from django.db.models import Count
+from rest_framework.permissions import *
 
 class ListCommentsOfPost(ListCreateAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return CommentSerializer_detailed
@@ -17,6 +20,7 @@ class ListCommentsOfPost(ListCreateAPIView):
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -40,6 +44,7 @@ class ListCommentsOfUser(ListCreateAPIView):
 class DetailCommentsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer_detailed
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
