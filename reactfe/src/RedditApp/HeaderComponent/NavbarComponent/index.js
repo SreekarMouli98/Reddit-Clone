@@ -18,6 +18,13 @@ import Signup from './Signup'
 import Search from './Search'
 
 class NavbarComponent extends React.Component {
+    componentDidMount() {
+        if (localStorage.getItem('token')) {
+            this.props.ctx.toggleLoggedIn()
+            this.props.ctx.setUsername(localStorage.getItem('username'))
+        }   
+    }
+
     render() {
         return (
             <Context.Consumer>

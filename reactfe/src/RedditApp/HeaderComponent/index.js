@@ -6,15 +6,22 @@ import {
 } from 'reactstrap'
 import NavbarComponent from './NavbarComponent'
 import TabComponent from './TabComponent'
+import Context from '../../provider'
 import './style.css'
 
 export default class HeaderComponent extends Component {
     render() {
         return (
-            <Container className='vert-align'>
-                <Row><Col><NavbarComponent /></Col></Row>
-                <Row><Col><TabComponent /></Col></Row>
-            </Container>
+            <Context.Consumer>
+                {context => {
+                    return (
+                        <Container className='vert-align'>
+                            <Row><Col><NavbarComponent ctx={context}/></Col></Row>
+                            <Row><Col><TabComponent /></Col></Row>
+                        </Container>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

@@ -156,7 +156,10 @@ class BodyComponent extends Component {
                                                 info='user'
                                                 user={props.match.params.username}
                                             >
-                                                <EditProfile user={props.match.params.username}/>
+                                                <EditProfile 
+                                                    user={props.match.params.username}
+                                                    context={context}
+                                                />
                                             </Wrapper>
                                         )
                                     }}
@@ -173,7 +176,7 @@ class BodyComponent extends Component {
                                                 dont_ask_new_post = {true}
                                                 subreddit={props.match.params.subreddit}
                                             >
-                                                <EditCreatePost />
+                                                <EditCreatePost context={context}/>
                                             </Wrapper>
                                         )
                                     }}
@@ -192,6 +195,7 @@ class BodyComponent extends Component {
                                             >
                                                 <EditCreatePost 
                                                     update={true}
+                                                    context={context}
                                                     subreddit={props.match.params.subreddit}
                                                     postid={props.match.params.postid}    
                                                 />
@@ -231,6 +235,7 @@ class BodyComponent extends Component {
                                             >
                                                 <EditCreateSubreddit
                                                     update={true}
+                                                    context={context}
                                                     subreddit={props.match.params.subreddit}
                                                 />
                                             </Wrapper>
@@ -266,7 +271,7 @@ class BodyComponent extends Component {
                                                 activeTab={'4'}
                                                 info='new'
                                             >
-                                                <EditCreatePost />
+                                                <EditCreatePost context={context}/>
                                             </Wrapper>
                                         )
                                     }}
@@ -315,7 +320,7 @@ class BodyComponent extends Component {
                                             activeTab={'4'}
                                             info={false}
                                         >
-                                            <EditCreateSubreddit />
+                                            <EditCreateSubreddit context={context}/>
                                         </Wrapper>
                                     }
                                 />

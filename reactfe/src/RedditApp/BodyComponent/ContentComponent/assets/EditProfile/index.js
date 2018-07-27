@@ -44,10 +44,16 @@ class EditProfile extends Component {
     }
 
     componentDidMount() {
+        if (this.props.context.loggedIn !== true) {
+            this.props.history.push('/')
+        }
         this.fetchUser(this.props.user)
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.context.loggedIn !== true) {
+            this.props.history.push('/')
+        }
         this.fetchUser(nextProps.user)
     }
 

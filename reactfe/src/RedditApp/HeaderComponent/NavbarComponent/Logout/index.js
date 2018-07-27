@@ -12,6 +12,7 @@ export default class Logout extends Component {
 
     handleSubmit(context) {
         localStorage.removeItem('token')
+        localStorage.removeItem('username')
         context.toggleLoggedIn()
         context.setUsername('')
         context.setUserId(0)
