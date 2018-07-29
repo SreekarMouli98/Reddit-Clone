@@ -8,7 +8,6 @@ from rest_framework.permissions import *
 class ListHomePosts(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer_detailed
-    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).filter(subreddit__subscribers__username=self.kwargs['username']).order_by('-updated_at', '-total_votes')
@@ -16,21 +15,17 @@ class ListHomePosts(ListAPIView):
 class ListAllPosts(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer_detailed
-    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes')
 
 class ListPopularPosts(ListAPIView):
     serializer_class = PostSerializer_detailed
-    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-total_votes', '-updated_at')
 
 class ListPostsOfReddit(ListCreateAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
-
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return PostSerializer_detailed
@@ -41,8 +36,7 @@ class ListPostsOfReddit(ListCreateAPIView):
         return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes').filter(subreddit__name=self.kwargs['r_name'])
 
 class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    queryset = Post.objects.all()   
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -62,8 +56,6 @@ class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
         return self.update(request, *args, **kwargs)     
 
 class ListPostsOfUser(ListAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
-
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return PostSerializer_detailed
@@ -76,7 +68,6 @@ class ListPostsOfUser(ListAPIView):
 class DetailPostsOfUser(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer_detailed
-    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())

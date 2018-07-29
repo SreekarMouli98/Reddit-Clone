@@ -28,7 +28,7 @@ export default class Signup extends Component {
     }
 
     signupSuccess(context, json) {
-        console.log('signup success', json)
+        console.log('signup success')
         localStorage.setItem('token', json.token)
         localStorage.setItem('username', this.state.username)
         context.toggleLoggedIn()

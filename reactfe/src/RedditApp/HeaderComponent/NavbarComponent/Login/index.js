@@ -28,7 +28,7 @@ class Login extends Component {
     }
 
     loginSuccess(context, response) {
-        console.log('Login Success!', response)
+        console.log('Login Success!')
         localStorage.setItem('token', response.token)
         localStorage.setItem('username', response.profile_username)
         context.toggleLoginModal()

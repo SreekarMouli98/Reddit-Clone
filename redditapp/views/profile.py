@@ -6,13 +6,16 @@ from rest_framework.permissions import *
 
 class ListProfiles(ListCreateAPIView):
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    permission_classes = (AllowAny, )
 
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ProfileSerializer
+        return ProfileSignupSerializer
 
 class DetailProfile(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
 

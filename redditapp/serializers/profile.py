@@ -10,21 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)
-    token = serializers.SerializerMethodField()
-
-    def get_token(self, obj):
-        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-        payload = jwt_payload_handler(obj)
-        token = jwt_encode_handler(payload)
-        return token
-
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data, username=validated_data.get('username'))
-        profile = Profile.objects.create(user=user, **validated_data)
-        return profile
     
     def update(self, instance, validated_data):
         instance.dob = validated_data.get('dob', instance.dob)
@@ -46,3 +31,32 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
         
+class ProfileSignupSerializer(serializers.ModelSerializer):
+    user = UserSerializer(required=True)
+    token = serializers.SerializerMethodField()
+
+    def get_token(self, obj):
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
+        payload = jwt_payload_handler(obj)
+        token = jwt_encode_handler(payload)
+        return token
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data, username=validated_data.get('username'))
+        profile = Profile.objects.create(user=user, **validated_data)
+        return profile
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+class CurrentProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(required=True)
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        depth = 1
