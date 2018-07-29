@@ -38,6 +38,9 @@ class EditCreatePost extends Component {
     } 
 
     componentDidMount() {
+        if (this.props.context.loggedIn !== true) {
+            this.props.history.push('/')
+        }
         if (this.props.update) {
             fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
             .then(data => data.json())
@@ -60,6 +63,12 @@ class EditCreatePost extends Component {
                     subreddits: json,
                 })
             })
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.context.loggedIn !== true) {
+            nextProps.history.push('/')
         }
     }
 
@@ -99,7 +108,8 @@ class EditCreatePost extends Component {
             method: this.props.update ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('token')}`
             },
             body:json
         })

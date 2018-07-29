@@ -45,11 +45,20 @@ class EditCreateSubreddit extends Component {
     }
 
     componentDidMount() {
+        if (this.props.context.loggedIn !== true) {
+            this.props.history.push('/')
+        }
         if (this.props.update) {
             this.fetchSubreddit(this.props.subreddit)
         }
     }
-    
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.context.loggedIn !== true) {
+            nextProps.history.push('/')
+        }
+    }
+
     addRule() {
         const rule = document.getElementById('new-rule').value
         if(rule) {
@@ -95,7 +104,8 @@ class EditCreateSubreddit extends Component {
             method: this.props.update ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('token')}`
             },
             body: json,
         })

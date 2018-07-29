@@ -1,8 +1,9 @@
 from redditapp.models import *
+from django.db.models import Count
 from django.views.generic import *
 from redditapp.serializers import *
 from rest_framework.generics import *
-from django.db.models import Count
+from rest_framework.permissions import *
 
 class ListHomePosts(ListAPIView):
     queryset = Post.objects.all()
@@ -35,7 +36,7 @@ class ListPostsOfReddit(ListCreateAPIView):
         return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes').filter(subreddit__name=self.kwargs['r_name'])
 
 class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all()   
 
     def get_serializer_class(self):
         if self.request.method == 'GET':

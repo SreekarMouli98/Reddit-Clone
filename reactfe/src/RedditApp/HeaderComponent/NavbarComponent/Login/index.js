@@ -29,6 +29,8 @@ class Login extends Component {
 
     loginSuccess(context, response) {
         console.log('Login Success!')
+        localStorage.setItem('token', response.token)
+        localStorage.setItem('username', response.profile_username)
         context.toggleLoginModal()
         context.toggleLoggedIn()
         context.setUsername(response.profile_username)
@@ -66,7 +68,9 @@ class Login extends Component {
         })
         .then(response => {
             response.ok ?
-                    response.json().then(json => { this.loginSuccess(context, json) })
+                    response.json().then(json => {
+                        this.loginSuccess(context, json) 
+                    })
                     :
                     console.log(response)
                     this.loginFail()

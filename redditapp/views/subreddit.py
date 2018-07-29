@@ -2,6 +2,8 @@ from redditapp.models import *
 from django.views.generic import *
 from redditapp.serializers import *
 from rest_framework.generics import *
+from rest_framework.permissions import *
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 class ListSubreddits(ListCreateAPIView):
     queryset = Subreddit.objects.all()

@@ -15,6 +15,7 @@ urlpatterns = [
     path('r/<str:r_name>/posts/<int:p_id>/comments/', ListCommentsOfPost.as_view(), name='reddit-post-comments'),
     path('r/<str:r_name>/posts/<int:p_id>/comments/<int:c_id>/', DetailCommentsOfPost.as_view(), name='reddit-post-comments-detail'),
     # USER VIEWS
+    path('current_user/', current_user, name='current-user'),
     path('u/', ListProfiles.as_view(), name='profiles'),
     path('u/<str:username>/', DetailProfile.as_view(), name='profiles-detail'),
     path('u/<str:username>/posts/', ListPostsOfUser.as_view(), name='profile-posts'), 
