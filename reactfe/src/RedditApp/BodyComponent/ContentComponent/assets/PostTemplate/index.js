@@ -94,7 +94,7 @@ class PostTemplate extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `JWT ${localStorage.getItem('token')}`
             },
             body: json
         })
@@ -146,7 +146,8 @@ class PostTemplate extends Component {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('token')}`
             },
             body: json
         })

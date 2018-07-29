@@ -39,6 +39,9 @@ class DeleteTemplate extends Component {
     delete(context) {
         fetch(this.props.toDeleteURL, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `JWT ${localStorage.getItem('token')}`
+            }
         })
         .then(response => {
             response.ok ? 

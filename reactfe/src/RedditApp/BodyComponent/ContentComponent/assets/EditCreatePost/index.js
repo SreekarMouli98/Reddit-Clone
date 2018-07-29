@@ -108,7 +108,8 @@ class EditCreatePost extends Component {
             method: this.props.update ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('token')}`
             },
             body:json
         })

@@ -18,11 +18,48 @@ import Signup from './Signup'
 import Search from './Search'
 
 class NavbarComponent extends React.Component {
+    get_token() {
+        return localStorage.getItem('token')
+    }
+
+    set_token(token) {
+        localStorage.setItem('token', token)
+    }
+    
+    remove_token() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+    }
+
+    refresh_token(old_token, context) {
+        fetch(`/api/auth/token/refresh/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: old_token
+            })
+        })
+        .then(response => {
+            response.ok ?
+                response.json()
+                .then(json => {
+                    this.set_token(json.token)
+                    context.toggleLoggedIn()
+                    context.setUserId(json.profile_id)
+                    context.setUsername(json.profile_username)
+                })
+                :
+                this.remove_token()
+        })
+    }
+
     componentDidMount() {
-        if (localStorage.getItem('token')) {
-            this.props.ctx.toggleLoggedIn()
-            this.props.ctx.setUsername(localStorage.getItem('username'))
-        }   
+        var old_token = this.get_token()
+        if (old_token) {
+            this.refresh_token(old_token, this.props.ctx) 
+        }
     }
 
     render() {
