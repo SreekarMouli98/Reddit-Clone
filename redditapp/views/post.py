@@ -10,20 +10,28 @@ class ListHomePosts(ListAPIView):
     serializer_class = PostSerializer_detailed
 
     def get_queryset(self):
-        return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).filter(subreddit__subscribers__username=self.kwargs['username']).order_by('-updated_at', '-total_votes')
+        return Post.objects.annotate(
+            total_votes=Count('upvotes', distinct=True)-Count('downvotes', distinct=True)
+        ).filter(
+            subreddit__subscribers__username=self.kwargs['username']
+        ).order_by('-updated_at', '-total_votes')
 
 class ListAllPosts(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer_detailed
 
     def get_queryset(self):
-        return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes')
+        return Post.objects.annotate(
+            total_votes=Count('upvotes', distinct=True)-Count('downvotes', distinct=True)
+        ).order_by('-updated_at', '-total_votes')
 
 class ListPopularPosts(ListAPIView):
     serializer_class = PostSerializer_detailed
 
     def get_queryset(self):
-        return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-total_votes', '-updated_at')
+        return Post.objects.annotate(
+            total_votes=Count('upvotes', distinct=True)-Count('downvotes', distinct=True)
+        ).order_by('-total_votes', '-updated_at')
 
 class ListPostsOfReddit(ListCreateAPIView):
     def get_serializer_class(self):
@@ -33,7 +41,11 @@ class ListPostsOfReddit(ListCreateAPIView):
             return PostSerializer
 
     def get_queryset(self):
-        return Post.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes').filter(subreddit__name=self.kwargs['r_name'])
+        return Post.objects.annotate(
+            total_votes=Count('upvotes', distinct=True)-Count('downvotes', distinct=True)
+        ).filter(
+            subreddit__name=self.kwargs['r_name']
+        ).order_by('-updated_at', '-total_votes')
 
 class DetailPostOfReddit(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()   
