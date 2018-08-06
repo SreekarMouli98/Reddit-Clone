@@ -16,6 +16,7 @@ import Login from './Login'
 import Logout from './Logout'
 import Signup from './Signup'
 import Search from './Search'
+import './style.css'
 
 class NavbarComponent extends React.Component {
     get_token() {
@@ -77,7 +78,7 @@ class NavbarComponent extends React.Component {
                                 Reddit.alpha
                             </NavbarBrand>
                             <Form inline>
-                                <InputGroup>
+                                <InputGroup id='my-navbar-form'>
                                     <Search />
                                 </InputGroup>
                                 {context.loggedIn ?
