@@ -13,7 +13,11 @@ class ListCommentsOfPost(ListCreateAPIView):
             return CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.annotate(total_votes=Count('upvotes')-Count('downvotes')).order_by('-updated_at', '-total_votes').filter(parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'])
+        return Comment.objects.annotate(
+            total_votes=Count('upvotes', distinct=True)-Count('downvotes', distinct=True)
+        ).filter(
+            parent_post__subreddit__name=self.kwargs['r_name'], parent_post__id=self.kwargs['p_id'] 
+        ).order_by('-updated_at', '-total_votes')
 
 
 class DetailCommentsOfPost(RetrieveUpdateDestroyAPIView):
