@@ -4,7 +4,9 @@ import {
 } from 'react-router'
 import {
     Form,
-    Input
+    InputGroup,
+    Input,
+    Button
 } from 'reactstrap'
 
 class Search extends Component {
@@ -26,8 +28,11 @@ class Search extends Component {
     handleSubmit(event) {
         event.preventDefault()
         if (this.state.keyword.length !== 0) {
-            document.getElementById('search-keyword').value = ''
             this.props.history.push(`/search/${this.state.keyword}/`)
+            this.setState({
+                keyword: ''
+            })
+            this.props.callback_function()
         }
     }
 
@@ -36,13 +41,17 @@ class Search extends Component {
             <Form
                 onSubmit={this.handleSubmit}
                 >   
-                <Input
-                    id='search-keyword'
-                    type='text'
-                    name='keyword'
-                    placeholder='Seach Reddit'
-                    onChange={this.handleChange}
-                />
+                <InputGroup>
+                    <Input
+                        id='search-keyword'
+                        type='text'
+                        name='keyword'
+                        placeholder='Seach Reddit'
+                        value={this.state.keyword}
+                        onChange={this.handleChange}
+                    />
+                    {this.props.btn && <Button color='info'>SEARCH</Button>}
+                </InputGroup>
             </Form>
         )
     }

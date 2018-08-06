@@ -11,6 +11,17 @@ import {
     Container,
     Row,
     Col,
+    ButtonDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    ButtonGroup,
+    Button,
+    InputGroup,
+    Input,
+    Modal,
+    ModalHeader,
+    ModalBody,
 } from 'reactstrap'
 import Profile from './ContentComponent/Profile'
 import Subreddit from './ContentComponent/Subreddit'
@@ -24,60 +35,7 @@ import Help from './ContentComponent/assets/Help'
 import EditCreateSubreddit from './ContentComponent/assets/EditCreateSubreddit'
 import SearchPage from './ContentComponent/SearchPage'
 import './style.css'
-
-class Wrapper extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            info: false
-        }
-    }
-
-    changeTab(nextTab) {
-        this.props.setActiveTab(nextTab)
-    }
-
-    changeInfo(info) {
-        this.setState({info: info})
-    }
-
-    componentDidMount() {
-        this.changeTab(this.props.activeTab)
-        this.changeInfo(this.props.info)
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.activeTab !== nextProps.activeTab) {
-            this.changeTab(nextProps.activeTab)
-        }
-        this.changeInfo(nextProps.info)
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                {this.props.info ?
-                        <Row>
-                            <Col md='8' id='content-block'>
-                                <SwitchTab />
-                                {this.props.children}
-                            </Col>
-                            <Col md='4' id='info-block'>
-                                <InfoComponent info={this.state.info} {...this.props}/>
-                            </Col>
-                        </Row>
-                    :
-                        <Row>
-                            <Col>
-                                <SwitchTab />
-                                {this.props.children}
-                            </Col>
-                        </Row>
-                }
-            </React.Fragment>
-        )
-    }
-}
+import Wrapper from './Wrapper'
 
 class BodyComponent extends Component {
     render() {
@@ -270,6 +228,7 @@ class BodyComponent extends Component {
                                                 setActiveTab={context.toggleTab}
                                                 activeTab={'4'}
                                                 info='new'
+                                                dontshow={true}
                                             >
                                                 <EditCreatePost context={context}/>
                                             </Wrapper>
@@ -293,7 +252,8 @@ class BodyComponent extends Component {
                                             setActiveTab={context.toggleTab}
                                             activeTab={'4'}
                                             info={false}
-                                        >
+                                            dontshow={true}
+                                            >
                                             <About />
                                         </Wrapper>
                                     }
@@ -306,7 +266,8 @@ class BodyComponent extends Component {
                                             setActiveTab={context.toggleTab}
                                             activeTab={'4'}
                                             info={false}
-                                        >
+                                            dontshow={true}
+                                            >
                                             <Help />
                                         </Wrapper>
                                     }
@@ -319,7 +280,8 @@ class BodyComponent extends Component {
                                             setActiveTab={context.toggleTab}
                                             activeTab={'4'}
                                             info={false}
-                                        >
+                                            dontshow={true}
+                                            >
                                             <EditCreateSubreddit context={context}/>
                                         </Wrapper>
                                     }

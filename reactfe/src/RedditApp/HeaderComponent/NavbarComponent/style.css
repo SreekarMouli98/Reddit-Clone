@@ -1,0 +1,5 @@
+@media (max-width: 576px) {
+    #my-navbar-form {
+        display: none;
+    }
+}
