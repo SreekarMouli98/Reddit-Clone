@@ -4,7 +4,8 @@ import {
     Col,
 } from 'reactstrap'
 import '../../assets/CommentTemplate'
-import CommentTemplate from '../../assets/CommentTemplate';
+import CommentTemplate from '../../assets/CommentTemplate'
+import AlertTemplate from '../../assets/AlertTemplate'
 import Context from '../../../../../provider'
 
 export default class ProfileComments extends Component {
@@ -50,9 +51,13 @@ export default class ProfileComments extends Component {
                                     }
                                 )
                                 :
-                                <h3 className='text-center'>
-                                    User hasn't made any comments yet!
-                                </h3>
+                                <AlertTemplate>
+                                    <hr />
+                                    <h3 className='text-center'>
+                                        User hasn't made any comments yet!
+                                    </h3>
+                                    <hr />
+                                </AlertTemplate>
                             }
                         </React.Fragment>
                     )

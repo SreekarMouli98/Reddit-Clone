@@ -7,6 +7,7 @@ import {
     Col
 } from 'reactstrap'
 import PostTemplate from '../../../assets/PostTemplate'
+import AlertTemplate from '../../../assets/AlertTemplate'
 
 export default class Home extends Component {
     constructor(props) {
@@ -42,10 +43,11 @@ export default class Home extends Component {
                     return (
                         <Container>
                             {context.loggedIn === false ? 
-                                <React.Fragment>
-                                    <h1 className='display-1 text-center'>Welcome to Reddit</h1>
-                                    <Alert color='danger'>Please login to utilize reddit completely</Alert>
-                                </React.Fragment>
+                                <AlertTemplate color='danger'>
+                                    <h1 className='display-3 text-center'>Welcome to Reddit</h1>
+                                    <hr />
+                                    <p className='text-center'>Please login to utilize reddit completely</p>
+                                </AlertTemplate>
                                 :
                                 <React.Fragment>
                                     {this.state.posts.length !== 0 ?
@@ -74,9 +76,13 @@ export default class Home extends Component {
                                             )
                                         })
                                         :
-                                        <h3 className='text-center'>
-                                            Seems like you haven't subscribed to anything!
-                                        </h3>
+                                        <AlertTemplate color='info'>
+                                            <hr />
+                                            <h2 className='text-center display-5'>
+                                                Subscribe to your favourite subreddits to get feed from them directly.
+                                            </h2>
+                                            <hr />
+                                        </AlertTemplate>
                                     }
                                 </React.Fragment>                            
                             }

@@ -9,25 +9,10 @@ import {
 } from 'react-router'
 import {
     Container,
-    Row,
-    Col,
-    ButtonDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    ButtonGroup,
-    Button,
-    InputGroup,
-    Input,
-    Modal,
-    ModalHeader,
-    ModalBody,
 } from 'reactstrap'
 import Profile from './ContentComponent/Profile'
 import Subreddit from './ContentComponent/Subreddit'
 import PostExpanded from './ContentComponent/PostExpanded'
-import InfoComponent  from './InfoComponent'
-import SwitchTab from './ContentComponent/Subreddit/SwitchTab'
 import EditCreatePost from './ContentComponent/assets/EditCreatePost'
 import EditProfile from './ContentComponent/assets/EditProfile'
 import About from './ContentComponent/assets/About'

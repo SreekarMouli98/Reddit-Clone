@@ -200,8 +200,12 @@ export default class InfoComponent extends Component {
                     return (
                         <React.Fragment>
                             {this.render_switch(this.state, context)}
-                            <NewSubredditCard />
-                            <AboutUsCard/>
+                            {!this.props.dontshow && 
+                                <React.Fragment>
+                                    <NewSubredditCard />
+                                    <AboutUsCard/>
+                                </React.Fragment>
+                            }
                         </React.Fragment>
                     )
                 }}
