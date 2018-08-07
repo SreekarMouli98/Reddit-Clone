@@ -6,6 +6,7 @@ import {
 import {
     withRouter
 } from 'react-router'
+import AlertTemplate from '../../assets/AlertTemplate'
 
 class ProfileSubreddits extends Component {
     constructor(props) {
@@ -55,9 +56,13 @@ class ProfileSubreddits extends Component {
                         })}
                     </ListGroup>
                     :
-                    <h3 className='text-center'>
-                        User hasn't created any subreddits!
-                    </h3>
+                    <AlertTemplate>
+                        <hr />
+                        <h3 className='text-center'>
+                            User doesn't own any subreddits!
+                        </h3>
+                        <hr />
+                    </AlertTemplate>
                 }
             </React.Fragment>
         )
