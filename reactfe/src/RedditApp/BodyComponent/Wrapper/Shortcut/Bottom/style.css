@@ -1,0 +1,11 @@
+@media (min-width: 576px) {
+    #my-shortcut {
+        display: none;
+    }
+}
+
+#my-shortcut {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+}

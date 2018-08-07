@@ -1,0 +1,11 @@
+@media (min-width: 576px) {
+    #my-info-grp {
+        display: none;
+    }
+}
+
+#my-info-grp {
+    position: fixed;
+    top: 100px;
+    right: 25px;
+}
