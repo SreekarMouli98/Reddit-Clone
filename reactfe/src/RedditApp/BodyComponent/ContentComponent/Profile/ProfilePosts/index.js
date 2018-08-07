@@ -4,6 +4,7 @@ import {
     Col
 } from 'reactstrap'
 import PostTemplate from '../../assets/PostTemplate'
+import AlertTemplate from '../../assets/AlertTemplate'
 import Context from '../../../../../provider'
 
 export default class ProfilePosts extends Component {
@@ -59,9 +60,13 @@ export default class ProfilePosts extends Component {
                                     )
                                 })
                                 :
-                                <h3 className='text-center'>
-                                    User hasn't made any posts yet!
-                                </h3>
+                                <AlertTemplate>
+                                    <hr />
+                                    <h3 className='text-center'>
+                                        User hasn't made any posts yet!
+                                    </h3>
+                                    <hr />
+                                </AlertTemplate>
                             }
                         </React.Fragment>
                     )
