@@ -46,7 +46,7 @@ class Bottom extends Component {
                 {context => {
                     return (
                         <ButtonGroup vertical id='my-shortcut'>
-                            <Button color="primary" onClick={this.toggleSearch}>
+                            <Button color="light" onClick={this.toggleSearch}>
                                 <i className="fa fa-search" aria-hidden="true"></i>
                             </Button>
                             <Modal isOpen={this.state.searchOpen} toggle={this.toggleSearch} centered>
@@ -68,7 +68,7 @@ class Bottom extends Component {
                                     context.toggleLoginModal()
                                 }}
                                 >
-                                <DropdownToggle color='primary'>
+                                <DropdownToggle color='dark'>
                                     <i className="fa fa-plus" aria-hidden="true"></i>
                                 </DropdownToggle>
                                 <DropdownMenu>
@@ -80,6 +80,7 @@ class Bottom extends Component {
                                                     this.props.history.push('/new/')
                                                     this.toggleShortcut()
                                                 }}
+                                                className='btn-outline-primary'
                                                 >
                                                 Post
                                             </Button>
@@ -89,6 +90,7 @@ class Bottom extends Component {
                                                     this.props.history.push('/create/')
                                                     this.toggleShortcut()
                                                 }}
+                                                className='btn-outline-primary'
                                                 >
                                                 Subreddit
                                             </Button>

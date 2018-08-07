@@ -121,7 +121,7 @@ class Top extends Component {
                             {this.props.info !== false &&
                                 <React.Fragment>
                                     <Button 
-                                        color='info'
+                                        color='dark'
                                         onClick={this.toggleModal}
                                         >
                                         <i className="fa fa-info" aria-hidden="true"></i>
