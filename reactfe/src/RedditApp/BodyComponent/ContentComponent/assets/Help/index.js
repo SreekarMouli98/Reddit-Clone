@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import Context from '../../../../../provider'
 import {
-     Jumbotron,
+    Card,
+    CardBody,
+    CardTitle,
+    CardText
 } from 'reactstrap'
 import {
     withRouter,
@@ -14,58 +17,133 @@ class Help extends Component {
                 {context => {
                     return (
                         <React.Fragment>
-                            <center><h1 className='display-1'>What is Reddit?</h1></center>
-                            <Jumbotron>
-                                {'Reddit is a place where users share their thoughts, opinions about topics.These topics can cover a variety of topics including news, science, movies, video games,music, books, fitness and food. '}
-                                <a 
-                                    href='#'
-                                    className='black-text black-text-on-hover'
-                                    onClick={(event) => {
-                                        event.preventDefault()
-                                        context.toggleSignupModal()
-                                    }}
-                                    >
-                                    Create your account now
-                                </a>
-                                {' and have fun!'}
-                            </Jumbotron>
-                            <hr />
-                            <center><h1 className='display-1'>How to use Reddit?</h1></center>
-                            <Jumbotron>
-                                <p>
-                                    {'Subscribe to your favourite subreddit to get feed directly from those. Visit '}
-                                    <a
-                                        href='#'
-                                        className='black-text black-text-on-hover'
-                                        onClick={(event) => {
-                                            event.preventDefault()
-                                            this.props.history.push('/r/popular/')
-                                        }}
-                                        >
-                                        popular
-                                    </a>
-                                    {' or '}
-                                    <a
-                                        href='#'
-                                        className='black-text black-text-on-hover'
-                                        onClick={(event) => {
-                                            event.preventDefault()
-                                            this.props.history.push('/r/all/')
-                                        }}
-                                        >
-                                        all
-                                    </a>
-                                    {" to get the feed from lastest and greatest subreddits."}
-                                </p>
-                                <p>
-                                    Upvote a post or comments to provide support to a post or comment. Downvote the same if the content
-                                    doesn't seem right!
-                                </p>
-                                <p>
-                                    The more upvotes your post or comment has, the more karma you will get.
-                                </p>
-                            </Jumbotron>
-                            <hr />
+                            <Card outline color='primary'>
+                                <CardBody>
+                                    <CardTitle>How do I create my account?</CardTitle>
+                                    <hr />
+                                    <CardText>
+                                        {'Click the "SIGNUP" button on the top-right or click '}
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                context.loggedIn === false && context.toggleSignupModal()
+                                            }}
+                                            >
+                                            here
+                                        </a>
+                                        {' to create your account.'}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                            <Card outline color='success'>
+                                <CardBody>
+                                    <CardTitle>What is a subreddit?</CardTitle>
+                                    <hr />
+                                    <CardText>A subreddit is basically a community where the community is organized around a topic of their interest.</CardText>
+                                </CardBody>
+                            </Card>
+                            <Card outline color='info'>
+                                <CardBody>
+                                    <CardTitle>How do I create a subreddit?</CardTitle>
+                                    <hr />
+                                    <CardText>
+                                        {'After logging in to Reddit, you can click '}
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                context.loggedIn ? 
+                                                    this.props.history.push('/create/')
+                                                    : 
+                                                    context.toggleLoginModal()
+                                            }}
+                                            >
+                                            here
+                                        </a>
+                                        {' to create your own subreddit.'}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                            <Card outline color='danger'>
+                                <CardBody>
+                                    <CardTitle>What is a post?</CardTitle>
+                                    <hr />
+                                    <CardText>
+                                        In a subreddit, your can state your point or opinion by making a post.
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                            <Card outline color='secondary'>
+                                <CardBody>
+                                    <CardTitle>How do I create a post?</CardTitle>
+                                    <hr />
+                                    <CardText>
+                                        {'After logging in to Reddit, you can click '}
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                context.loggedIn ? 
+                                                    this.props.history.push('/new/')
+                                                    : 
+                                                    context.toggleLoginModal()
+                                            }}
+                                            >
+                                            here
+                                        </a>
+                                        {' to create a post.'}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                            <Card outline color='danger'>
+                                <CardBody>
+                                    <CardTitle>What is Home, Popular and All?</CardTitle>
+                                    <hr />
+                                    <CardText>
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                this.props.history.push('/r/home/')
+                                            }}
+                                            >
+                                            Home
+                                        </a>
+                                        {' page is used to show you only the posts from the subreddits that you are subscribed to.'}
+                                    </CardText>
+                                    <CardText>
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                this.props.history.push('/r/popular/')
+                                            }}
+                                            >
+                                            Popular
+                                        </a>
+                                        {' page is used to show you only those posts which are trending and are having high votes.'}
+                                    </CardText>
+                                    <CardText>
+                                        <a 
+                                            href='#' 
+                                            className='black-text black-text-on-hover' 
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                this.props.history.push('/r/all/')
+                                            }}
+                                            >
+                                            All
+                                        </a>
+                                        {' page is used to show all the recent and newer posts rising in Reddit.'}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
                         </React.Fragment>
                     )}
                 }

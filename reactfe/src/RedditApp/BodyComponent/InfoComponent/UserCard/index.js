@@ -17,7 +17,12 @@ class UserCard extends Component {
         return (
             <Card>
                 <CardHeader>
-                    <CardText className='text-centered' onClick={()=>this.props.history.push(`/r/${this.props.username}/`)}>
+                    <CardText 
+                        className='text-center cursor-on-hover' 
+                        onClick={()=>
+                            this.props.history.push(`/u/${this.props.username}/`)
+                        }
+                        >
                         <i className="fa fa-user-circle" aria-hidden="true"></i> {this.props.username}
                     </CardText>
                 </CardHeader>
@@ -28,11 +33,11 @@ class UserCard extends Component {
                             {' D.O.B : '}
                             {this.props.dob}
                         </ListGroupItem>
-                        <ListGroupItem>
+                        {/* <ListGroupItem>
                             <i className="fa fa-certificate" aria-hidden="true"></i>
                             {' Karma: '}
                             <Badge pill>{this.props.karma}</Badge>
-                        </ListGroupItem>
+                        </ListGroupItem> */}
                     </ListGroup>
                 </CardBody>
             </Card>            

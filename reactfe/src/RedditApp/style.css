@@ -30,3 +30,7 @@
 .no-padding {
     border-top: 0px
 }
+
+.underline {
+    text-decoration: underline;
+}
