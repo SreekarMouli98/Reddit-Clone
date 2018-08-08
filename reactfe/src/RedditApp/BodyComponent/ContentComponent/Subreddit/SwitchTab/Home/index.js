@@ -44,7 +44,7 @@ export default class Home extends Component {
                         <Container>
                             {context.loggedIn === false ? 
                                 <AlertTemplate color='danger'>
-                                    <h1 className='display-3 text-center'>Welcome to Reddit</h1>
+                                    <h1 className='display-4 text-center'>Welcome to Reddit</h1>
                                     <hr />
                                     <p className='text-center'>Please login to utilize reddit completely</p>
                                 </AlertTemplate>
@@ -70,6 +70,8 @@ export default class Home extends Component {
                                                             clickable={true}
                                                             can_edit={context.username === post.profile.username && context.loggedIn === true}
                                                             can_delete={context.username === post.profile.username && context.loggedIn === true}
+                                                            created_at={post.created_at}
+                                                            updated_at={post.updated_at}
                                                         />
                                                     </Col>
                                                 </Row>

@@ -57,6 +57,8 @@ export default class All extends Component {
                                                 clickable={true}
                                                 can_edit={context.username === post.profile.username && context.loggedIn === true}
                                                 can_delete={context.username === post.profile.username && context.loggedIn === true}
+                                                created_at={post.created_at}
+                                                updated_at={post.updated_at}
                                             />
                                         </Col>
                                     </Row>

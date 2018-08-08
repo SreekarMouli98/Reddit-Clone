@@ -167,6 +167,20 @@ class CommentTemplate extends Component {
         })
     }
 
+    get_time(def_time) {
+        if (def_time !== undefined) {
+            var date = def_time.split('-')
+            var endin = date.pop()
+            var time = endin.split('T')
+            date.push(time[0])
+            time = time[1].split(':')
+            return `at ${time[0]}:${time[1]} on ${date[2]}-${date[1]}-${date[0]}`
+        }
+        else {
+            return ''
+        }
+    }
+
     render() {
         return (
             <Context.Consumer>
@@ -239,7 +253,9 @@ class CommentTemplate extends Component {
                                                                 r/{this.props.subreddit}
                                                             </a>
                                                         }
-                                                        <small className='text-muted'>  {this.state.votes} vote(s)</small>
+                                                        <small className='text-muted'>  {this.state.votes} vote(s)
+                                                            {` ${this.get_time(this.props.created_at)}`}
+                                                        </small>
                                                     </Col>
                                                     <Col sm={5}>
                                                         {this.props.can_edit && 

@@ -44,7 +44,9 @@ export default class ProfileComments extends Component {
                                                         subreddit={comment.parent_post.subreddit.name}
                                                         subredditlink={true}
                                                         clickable={true}
-                                                        />
+                                                        created_at={comment.created_at}
+                                                        updated_at={comment.updated_at}
+                                                    />
                                                 </Col>
                                             </Row>
                                         )

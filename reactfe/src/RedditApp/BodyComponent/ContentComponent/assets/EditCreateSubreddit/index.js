@@ -45,7 +45,7 @@ class EditCreateSubreddit extends Component {
     }
 
     componentDidMount() {
-        if (this.props.context.loggedIn !== true) {
+        if (localStorage.getItem('token') === null) {
             this.props.history.push('/')
         }
         if (this.props.update) {
@@ -54,8 +54,8 @@ class EditCreateSubreddit extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.context.loggedIn !== true) {
-            nextProps.history.push('/')
+        if (localStorage.getItem('token') === null) {
+            this.props.history.push('/')
         }
     }
 
