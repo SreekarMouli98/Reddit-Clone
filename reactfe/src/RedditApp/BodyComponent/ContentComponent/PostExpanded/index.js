@@ -69,6 +69,8 @@ export default class PostExpanded extends Component {
                                 userlink={true}
                                 can_edit={context.username === post.profile.username && context.loggedIn === true}
                                 can_delete={context.username === post.profile.username && context.loggedIn === true}    
+                                created_at={post.created_at}
+                                updated_at={post.updated_at}
                             />
                             <Table>
                                 <thead>
@@ -98,6 +100,8 @@ export default class PostExpanded extends Component {
                                                             commentid={comment.id}
                                                             can_edit={context.username === comment.profile.username && context.loggedIn === true}
                                                             can_delete={context.username === comment.profile.username && context.loggedIn === true}
+                                                            created_at={comment.created_at}
+                                                            updated_at={comment.updated_at}
                                                         />
                                                     </tr>
                                                 )}

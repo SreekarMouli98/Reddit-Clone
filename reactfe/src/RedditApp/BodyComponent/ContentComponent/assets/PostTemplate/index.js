@@ -165,6 +165,20 @@ class PostTemplate extends Component {
         })
     }
 
+    get_time(def_time) {
+        if (def_time !== undefined) {
+            var date = def_time.split('-')
+            var endin = date.pop()
+            var time = endin.split('T')
+            date.push(time[0])
+            time = time[1].split(':')
+            return `${time[0]}:${time[1]} on ${date[2]}-${date[1]}-${date[0]}`
+        }
+        else {
+            return ''
+        }
+    }
+
     render() {
         var {clickable} = this.props
         return (
@@ -218,6 +232,7 @@ class PostTemplate extends Component {
                                                     </CardText>
                                                 </CardTitle>
                                                 <CardText>{this.props.content}</CardText>
+                                                <small>
                                                 {this.props.subredditlink && 
                                                     <a
                                                         href='/'
@@ -233,7 +248,7 @@ class PostTemplate extends Component {
                                                 }
                                                 { this.props.userlink &&
                                                     <div>
-                                                        {'Posted by '}
+                                                        {' Posted by '}
                                                         <a
                                                             className='black-text black-text-on-hover'
                                                             href='/'
@@ -248,6 +263,10 @@ class PostTemplate extends Component {
                                                         </a>
                                                     </div> 
                                                 }
+                                                </small>
+                                                <small className='text-muted'>
+                                                {` ${this.get_time(this.props.created_at)}`}
+                                                </small>
                                             </CardBody>
                                             {(this.props.can_edit || this.props.can_delete) &&
                                                 <CardFooter>
