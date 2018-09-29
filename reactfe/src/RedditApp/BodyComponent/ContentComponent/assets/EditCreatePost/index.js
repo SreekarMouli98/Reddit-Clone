@@ -45,6 +45,9 @@ class EditCreatePost extends Component {
             fetch(`/api/reddit/r/${this.props.subreddit}/posts/${this.props.postid}/`)
             .then(data => data.json())
             .then(json => {
+                if (json.profile.username !== localStorage.getItem('username')) {
+                    this.props.history.push('/')
+                }
                 this.setState({
                     title: json.title,
                     content: json.content,

@@ -35,6 +35,9 @@ class EditCreateSubreddit extends Component {
         fetch(`/api/reddit/r/${subreddit}/`)
         .then(data => data.json())
         .then(json => {
+            if (json.profile.username !== localStorage.getItem('username')) {
+                this.props.history.push('/')
+            }
             this.setState({
                 name: json.name,
                 description: json.description,
